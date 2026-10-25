@@ -1,0 +1,32 @@
+{{ define "title" }}
+  项目档案 · {{ .Site.Title }}
+{{ end }}
+
+{{ define "content" }}
+<section class="container projects-index">
+  <header class="index-header">
+    <span class="section-kicker">PROJECT ARCHIVE / 03</span>
+    <h1>项目档案</h1>
+    <p>安全研究、离线工具与密码学工程。每个项目都保留完整仓库、技术栈和当前状态。</p>
+  </header>
+
+  {{ .Content }}
+
+  <div class="project-index-grid">
+    {{ range .Pages.ByWeight }}
+    <a class="project-index-card" href="{{ .RelPermalink }}">
+      <div class="project-card-top">
+        <span>{{ .Params.code | default "PROJECT" }}</span>
+        <span class="project-status">{{ .Params.status | default "ACTIVE" }}</span>
+      </div>
+      <h2>{{ .Title }}</h2>
+      <p>{{ .Params.summary | default .Summary }}</p>
+      <div class="project-stack">
+        {{ range .Params.stack }}<code>{{ . }}</code>{{ end }}
+      </div>
+      <span class="project-arrow" aria-hidden="true">→</span>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

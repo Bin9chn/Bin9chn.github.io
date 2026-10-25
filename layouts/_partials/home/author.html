@@ -1,0 +1,11 @@
+<h1>{{ .Site.Params.author }}</h1>
+{{ if reflect.IsSlice .Site.Params.info }}
+<h2 class="hero-disciplines">
+  {{ range $index, $item := .Site.Params.info }}
+    {{ if $index }}<span class="discipline-separator" aria-hidden="true">·</span>{{ end }}
+    <span>{{ $item | markdownify }}</span>
+  {{ end }}
+</h2>
+{{ else }}
+<h2>{{ .Site.Params.info | markdownify }}</h2>
+{{ end }}

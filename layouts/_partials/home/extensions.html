@@ -1,0 +1,66 @@
+{{ $projects := where .Site.RegularPages "Section" "projects" }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+
+<div class="home-dashboard">
+  <section class="writing-panel" aria-labelledby="latest-writing-title">
+    <div class="section-heading">
+      <div>
+        <span class="section-kicker">01 / LATEST WRITING</span>
+        <h2 id="latest-writing-title">最近文章</h2>
+      </div>
+      <a class="section-link" href="{{ "posts/" | relLangURL }}">全部文章 <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="feed-list">
+      {{ range $index, $post := first 5 ($posts.ByDate.Reverse) }}
+      <a class="feed-item" href="{{ $post.RelPermalink }}">
+        <span class="feed-index">{{ printf "%02d" (add $index 1) }}</span>
+        <span class="feed-copy">
+          <strong>{{ $post.Title }}</strong>
+          <span class="feed-meta">
+            <time datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date | time.Format "2006.01.02" }}</time>
+            <span>{{ $post.ReadingTime }} 分钟阅读</span>
+          </span>
+          <span class="feed-summary">{{ $post.Summary | plainify | truncate 118 }}</span>
+        </span>
+        <span class="feed-arrow" aria-hidden="true">↗</span>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+
+  <aside class="projects-panel" aria-labelledby="home-projects-title">
+    <div class="section-heading">
+      <div>
+        <span class="section-kicker">02 / PROJECT INDEX</span>
+        <h2 id="home-projects-title">项目索引</h2>
+      </div>
+      <a class="section-link" href="{{ "projects/" | relLangURL }}">全部项目 <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="project-rail">
+      {{ range $projects.ByWeight }}
+      <a class="project-rail-item" href="{{ .RelPermalink }}">
+        <span class="project-rail-code">{{ .Params.code | default "P" }}</span>
+        <span class="project-rail-copy">
+          <span class="project-rail-title">
+            <strong>{{ .Title }}</strong>
+            <span>{{ .Params.status | default "ACTIVE" }}</span>
+          </span>
+          <span class="project-rail-summary">{{ .Params.summary | default .Summary | plainify | truncate 52 }}</span>
+        </span>
+        <span class="project-rail-arrow" aria-hidden="true">↗</span>
+      </a>
+      {{ end }}
+
+      <a class="project-rail-item project-rail-github" href="https://github.com/beichenst?tab=repositories" target="_blank" rel="me noopener">
+        <span class="project-rail-code">GH</span>
+        <span class="project-rail-copy">
+          <span class="project-rail-title"><strong>更多公开仓库</strong><span>GITHUB</span></span>
+          <span class="project-rail-summary">查看持续更新的源码、发布版本与实验项目。</span>
+        </span>
+        <span class="project-rail-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </aside>
+</div>

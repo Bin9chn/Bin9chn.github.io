@@ -1,0 +1,94 @@
+baseURL = "https://beichenst.github.io/"
+title = "Bin9chn // Security Research"
+theme = "hugo-coder"
+locale = "zh-cn"
+defaultContentLanguage = "zh-cn"
+hasCJKLanguage = true
+enableEmoji = false
+enableRobotsTXT = true
+
+[pagination]
+pagerSize = 8
+
+[markup]
+[markup.highlight]
+noClasses = false
+style = "github-dark"
+lineNos = true
+
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+
+[taxonomies]
+category = "categories"
+series = "series"
+tag = "tags"
+author = "authors"
+
+[params]
+author = "Bin9chn"
+info = ["Protocol Security", "Offensive Engineering", "Local-first Tooling"]
+description = "Bin9chn 的网络安全研究与工程项目笔记，关注协议安全、离线数据处理和密码学工具。"
+keywords = "网络安全,协议安全,HTTP/2,HPACK,密码学,CTF,安全工具,Bin9chn"
+avatarURL = "images/avatar.png"
+faviconSVG = "/images/favicon.svg"
+dateFormat = "2006.01.02"
+since = 2023
+colorScheme = "dark"
+hideColorSchemeToggle = true
+customSCSS = ["scss/cyber.scss"]
+customJS = ["js/ambient-particles.js"]
+maxSeeAlsoItems = 4
+
+[[params.focus]]
+index = "01"
+title = "Protocol Security"
+detail = "从状态机、帧边界与资源生命周期中寻找协议实现的认知盲区。"
+label = "HTTP/2 · HPACK"
+url = "tags/protocol-security/"
+
+[[params.focus]]
+index = "02"
+title = "Local-first Tooling"
+detail = "让敏感数据留在本机，把复杂操作组织成可复现的数据处理配方。"
+label = "OFFLINE · PRIVACY"
+url = "tags/tooling/"
+
+[[params.focus]]
+index = "03"
+title = "Crypto Engineering"
+detail = "把古典密码、编码与现代密码学封装成低摩擦的分析工作流。"
+label = "CTF · CRYPTO"
+url = "tags/cryptography/"
+
+[[params.social]]
+name = "GitHub"
+icon = "fa-brands fa-github fa-2x"
+weight = 1
+url = "https://github.com/beichenst"
+rel = "me"
+target = "_blank"
+
+[[params.social]]
+name = "RSS"
+icon = "fa-solid fa-rss fa-2x"
+weight = 2
+url = "/index.xml"
+rel = "alternate"
+type = "application/rss+xml"
+
+[[menu.main]]
+name = "研究日志"
+weight = 1
+url = "posts/"
+
+[[menu.main]]
+name = "项目档案"
+weight = 2
+url = "projects/"
+
+[[menu.main]]
+name = "关于"
+weight = 3
+url = "about/"

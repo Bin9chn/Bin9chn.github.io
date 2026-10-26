@@ -5,6 +5,7 @@ draft = false
 summary = "从操作配方、脚本隔离到 WebView 边界，拆解一个本地优先安全工具如何把复杂度收进可复现的工作流。"
 tags = ["Tooling", "Offline", "Desktop"]
 categories = ["项目档案"]
+featuredImage = "images/cover.png"
 +++
 
 安全分析工具经常面对一个矛盾：功能越丰富，数据路径越难解释；为了效率接入在线服务，又会把敏感输入带出本机。LapCry 给出的答案是“本地优先 + 操作配方”。

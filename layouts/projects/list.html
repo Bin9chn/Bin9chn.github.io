@@ -12,9 +12,9 @@
 
   <div class="project-list">
     {{ range .Pages.ByWeight }}
-    <a class="project-row" href="{{ .RelPermalink }}">
+    <a class="project-card glass-panel" href="{{ .RelPermalink }}">
       <span class="project-code">{{ .Params.code | default "PROJECT" }}</span>
-      <span class="project-row-main">
+      <span class="project-card-main">
         <span class="project-title-line">
           <strong>{{ .Title }}</strong>
           <span>{{ .Params.status | default "ACTIVE" }}</span>

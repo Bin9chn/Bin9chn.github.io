@@ -41,10 +41,12 @@ content/posts/my-research-note/
 - 主题：`hugo-coder` v1.2
 - 许可：MIT
 - 主题源码已随项目保留，Actions 构建不依赖 Git submodule。
+- 自定义视觉：iOS 柔光玻璃风格，支持自动、浅色和深色模式。
+- 每篇文章包含独立的 1200×630 封面，存放在文章目录的 `images/cover.png`。
 
 ## CSDN 迁移
 
-- 已迁移 40 篇原创文章。
+- 已迁移并保留 32 篇 CSDN 原创文章，加上站内原有文章共 35 篇。
 - 每篇文章独立存放在 `content/posts/<slug>/`。
 - 原站封面和正文图片已本地化到对应文章的 `images/` 目录。
 - 文章保留 `sourceUrl`，正文页提供“查看原站”入口。

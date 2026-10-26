@@ -5,6 +5,7 @@ draft = false
 summary = "从 HPACK 动态表与 HTTP/2 流控出发，理解“一个字节放大成一次分配”之后再被长期占用的资源路径。"
 tags = ["Protocol Security", "HTTP/2", "HPACK"]
 categories = ["协议安全"]
+featuredImage = "images/cover.png"
 +++
 
 HTTP/2 Bomb 的研究价值不在单个 payload，而在两个长期存在的机制被放到同一条资源生命周期里观察：一边放大内存分配，一边阻止这些内存被及时释放。

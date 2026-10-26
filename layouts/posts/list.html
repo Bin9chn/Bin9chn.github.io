@@ -12,14 +12,16 @@
 
   <div class="post-list archive-list">
     {{ range .Paginator.Pages }}
-    <a class="post-row" href="{{ .RelPermalink }}">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006.01.02" }}</time>
-      <span class="post-row-main">
-        <strong>{{ .Title }}</strong>
-        <span class="post-row-summary">{{ .Summary | plainify | truncate 130 }}</span>
+    <a class="post-card glass-panel" href="{{ .RelPermalink }}">
+      <span class="post-card-top">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006.01.02" }}</time>
+        {{ with index (.GetTerms "categories") 0 }}<span class="post-category">{{ .LinkTitle }}</span>{{ end }}
       </span>
-      {{ with index (.GetTerms "categories") 0 }}<span class="post-category">{{ .LinkTitle }}</span>{{ end }}
-      <span class="post-row-arrow" aria-hidden="true">↗</span>
+      <span class="post-card-main">
+        <strong>{{ .Title }}</strong>
+        <span class="post-card-summary">{{ .Summary | plainify | truncate 126 }}</span>
+      </span>
+      <span class="post-card-foot"><span>{{ .ReadingTime }} 分钟阅读</span><i aria-hidden="true">↗</i></span>
     </a>
     {{ end }}
   </div>

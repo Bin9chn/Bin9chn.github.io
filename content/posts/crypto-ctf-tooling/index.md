@@ -5,6 +5,7 @@ draft = false
 summary = "从算法分类、动态参数到单文件交付，看一个 CTF 工具如何减少高频变换中的上下文切换。"
 tags = ["Cryptography", "CTF", "Tooling"]
 categories = ["工程笔记"]
+featuredImage = "images/cover.png"
 +++
 
 密码学 CTF 工具看起来只是一组算法的集合，但真正影响效率的往往不是算法数量，而是输入、参数和结果在不同工具之间来回搬运的成本。

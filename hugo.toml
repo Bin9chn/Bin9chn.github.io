@@ -35,9 +35,9 @@ avatarURL = "images/avatar.png"
 faviconSVG = "/images/favicon.svg"
 dateFormat = "2006.01.02"
 since = 2023
-colorScheme = "dark"
-hideColorSchemeToggle = true
-customSCSS = ["scss/simple.scss"]
+colorScheme = "auto"
+hideColorSchemeToggle = false
+customSCSS = ["scss/glass.scss"]
 maxSeeAlsoItems = 4
 
 [[params.social]]

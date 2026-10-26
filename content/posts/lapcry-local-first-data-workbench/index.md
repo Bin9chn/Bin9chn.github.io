@@ -38,4 +38,4 @@ LapCry 当前仍有明确的内存占用问题。WebView2 与操作模块会带�
 
 这也是工程类安全工具的真实状态：功能边界可以利用，但性能、资源生命周期和异常清理始终需要继续验证。
 
-[查看 LapCry 仓库](https://github.com/beichenst/LapCry_public)
+[查看 LapCry 仓库](https://github.com/Bin9chn/LapCry_public)

@@ -39,4 +39,4 @@ nginx 后续引入 `max_headers`，Apache httpd 的 mod_http2 修复则让 Cooki
 
 安全审计容易在一个函数里寻找越界或注入，但资源耗尽往往发生在多个组件的契约之间。问“这个限制覆盖了什么”之外，还要问“限制没有覆盖的对象何时释放”。
 
-[查看 HTTP/2 Bomb 研究仓库](https://github.com/beichenst/http2-bomb)
+[查看 HTTP/2 Bomb 研究仓库](https://github.com/Bin9chn/http2-bomb)

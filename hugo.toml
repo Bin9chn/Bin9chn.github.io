@@ -1,4 +1,4 @@
-baseURL = "https://beichenst.github.io/"
+baseURL = "https://bin9chn.github.io/"
 title = "Bin9chn"
 theme = "hugo-coder"
 locale = "zh-cn"
@@ -44,7 +44,7 @@ maxSeeAlsoItems = 4
 name = "GitHub"
 icon = "fa-brands fa-github fa-2x"
 weight = 1
-url = "https://github.com/beichenst"
+url = "https://github.com/Bin9chn"
 rel = "me"
 target = "_blank"
 

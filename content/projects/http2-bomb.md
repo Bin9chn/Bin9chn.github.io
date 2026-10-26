@@ -7,7 +7,7 @@ code = "P-002"
 status = "PUBLIC RESEARCH"
 since = "2026"
 summary = "把 HPACK 索引引用放大与 HTTP/2 流控停滞组合起来，研究主流服务器在默认配置下的远程资源耗尽风险。"
-repo = "https://github.com/beichenst/http2-bomb"
+repo = "https://github.com/Bin9chn/http2-bomb"
 stack = ["HTTP/2", "HPACK", "Python", "Docker"]
 tags = ["Protocol Security", "HTTP/2", "DoS"]
 +++
@@ -32,4 +32,4 @@ nginx 在 1.29.8 引入 `max_headers`；Apache httpd 的 mod_http2 2.0.41 将 Co
 
 > 该项目包含受控环境中的验证材料。只应在本机或明确授权的测试环境中使用。
 
-[查看 HTTP/2 Bomb 研究仓库](https://github.com/beichenst/http2-bomb)
+[查看 HTTP/2 Bomb 研究仓库](https://github.com/Bin9chn/http2-bomb)

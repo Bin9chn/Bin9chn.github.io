@@ -24,4 +24,4 @@ LRT CryptoCTF Tools 把常见的 Base 编码、Hex、ASCII、URL、Unicode、HTM
 
 对安全工具而言，好用的界面不是装饰。它决定了分析人员能否维持专注，也决定了错误参数是否容易被看见。
 
-[查看 LRT CryptoCTF Tools](https://github.com/beichenst/LRT-CryptoCTF-Tools)
+[查看 LRT CryptoCTF Tools](https://github.com/Bin9chn/LRT-CryptoCTF-Tools)

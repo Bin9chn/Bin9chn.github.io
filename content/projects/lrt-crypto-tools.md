@@ -7,7 +7,7 @@ code = "P-003"
 status = "MAINTAINED"
 since = "2025"
 summary = "面向 CTF 密码学题目的桌面工具，以中文算法树、动态参数提示和单文件 EXE 降低分析摩擦。"
-repo = "https://github.com/beichenst/LRT-CryptoCTF-Tools"
+repo = "https://github.com/Bin9chn/LRT-CryptoCTF-Tools"
 stack = ["Python", "GUI", "PyInstaller", "Cryptography"]
 tags = ["Cryptography", "CTF", "Tooling"]
 +++
@@ -30,4 +30,4 @@ LRT CryptoCTF Tools 解决的是 CTF 密码学分析中很具体的一段摩擦�
 
 它并不试图替代完整的密码学分析平台，而是把高频、低门槛的变换集中到一条可预测的操作路径中。对于比赛和临时排查，双击即用比重新搭建环境更重要。
 
-[查看 LRT CryptoCTF Tools](https://github.com/beichenst/LRT-CryptoCTF-Tools)
+[查看 LRT CryptoCTF Tools](https://github.com/Bin9chn/LRT-CryptoCTF-Tools)

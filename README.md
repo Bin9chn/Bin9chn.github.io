@@ -2,7 +2,7 @@
 
 基于 Hugo 与 `hugo-coder` 的个人研究博客，内容聚焦网络安全、CTF、流量分析、漏洞研究和安全工程。
 
-站点：https://beichenst.github.io/
+站点：https://bin9chn.github.io/
 
 ## 本地预览
 
@@ -34,7 +34,7 @@ content/posts/my-research-note/
 
 仓库推送至 GitHub 后，在 `Settings > Pages` 中将发布源设为 **GitHub Actions**。工作流会在每次推送到 `main` 时使用 Hugo Extended 构建并发布。
 
-生产地址为 `https://beichenst.github.io/`。GitHub Actions 会从 Pages 配置中取得实际站点地址并覆盖构建参数。
+生产地址为 `https://bin9chn.github.io/`。GitHub Actions 会从 Pages 配置中取得实际站点地址并覆盖构建参数。
 
 ## 主题
 

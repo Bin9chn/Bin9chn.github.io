@@ -7,7 +7,7 @@ code = "P-004"
 status = "INDEXING"
 since = "2026"
 summary = "CVE 研究资料归档入口，用于后续整理漏洞记录、复现材料与修复状态。"
-repo = "https://github.com/beichenst/CVE"
+repo = "https://github.com/Bin9chn/CVE"
 stack = ["CVE", "Research"]
 tags = ["Vulnerability Research", "CVE"]
 +++
@@ -16,4 +16,4 @@ tags = ["Vulnerability Research", "CVE"]
 
 当前仓库尚未提供公开 README，因此本站先保留项目索引，不补写未公开的漏洞细节。后续可在这里整理影响版本、触发条件、修复状态与授权范围内的复现说明。
 
-[查看 CVE 仓库](https://github.com/beichenst/CVE)
+[查看 CVE 仓库](https://github.com/Bin9chn/CVE)

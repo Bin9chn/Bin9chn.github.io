@@ -14,16 +14,6 @@
     {{ with .Params.summary }}<p class="article-summary">{{ . }}</p>{{ end }}
   </header>
 
-  {{ with .Params.featuredImage }}
-    {{ with $.Resources.GetMatch . }}
-      {{ $cover := . }}
-      {{ if and (gt $cover.Width 0) (gt $cover.Width 1400) }}{{ $cover = .Resize "1400x webp q84" }}{{ end }}
-      <figure class="article-cover">
-        <img src="{{ $cover.RelPermalink }}" alt="{{ $.Title }}" loading="eager" decoding="async">
-      </figure>
-    {{ end }}
-  {{ end }}
-
   {{ with .TableOfContents }}
     {{ if gt (len .) 80 }}
     <details class="article-toc">

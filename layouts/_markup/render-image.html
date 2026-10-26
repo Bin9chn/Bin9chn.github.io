@@ -1,0 +1,16 @@
+{{- $alt := .Text | plainify -}}
+{{- $resource := .Page.Resources.GetMatch .Destination -}}
+{{- if $resource -}}
+  {{- $image := $resource -}}
+  {{- if and (gt $resource.Width 0) (ne $resource.MediaType.SubType "gif") (gt $resource.Width 1600) -}}
+    {{- $image = $resource.Resize "1600x webp q84" -}}
+  {{- end -}}
+  <figure class="article-figure">
+    <a href="{{ $resource.RelPermalink }}">
+      <img src="{{ $image.RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+    </a>
+    {{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+{{- else -}}
+  <img src="{{ .Destination | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+{{- end -}}

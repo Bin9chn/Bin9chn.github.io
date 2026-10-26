@@ -1,0 +1,21 @@
+{
+  "name": "Bin9chn",
+  "short_name": "Bin9chn",
+  "description": "Bin9chn 的网络安全研究与工程项目笔记",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0d10",
+  "theme_color": "#0b0d10",
+  "icons": [
+    {
+      "src": "/images/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

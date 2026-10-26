@@ -1,0 +1,29 @@
+{{ define "title" }}
+  文章 · {{ .Site.Title }}
+{{ end }}
+
+{{ define "content" }}
+<section class="container archive-page">
+  <header class="page-head">
+    <p class="eyebrow">WRITING ARCHIVE</p>
+    <h1>文章</h1>
+    <p>共 {{ len .Pages }} 篇，记录网络安全、CTF、流量分析、漏洞研究与工程实践。</p>
+  </header>
+
+  <div class="post-list archive-list">
+    {{ range .Paginator.Pages }}
+    <a class="post-row" href="{{ .RelPermalink }}">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006.01.02" }}</time>
+      <span class="post-row-main">
+        <strong>{{ .Title }}</strong>
+        <span class="post-row-summary">{{ .Summary | plainify | truncate 130 }}</span>
+      </span>
+      {{ with index (.GetTerms "categories") 0 }}<span class="post-category">{{ .LinkTitle }}</span>{{ end }}
+      <span class="post-row-arrow" aria-hidden="true">↗</span>
+    </a>
+    {{ end }}
+  </div>
+
+  {{ partial "pagination.html" . }}
+</section>
+{{ end }}

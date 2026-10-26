@@ -3,43 +3,24 @@
 {{ end }}
 
 {{ define "content" }}
-<section class="container project-page">
-  <header class="project-hero">
-    <div class="project-hero-meta">
-      <span>{{ .Params.code | default "PROJECT" }}</span>
-      <span class="project-status">{{ .Params.status | default "ACTIVE" }}</span>
-    </div>
+<article class="container project-page">
+  <header class="page-head project-head">
+    <p class="eyebrow">{{ .Params.code | default "PROJECT" }} / {{ .Params.status | default "ACTIVE" }}</p>
     <h1>{{ .Title }}</h1>
     <p>{{ .Params.summary | default .Summary }}</p>
-    <div class="project-facts">
-      {{ with .Params.stack }}
-      <div>
-        <span>STACK</span>
-        <p>{{ delimit . " / " }}</p>
-      </div>
-      {{ end }}
-      {{ with .Params.since }}
-      <div>
-        <span>SINCE</span>
-        <p>{{ . }}</p>
-      </div>
-      {{ end }}
-      {{ with .Params.repo }}
-      <div>
-        <span>SOURCE</span>
-        <p><a href="{{ . }}" target="_blank" rel="noopener">GitHub Repository ↗</a></p>
-      </div>
-      {{ end }}
-    </div>
   </header>
 
-  <article class="project-content">
-    {{ .Content }}
-  </article>
+  <dl class="project-meta">
+    {{ with .Params.stack }}<div><dt>技术栈</dt><dd>{{ delimit . " / " }}</dd></div>{{ end }}
+    {{ with .Params.since }}<div><dt>开始时间</dt><dd>{{ . }}</dd></div>{{ end }}
+    {{ with .Params.repo }}<div><dt>源码</dt><dd><a href="{{ . }}" target="_blank" rel="noopener">GitHub ↗</a></dd></div>{{ end }}
+  </dl>
 
-  <nav class="project-foot" aria-label="项目导航">
-    <a href="{{ "projects/" | relLangURL }}">← 返回项目档案</a>
+  <div class="article-content project-content">{{ .Content }}</div>
+
+  <footer class="article-actions">
+    <a href="{{ "projects/" | relLangURL }}">← 返回项目列表</a>
     {{ with .Params.repo }}<a href="{{ . }}" target="_blank" rel="noopener">查看源码 ↗</a>{{ end }}
-  </nav>
-</section>
+  </footer>
+</article>
 {{ end }}

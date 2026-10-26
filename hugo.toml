@@ -1,5 +1,5 @@
 baseURL = "https://beichenst.github.io/"
-title = "Bin9chn // Security Research"
+title = "Bin9chn"
 theme = "hugo-coder"
 locale = "zh-cn"
 defaultContentLanguage = "zh-cn"
@@ -8,13 +8,13 @@ enableEmoji = false
 enableRobotsTXT = true
 
 [pagination]
-pagerSize = 8
+pagerSize = 12
 
 [markup]
 [markup.highlight]
 noClasses = false
 style = "github-dark"
-lineNos = true
+lineNos = false
 
 [markup.goldmark]
 [markup.goldmark.renderer]
@@ -37,30 +37,8 @@ dateFormat = "2006.01.02"
 since = 2023
 colorScheme = "dark"
 hideColorSchemeToggle = true
-customSCSS = ["scss/cyber.scss"]
-customJS = ["js/ambient-particles.js"]
+customSCSS = ["scss/simple.scss"]
 maxSeeAlsoItems = 4
-
-[[params.focus]]
-index = "01"
-title = "Protocol Security"
-detail = "从状态机、帧边界与资源生命周期中寻找协议实现的认知盲区。"
-label = "HTTP/2 · HPACK"
-url = "tags/protocol-security/"
-
-[[params.focus]]
-index = "02"
-title = "Local-first Tooling"
-detail = "让敏感数据留在本机，把复杂操作组织成可复现的数据处理配方。"
-label = "OFFLINE · PRIVACY"
-url = "tags/tooling/"
-
-[[params.focus]]
-index = "03"
-title = "Crypto Engineering"
-detail = "把古典密码、编码与现代密码学封装成低摩擦的分析工作流。"
-label = "CTF · CRYPTO"
-url = "tags/cryptography/"
 
 [[params.social]]
 name = "GitHub"
@@ -79,12 +57,12 @@ rel = "alternate"
 type = "application/rss+xml"
 
 [[menu.main]]
-name = "研究日志"
+name = "文章"
 weight = 1
 url = "posts/"
 
 [[menu.main]]
-name = "项目档案"
+name = "项目"
 weight = 2
 url = "projects/"
 

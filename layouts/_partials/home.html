@@ -1,45 +1,47 @@
 {{ $posts := where .Site.RegularPages "Section" "posts" }}
-{{ $projects := where .Site.RegularPages "Section" "projects" }}
-{{ $latestDate := "—" }}
-{{ if $posts }}
-  {{ $latestDate = (index ($posts.ByDate.Reverse) 0).Date.Format "2006.01.02" }}
-{{ end }}
 
-<section class="container home-shell">
-  <header class="home-compact">
-    <div class="hero-topline" aria-hidden="true">
-      <span><b>SEC//LOG</b> / SECURITY RESEARCH</span>
-      <span class="hero-state"><i></i>SYSTEM READY</span>
+<div class="container home-page">
+  <header class="home-head">
+    {{ with .Site.Params.avatarURL }}
+    <div class="avatar home-avatar">
+      <img src="{{ . | relURL }}" alt="{{ $.Site.Params.author }}" width="96" height="96">
     </div>
-    <div class="compact-profile">
-      {{ with .Site.Params.avatarURL }}
-      <div class="avatar">
-        <img src="{{ . | relURL }}" alt="Bin9chn avatar" width="112" height="112">
-      </div>
-      {{ end }}
-      <div class="compact-identity">
-        <h1>{{ .Site.Params.author }}</h1>
-        <h2 class="hero-disciplines">
-          {{ range $index, $item := .Site.Params.info }}
-            {{ if $index }}<span class="discipline-separator" aria-hidden="true">·</span>{{ end }}
-            <span>{{ $item }}</span>
-          {{ end }}
-        </h2>
-      </div>
-      <div class="home-actions">
-        {{ partialCached "home/social.html" . }}
-        <a class="text-link" href="{{ "about/" | relLangURL }}">关于 <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
-    <div class="hero-lower">
-      <p class="home-blurb">记录协议安全、攻击面与安全工具工程，也持续整理博客和研究过程。</p>
-      <div class="hero-metrics" aria-label="站点数据">
-        <span><b>{{ len $posts }}</b> NOTES</span>
-        <span><b>{{ len $projects }}</b> PROJECTS</span>
-        <span><b>{{ $latestDate }}</b> LAST UPDATE</span>
-      </div>
+    {{ end }}
+    <div class="home-identity">
+      <p class="eyebrow">SECURITY RESEARCH · CTF · ENGINEERING</p>
+      <h1>{{ .Site.Params.author }}</h1>
+      <p class="home-bio">{{ .Site.Params.description }}</p>
+      {{ partialCached "home/social.html" . }}
     </div>
   </header>
 
-  {{ partial "home/extensions.html" . }}
-</section>
+  <section class="home-posts" aria-labelledby="recent-posts-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">LATEST NOTES</p>
+        <h2 id="recent-posts-title">最近文章</h2>
+      </div>
+      <a href="{{ "posts/" | relLangURL }}">全部 {{ len $posts }} 篇 <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="post-list">
+      {{ range first 8 ($posts.ByDate.Reverse) }}
+      <a class="post-row" href="{{ .RelPermalink }}">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006.01.02" }}</time>
+        <span class="post-row-main">
+          <strong>{{ .Title }}</strong>
+          <span class="post-row-summary">{{ .Summary | plainify | truncate 120 }}</span>
+        </span>
+        {{ with index (.GetTerms "categories") 0 }}<span class="post-category">{{ .LinkTitle }}</span>{{ end }}
+        <span class="post-row-arrow" aria-hidden="true">↗</span>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+
+  <nav class="home-links" aria-label="站点入口">
+    <a href="{{ "projects/" | relLangURL }}">项目归档 <span aria-hidden="true">→</span></a>
+    <a href="{{ "about/" | relLangURL }}">关于我 <span aria-hidden="true">→</span></a>
+    <a href="{{ "index.xml" | relURL }}">RSS <span aria-hidden="true">↗</span></a>
+  </nav>
+</div>

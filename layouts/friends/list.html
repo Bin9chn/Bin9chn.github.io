@@ -1,0 +1,55 @@
+{{ define "title" }}
+  友链 · {{ .Site.Title }}
+{{ end }}
+
+{{ define "content" }}
+{{ $friends := hugo.Data.friends.friends }}
+
+<section class="container friends-page">
+  <header class="page-head">
+    <p class="eyebrow">FRIENDS / LINKS</p>
+    <h1>友链</h1>
+    <p>这里收录安全研究、技术博客和相关项目站点。</p>
+  </header>
+
+  {{ if $friends }}
+  <div class="friend-grid">
+    {{ range $friends }}
+    <a class="friend-card glass-panel" href="{{ .url | safeURL }}" target="_blank" rel="noopener">
+      <span class="friend-avatar">
+        {{ with .avatar }}
+          <img src="{{ . | safeURL }}" alt="" loading="lazy">
+        {{ else }}
+          <span>{{ substr .name 0 1 }}</span>
+        {{ end }}
+      </span>
+      <span class="friend-copy">
+        <strong>{{ .name }}</strong>
+        <span>{{ .description }}</span>
+        {{ with .tags }}
+        <span class="friend-tags">
+          {{ range . }}<i>{{ . }}</i>{{ end }}
+        </span>
+        {{ end }}
+      </span>
+      <span class="post-row-arrow" aria-hidden="true">↗</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="friends-empty glass-panel">
+    <span class="friend-empty-mark" aria-hidden="true">+</span>
+    <h2>友链正在整理</h2>
+    <p>欢迎提交站点名称、地址、简介和头像地址。我会审核后加入这里。</p>
+    <a class="button-link" href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">
+      申请友链 <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+  {{ end }}
+
+  <footer class="friends-foot">
+    <p>友情链接仅收录可长期访问且内容相关的站点。</p>
+    <a href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">申请友链 ↗</a>
+  </footer>
+</section>
+{{ end }}

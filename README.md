@@ -50,3 +50,18 @@ content/posts/my-research-note/
 - 每篇文章独立存放在 `content/posts/<slug>/`。
 - 原站封面和正文图片已本地化到对应文章的 `images/` 目录。
 - 文章保留 `sourceUrl`，正文页提供“查看原站”入口。
+
+## 添加友链
+
+可以直接编辑 `data/friends.json`，也可以运行：
+
+```powershell
+.\scripts\add-friend.ps1 `
+  -Name "站点名称" `
+  -Url "https://example.com/" `
+  -Description "一句话介绍" `
+  -Avatar "https://example.com/avatar.png" `
+  -Tags "安全研究", "CTF"
+```
+
+添加后运行 `hugo server` 预览，提交并 push 即可发布。其他站点可以通过友链页的“申请友链”按钮提交 GitHub Issue。

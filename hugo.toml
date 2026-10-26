@@ -67,6 +67,11 @@ weight = 2
 url = "projects/"
 
 [[menu.main]]
-name = "关于"
+name = "友链"
 weight = 3
+url = "friends/"
+
+[[menu.main]]
+name = "关于"
+weight = 4
 url = "about/"

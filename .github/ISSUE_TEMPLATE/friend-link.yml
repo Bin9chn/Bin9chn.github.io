@@ -1,0 +1,47 @@
+name: 友链申请
+description: 申请添加友情链接
+title: "[友链申请] 站点名称"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢申请友链。请填写以下信息，审核后会添加到博客。
+  - type: input
+    id: name
+    attributes:
+      label: 站点名称
+      placeholder: 例如：Example Security Blog
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 站点地址
+      placeholder: https://example.com/
+    validations:
+      required: true
+  - type: input
+    id: avatar
+    attributes:
+      label: 头像地址
+      placeholder: https://example.com/avatar.png
+  - type: textarea
+    id: description
+    attributes:
+      label: 站点简介
+      placeholder: 用一两句话介绍站点方向。
+      maxlength: 120
+    validations:
+      required: true
+  - type: input
+    id: tags
+    attributes:
+      label: 标签
+      placeholder: 安全研究, CTF, 开发
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 确认
+      options:
+        - label: 站点可长期访问，且内容与网络安全或技术开发相关。
+          required: true

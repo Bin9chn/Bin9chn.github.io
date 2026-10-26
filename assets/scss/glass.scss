@@ -159,6 +159,13 @@ pre,
   margin-bottom: 5rem;
 }
 
+.content header.home-head,
+.content header.page-head,
+.content header.article-head {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .container {
   max-width: 108rem;
   padding-right: 2.4rem;
@@ -549,6 +556,19 @@ pre,
   padding-top: 4.6rem;
 }
 
+.about-page {
+  max-width: 102rem;
+  padding-top: 1.8rem;
+
+  .page-head {
+    padding-bottom: 2rem;
+  }
+
+  .article-content {
+    margin-top: 1.4rem;
+  }
+}
+
 .page-head {
   max-width: 80rem;
   padding: 0 0.6rem 3.3rem;
@@ -783,6 +803,7 @@ pre,
     color: var(--secondary);
     text-decoration: underline;
     text-underline-offset: 0.2em;
+    overflow-wrap: anywhere;
   }
 
   strong {
@@ -811,6 +832,7 @@ pre,
     background: var(--inline-code-bg);
     color: var(--text);
     font-size: 0.88em;
+    overflow-wrap: anywhere;
   }
 
   pre {
@@ -840,6 +862,8 @@ pre,
     margin: 2rem 0;
     border-collapse: collapse;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
 
     th,
     td {
@@ -1330,6 +1354,308 @@ body.colorscheme-dark .project-content {
     span {
       display: none;
     }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .navigation {
+    padding-top: 0.8rem;
+
+    .container {
+      height: 5.2rem;
+      padding-right: 0.7rem;
+      padding-left: 1.2rem;
+      border-radius: 1.4rem;
+    }
+
+    .navigation-title {
+      font-size: 1.36rem;
+    }
+
+    .navigation-list {
+      top: 6.2rem;
+      right: 1.2rem;
+      left: 1.2rem;
+    }
+  }
+
+  .container {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+  }
+
+  .about-page {
+    padding-top: 1rem;
+  }
+
+  .about-page .page-head {
+    padding-bottom: 1.5rem;
+  }
+
+  .home-page,
+  .archive-page,
+  .project-page,
+  .article-page,
+  .page {
+    padding-top: 2.1rem;
+  }
+
+  .home-head {
+    padding: 1.6rem;
+    border-radius: 1.9rem;
+  }
+
+  .home-avatar img {
+    width: 7.2rem;
+    height: 7.2rem;
+    border-radius: 1.8rem;
+  }
+
+  .identity-copy h1 {
+    font-size: 3.5rem;
+  }
+
+  .identity-copy .home-bio {
+    margin-top: 0.9rem;
+    font-size: 1.22rem;
+    line-height: 1.65;
+  }
+
+  .widget-stats {
+    gap: 0.7rem;
+
+    div {
+      padding: 1rem;
+      border-radius: 1.2rem;
+    }
+
+    strong {
+      font-size: 2.35rem;
+    }
+  }
+
+  .home-posts {
+    padding-top: 2.8rem;
+  }
+
+  .section-head h2 {
+    font-size: 2.35rem;
+  }
+
+  .post-list {
+    gap: 0.9rem;
+  }
+
+  .post-card,
+  .project-card {
+    padding: 1.45rem;
+    border-radius: 1.5rem;
+  }
+
+  .post-card-top {
+    gap: 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  .post-category {
+    padding: 0.32rem 0.52rem;
+    font-size: 0.78rem;
+  }
+
+  .post-card-main {
+    margin: 1.25rem 0;
+    gap: 0.6rem;
+
+    strong {
+      font-size: 1.5rem;
+      line-height: 1.45;
+    }
+  }
+
+  .post-card-summary {
+    font-size: 1.16rem;
+    line-height: 1.64;
+  }
+
+  .post-card-foot {
+    font-size: 1rem;
+  }
+
+  .page-head {
+    padding-right: 0.3rem;
+    padding-bottom: 1.8rem;
+    padding-left: 0.3rem;
+
+    h1 {
+      font-size: 3.25rem;
+    }
+
+    > p:last-child {
+      margin-top: 0.9rem;
+      font-size: 1.25rem;
+      line-height: 1.65;
+    }
+  }
+
+  .article-head {
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 2.9rem;
+      line-height: 1.16;
+    }
+  }
+
+  .article-meta {
+    gap: 0.4rem;
+
+    a,
+    span,
+    time {
+      padding: 0.38rem 0.58rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .article-summary {
+    margin-top: 1.2rem;
+    font-size: 1.28rem;
+    line-height: 1.68;
+  }
+
+  .article-cover {
+    margin-top: 2rem;
+    padding: 0.4rem;
+    border-radius: 1.6rem;
+
+    img {
+      border-radius: 1.25rem;
+    }
+
+    figcaption {
+      padding: 0.65rem 0.5rem 0.3rem;
+      font-size: 0.82rem;
+    }
+  }
+
+  .article-toc {
+    margin-top: 1.5rem;
+    padding: 1.2rem 1.4rem;
+    border-radius: 1.3rem;
+  }
+
+  .article-content,
+  .project-content {
+    margin-top: 1.5rem;
+    padding: 1.7rem 1.3rem;
+    border-radius: 1.6rem;
+    font-size: 1.46rem;
+    line-height: 1.82;
+
+    h1 {
+      margin-top: 3.5rem;
+      font-size: 2.35rem;
+    }
+
+    h2 {
+      margin-top: 3.2rem;
+      font-size: 2.1rem;
+    }
+
+    h3 {
+      margin-top: 2.8rem;
+      font-size: 1.82rem;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.8rem;
+    }
+
+    blockquote {
+      margin: 1.8rem 0;
+      padding: 0.8rem 1rem;
+    }
+
+    pre {
+      margin: 1.7rem -0.2rem;
+      padding: 1rem;
+      border-radius: 1.1rem;
+
+      code {
+        font-size: 1.08rem;
+      }
+    }
+
+    table {
+      margin: 1.6rem 0;
+
+      th,
+      td {
+        min-width: 7rem;
+        padding: 0.7rem 0.75rem;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .article-foot {
+    margin-top: 2.2rem;
+    padding-top: 1.5rem;
+  }
+
+  .article-tags {
+    gap: 0.5rem;
+
+    a {
+      padding: 0.38rem 0.58rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  .article-actions {
+    margin-top: 1.3rem;
+
+    a {
+      font-size: 1.12rem;
+    }
+  }
+
+  .pagination {
+    margin-top: 2.3rem;
+
+    ul {
+      gap: 0.35rem;
+      padding: 0.45rem;
+      border-radius: 1.1rem;
+    }
+
+    a,
+    span {
+      min-width: 3rem;
+      height: 3rem;
+      padding: 0 0.55rem;
+      font-size: 1rem;
+    }
+  }
+
+  .float-container {
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  #dark-mode-toggle {
+    width: 4.1rem;
+    height: 4.1rem;
+  }
+
+  .footer {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
   }
 }
 

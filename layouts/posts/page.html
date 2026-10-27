@@ -27,7 +27,7 @@
 
     <div class="nerdy-container pb-16 pt-6">
       <div class="mx-auto max-w-6xl">
-        <div class="grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div class="grid grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
           {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags "margin" "mb-0") }}
 
           {{ with $cover }}
@@ -37,7 +37,7 @@
           {{ end }}
         </div>
 
-        <div class="mt-10 grid gap-10 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
+        <div class="mt-10 grid grid-cols-1 gap-10 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
           <div class="min-w-0">
             <article class="nerdy-card p-5 sm:p-8">
               <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">
@@ -59,8 +59,8 @@
                 {{ end }}
               </div>
               <div class="flex flex-wrap gap-4 font-mono text-xs">
-                <a class="nerdy-link" href="{{ "posts/" | relLangURL }}">← 返回文章列表</a>
-                {{ with .Params.sourceUrl }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看原站 ↗</a>{{ end }}
+                <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "posts/" | relLangURL }}">← 返回文章列表</a>
+                {{ with .Params.sourceUrl }}<a class="nerdy-link inline-flex min-h-8 items-center" href="{{ . }}" target="_blank" rel="noopener">查看原站 ↗</a>{{ end }}
               </div>
             </footer>
           </div>

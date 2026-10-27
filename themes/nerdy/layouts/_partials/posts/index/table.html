@@ -21,14 +21,14 @@
       </div>
       {{/* Kept in the window bar so the count sits with the list it describes
            instead of floating at the far edge of a 1280px row. */}}
-      <span class="ml-auto shrink-0 pl-4 font-mono text-[10px] nerdy-muted-soft">{{ $count }} posts</span>
+      <span class="ml-auto shrink-0 pl-4 font-mono text-[11px] nerdy-muted-soft">{{ $count }} posts</span>
     </div>
 
     <div class="divide-y divide-slate-200/80 md:hidden dark:divide-slate-700/40">
       {{ range $rowIndex, $post := $pages }}
         {{ $pageNumber := add (div $rowIndex 10) 1 }}
         <a class="nerdy-post-row flex flex-col gap-2 px-4 py-3 transition-colors hover:bg-slate-100/80 dark:hover:bg-slate-800/40" href="{{ $post.RelPermalink }}" x-show="currentPage === {{ $pageNumber }}">
-          <div class="flex items-center gap-3 font-mono text-[10px] nerdy-muted-soft">
+          <div class="flex items-center gap-3 font-mono text-[11px] nerdy-muted-soft">
             <span>{{ if not $post.Date.IsZero }}{{ $post.Date.Format "2006-01-02" }}{{ else }}n/a{{ end }}</span>
             <span aria-hidden="true">·</span>
             <span>{{ $post.ReadingTime }} min read</span>
@@ -86,13 +86,13 @@
     </div>
 
     <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-300/90 bg-slate-100/95 px-4 py-3 dark:border-slate-700/80 dark:bg-slate-900/40">
-      <span class="text-[10px] nerdy-muted-soft">10 posts per page · Page <span x-text="currentPage"></span> of {{ $pageCount }}</span>
+      <span class="text-[11px] nerdy-muted-soft">10 posts per page · Page <span x-text="currentPage"></span> of {{ $pageCount }}</span>
       <div class="flex flex-wrap gap-1.5">
-        <button class="rounded border px-2 py-1 text-[10px] transition-colors disabled:cursor-not-allowed disabled:opacity-40" type="button" x-on:click="currentPage = Math.max(1, currentPage - 1)" x-bind:disabled="currentPage === 1">Prev</button>
+        <button class="inline-flex min-h-9 min-w-9 items-center justify-center rounded border px-2.5 py-1.5 text-[11px] transition-colors disabled:cursor-not-allowed disabled:opacity-40" type="button" x-on:click="currentPage = Math.max(1, currentPage - 1)" x-bind:disabled="currentPage === 1">Prev</button>
         {{ range seq 1 $pageCount }}
-          <button class="rounded border px-2 py-1 text-[10px] transition-colors" type="button" x-on:click="currentPage = {{ . }}" x-bind:class="currentPage === {{ . }} ? 'border-accent-cyan bg-accent-cyan/10 text-accent-cyan' : 'border-slate-300 text-slate-600 hover:text-slate-950 dark:border-slate-700 dark:hover:text-white'">{{ . }}</button>
+          <button class="inline-flex min-h-9 min-w-9 items-center justify-center rounded border px-2.5 py-1.5 text-[11px] transition-colors" type="button" x-on:click="currentPage = {{ . }}" x-bind:class="currentPage === {{ . }} ? 'border-accent-cyan bg-accent-cyan/10 text-accent-cyan' : 'border-slate-300 text-slate-600 hover:text-slate-950 dark:border-slate-700 dark:hover:text-white'">{{ . }}</button>
         {{ end }}
-        <button class="rounded border px-2 py-1 text-[10px] transition-colors disabled:cursor-not-allowed disabled:opacity-40" type="button" x-on:click="currentPage = Math.min({{ $pageCount }}, currentPage + 1)" x-bind:disabled="currentPage === {{ $pageCount }}">Next</button>
+        <button class="inline-flex min-h-9 min-w-9 items-center justify-center rounded border px-2.5 py-1.5 text-[11px] transition-colors disabled:cursor-not-allowed disabled:opacity-40" type="button" x-on:click="currentPage = Math.min({{ $pageCount }}, currentPage + 1)" x-bind:disabled="currentPage === {{ $pageCount }}">Next</button>
       </div>
     </div>
   </div>

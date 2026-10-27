@@ -23,7 +23,7 @@
         <div class="h-3.5 w-3.5 rounded-full border border-black/20 bg-[#ff5f56] shadow-sm"></div>
         <div class="h-3.5 w-3.5 rounded-full border border-black/20 bg-[#ffbd2e] shadow-sm"></div>
         <button
-          class="group/maximize relative h-3.5 w-3.5 rounded-full border border-black/20 bg-[#27c93f] shadow-sm"
+          class="group/maximize relative h-3.5 w-3.5 rounded-full border border-black/20 bg-[#27c93f] shadow-sm after:absolute after:-inset-2 after:content-['']"
           type="button"
           x-bind:title="isFullscreen ? 'Exit fullscreen' : 'Maximize terminal'"
           x-bind:aria-label="isFullscreen ? 'Exit fullscreen' : 'Maximize terminal'"
@@ -81,7 +81,7 @@
       <div class="mr-2 hidden select-none font-sans text-[10px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-500 sm:block">Quick_Cmds:</div>
       <template x-for="command in quickCommands" :key="command.name">
         <button
-          class="rounded border border-slate-300 bg-white/80 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-slate-700 transition-colors hover:border-accent-cyan/40 hover:bg-white hover:text-accent-cyan active:scale-95 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-300 dark:hover:bg-slate-600"
+          class="inline-flex min-h-8 items-center rounded border border-slate-300 bg-white/80 px-2.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-slate-700 transition-colors hover:border-accent-cyan/40 hover:bg-white hover:text-accent-cyan active:scale-95 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-300 dark:hover:bg-slate-600"
           type="button"
           x-text="command.label"
           x-bind:aria-label="`Run terminal command: ${command.label}`"
@@ -89,7 +89,7 @@
         ></button>
       </template>
       <button
-        class="ml-auto rounded bg-transparent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-slate-600 transition-colors hover:bg-slate-100 hover:text-accent-cyan active:scale-95 dark:text-slate-400 dark:hover:bg-slate-700/50"
+        class="ml-auto inline-flex min-h-8 items-center rounded bg-transparent px-2.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-slate-600 transition-colors hover:bg-slate-100 hover:text-accent-cyan active:scale-95 dark:text-slate-400 dark:hover:bg-slate-700/50"
         type="button"
         aria-label="Clear terminal output"
         x-on:click.stop="runQuickCommand('clear')"

@@ -358,7 +358,7 @@
   }
 
   .nerdy-chip {
-    @apply rounded border px-2 py-0.5 font-mono text-[10px];
+    @apply rounded border px-2 py-0.5 font-mono text-[11px];
   }
 
   .nerdy-chip-cyan {
@@ -559,10 +559,12 @@
     background: rgb(15 23 42 / 88%);
     color: rgb(203 213 225);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1;
+    min-height: 2.25rem;
+    min-width: 2.75rem;
     opacity: 0;
-    padding: 0.45rem 0.6rem;
+    padding: 0.55rem 0.7rem;
     pointer-events: none;
     transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, opacity 150ms ease, transform 150ms ease;
   }
@@ -571,6 +573,16 @@
   .nerdy-code-block:focus-within .nerdy-code-copy-button {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  /* Touch devices never hover, so the copy affordance has to be always on.
+     The extra top padding reserves a band for it, otherwise it sits on top of
+     the first code line. */
+  @media (hover: none) {
+    .nerdy-code-copy-button {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 
   .nerdy-code-copy-button:hover,

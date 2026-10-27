@@ -15,10 +15,10 @@
           <span class="font-mono text-[11px] uppercase tracking-widest nerdy-muted-soft">
             total // {{ $count }} site{{ if ne $count 1 }}s{{ end }}
           </span>
-          <a class="nerdy-link font-mono text-xs" href="{{ $applyURL }}">申请友链 ↗</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center font-mono text-xs" href="{{ $applyURL }}">申请友链 ↗</a>
         </div>
 
-        <div class="grid gap-3 md:grid-cols-2">
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           {{ range $friends }}
             {{ $friend := . }}
             <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan grid grid-cols-[3.6rem_minmax(0,1fr)_1rem] items-start gap-4 p-4" href="{{ .url | safeURL }}" target="_blank" rel="noopener">

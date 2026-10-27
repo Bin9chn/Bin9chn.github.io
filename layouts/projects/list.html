@@ -7,7 +7,7 @@
       <div class="mx-auto max-w-5xl">
         {{ partial "components/page-heading.html" (dict "title" "项目" "description" "公开的安全研究、离线工具与密码学工程。" "eyebrow" "~/projects" "accent" "Projects") }}
 
-        <div class="grid gap-4 sm:grid-cols-2">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {{ range .Pages.ByWeight }}
             <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan flex min-h-56 flex-col p-5" href="{{ .RelPermalink }}">
               <div class="flex items-center justify-between gap-3 font-mono text-[10px]">

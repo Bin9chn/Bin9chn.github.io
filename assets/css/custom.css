@@ -63,13 +63,63 @@ body {
   margin-inline: auto;
 }
 
+/* Tailwind Typography wraps inline code in literal backticks; the theme tries to
+   reset it inside a layer, which loses. In Chinese prose that reads like broken
+   markdown, so clear it here (unlayered wins). */
+.nerdy-prose :not(pre) > code::before,
+.nerdy-prose :not(pre) > code::after {
+  content: none;
+}
+
+/* The theme's padding-right for the floating copy button loses to the prose
+   plugin's shorthand, so long code lines ran underneath it. Restated here
+   because unlayered rules beat the theme's layered utilities. */
+.nerdy-code-block > pre {
+  padding-right: 4.75rem;
+}
+
+/* On touch the button is always visible, so give it a band of its own above the
+   code instead of stealing width from every line. */
+@media (hover: none) {
+  .nerdy-code-block > pre {
+    padding-right: 1rem;
+    padding-top: 2.75rem;
+  }
+
+  .nerdy-code-copy-button {
+    top: 0.5rem;
+    min-height: 2rem;
+    min-width: 2.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.6875rem;
+  }
+}
+
 @media (max-width: 640px) {
   .nerdy-container {
     padding-inline: 1rem;
   }
 
+  /* 16px is the comfortable floor for CJK body text on a phone; below that the
+     glyphs get cramped and the column ends up with too many characters. */
   .nerdy-prose {
-    font-size: 0.95rem;
+    font-size: 1rem;
+  }
+
+  .nerdy-prose p,
+  .nerdy-prose li {
+    line-height: 1.85;
+  }
+
+  .nerdy-prose p {
+    margin-top: 1.1em;
+    margin-bottom: 1.1em;
+  }
+
+  /* 10px chips and meta labels are unreadable on a 3x phone screen. */
+  .nerdy-chip {
+    font-size: 0.75rem;
+    padding-inline: 0.45rem;
   }
 }
 

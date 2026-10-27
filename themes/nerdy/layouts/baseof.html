@@ -4,15 +4,14 @@
     {{ partial "site/head.html" . }}
   </head>
   <body class="min-h-screen bg-background text-foreground">
-    {{ $isPostsSurface := or (eq .Section "posts") (eq .Type "posts") }}
-    <a class="nerdy-skip-link" href="#main-content">Skip to main content</a>
-    {{ partial "site/theme-toggle-float.html" . }}
-    {{ if and (not .IsHome) (not $isPostsSurface) }}{{ partial "site/header.html" . }}{{ end }}
+    <a class="nerdy-skip-link" href="#main-content">Skip to main content</a>    {{/* The header carries the only top-level navigation, so every page renders it.
+         Home uses a slimmer variant to keep the terminal above the fold. */}}
+    {{ partial "site/header.html" (dict "compact" .IsHome "page" .) }}
     {{/* Templates own their horizontal container (nerdy-container) so the page
          surface, including its grid background, can span the full width. */}}
     <main id="main-content" tabindex="-1" class="w-full">
       {{ block "main" . }}{{ end }}
     </main>
-    {{ if and (not .IsHome) (not $isPostsSurface) }}{{ partial "site/footer.html" . }}{{ end }}
+    {{ partial "site/footer.html" . }}
   </body>
 </html>

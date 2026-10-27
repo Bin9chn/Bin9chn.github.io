@@ -149,61 +149,32 @@
     display: none;
   }
 
-  .toc-active .toc-bar {
-    width: 0.875rem;
-    background-color: rgb(8 145 178);
-  }
-
-  .dark .toc-active .toc-bar {
-    background-color: rgb(34 211 238);
-    box-shadow: 0 0 10px rgb(34 211 238 / 55%);
-  }
-
-  .toc-active .toc-text {
-    color: rgb(23 23 23);
-    font-weight: 500;
-  }
-
-  .dark .toc-active .toc-text {
-    color: rgb(245 245 245);
+  /* Softens the clipped first line of the terminal scroll area. */
+  .terminal-fade {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 1.25rem);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 1.25rem);
   }
 }
 
 @layer components {
-  .toc-card {
-    @apply flex max-h-[60vh] w-8 flex-col gap-0 overflow-y-auto overflow-x-hidden rounded-xl border border-transparent bg-white/60 px-2 py-5 shadow-none backdrop-blur-sm transition-[width,padding-left,padding-right,background-color,border-color,box-shadow] duration-500 ease-out hover:w-64 hover:border-slate-300/80 hover:bg-white/95 hover:px-4 hover:shadow-2xl hover:shadow-slate-900/10 dark:bg-slate-900/20 dark:hover:border-slate-700/80 dark:hover:bg-slate-800/90 dark:hover:shadow-black/30;
+  .toc-rail {
+    @apply sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-xl border border-slate-300/70 bg-white/75 p-4 backdrop-blur-md dark:border-slate-700/70 dark:bg-slate-900/50;
   }
 
-  .toc-link {
-    @apply flex h-6 w-full items-center gap-3 rounded-md px-1.5 py-0 font-mono text-xs leading-none text-slate-700 transition-[background-color,color,padding] duration-200 hover:bg-slate-100/90 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-100;
+  .toc-rail-label {
+    @apply mb-2 border-b border-slate-300/60 pb-2 font-mono text-[10px] uppercase tracking-widest text-slate-500 dark:border-slate-700/60 dark:text-slate-500;
   }
 
-  .toc-heading {
-    @apply flex h-6 w-full items-center gap-3 rounded-md px-1.5 py-0 font-mono text-[10px] leading-none tracking-widest text-slate-600 transition-[gap] duration-300 ease-out group-hover:gap-0 dark:text-slate-400;
+  .toc-rail-link {
+    @apply -ml-px block truncate border-l-2 border-slate-300/70 py-1.5 pl-3 pr-1 font-mono text-xs leading-5 text-slate-600 transition-colors hover:border-slate-400 hover:bg-slate-100/70 hover:text-slate-950 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-500 dark:hover:bg-slate-800/60 dark:hover:text-slate-100;
   }
 
-  .toc-link--child {
-    @apply pl-4;
+  .toc-rail-link--child {
+    @apply pl-6;
   }
 
-  .toc-bar {
-    @apply h-px w-3 shrink-0 rounded-full bg-slate-500 transition-all duration-200 dark:bg-slate-500;
-  }
-
-  .toc-text {
-    @apply min-w-0 max-w-0 overflow-hidden truncate whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 ease-out group-hover:max-w-52 group-hover:opacity-100;
-  }
-
-  .toc-label {
-    @apply min-w-0 max-w-0 overflow-hidden truncate whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 ease-out group-hover:max-w-52 group-hover:opacity-100;
-  }
-
-  .toc-heading .toc-bar {
-    @apply group-hover:w-0 group-hover:opacity-0;
-  }
-
-  .toc-link.toc-active {
-    @apply hover:bg-slate-200/70 dark:hover:bg-slate-700/60;
+  .toc-rail-link.toc-active {
+    @apply border-accent-cyan bg-slate-100/80 font-semibold text-slate-950 dark:bg-slate-800/70 dark:text-white;
   }
 
   .nerdy-page-surface {
@@ -503,9 +474,12 @@
   }
 
   .nerdy-prose :where(h2, h3):not(:where(.not-prose, .not-prose *))::before {
-    margin-right: 0.5rem;
+    margin-right: 0.55rem;
     color: rgb(14 116 144 / 70%);
+    font-size: 0.72em;
     font-weight: 700;
+    opacity: 0.6;
+    vertical-align: 0.12em;
   }
 
   .dark .nerdy-prose :where(h2, h3):not(:where(.not-prose, .not-prose *))::before {

@@ -7,7 +7,6 @@
 <section>
   <div class="mb-6 flex items-center justify-between gap-4">
     {{ partial "components/section-heading.html" (dict "icon" "list" "title" "All Posts" "iconClass" "h-5 w-5" "class" "mb-0") }}
-    <span class="font-mono text-xs nerdy-muted-soft">Showing {{ $count }} posts</span>
   </div>
 
   <div class="nerdy-window">
@@ -20,6 +19,9 @@
         </div>
         <div class="truncate font-bold nerdy-muted">{{ $tablePath }}</div>
       </div>
+      {{/* Kept in the window bar so the count sits with the list it describes
+           instead of floating at the far edge of a 1280px row. */}}
+      <span class="ml-auto shrink-0 pl-4 font-mono text-[10px] nerdy-muted-soft">{{ $count }} posts</span>
     </div>
 
     <div class="divide-y divide-slate-200/80 md:hidden dark:divide-slate-700/40">

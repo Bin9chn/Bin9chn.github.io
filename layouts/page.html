@@ -1,11 +1,15 @@
 {{ define "main" }}
+  {{/* Reading pages use a narrower measure than the card grids (项目 / 友链)
+       so long paragraphs do not run past ~55 Chinese characters a line. */}}
+  {{ $eyebrow := printf "~/%s" (.Section | default .File.ContentBaseName) }}
+
   <div class="nerdy-page-surface">
     <div class="nerdy-ambient-bg"></div>
     <div class="nerdy-top-glow"></div>
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-4xl">
-        {{ partial "components/page-heading.html" (dict "title" .Title "description" .Description "eyebrow" "~/page" "accent" "cyan") }}
+        {{ partial "components/page-heading.html" (dict "title" .Title "description" .Description "eyebrow" $eyebrow "accent" "cyan") }}
 
         <article class="nerdy-card p-5 sm:p-8">
           <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">

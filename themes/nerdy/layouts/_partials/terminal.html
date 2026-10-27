@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="min-h-0 flex-1 overflow-y-auto scroll-smooth p-4 text-slate-900 dark:text-slate-100 md:p-6" x-ref="container" role="log" aria-live="polite" aria-atomic="false" aria-label="Terminal output">
+    <div class="min-h-0 flex-1 overflow-y-auto scroll-smooth p-4 text-slate-900 dark:text-slate-100 md:p-6" x-ref="container" role="log" aria-live="polite" aria-atomic="false" aria-label="Terminal output" x-on:scroll="$el.classList.toggle('terminal-fade', $el.scrollTop > 8)">
       <div class="w-full">
         <template x-for="(entry, index) in history" :key="index">
           <div>

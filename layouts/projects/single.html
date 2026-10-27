@@ -4,7 +4,7 @@
     <div class="nerdy-top-glow"></div>
 
     <div class="nerdy-container pb-16 pt-10">
-      <div class="mx-auto max-w-5xl">
+      <div class="mx-auto max-w-4xl">
         {{ partial "components/page-heading.html" (dict "title" .Title "description" (.Params.summary | default .Summary) "eyebrow" (printf "~/%s" (.Params.code | default "project")) "accent" (.Params.status | default "Active")) }}
 
         <dl class="mb-6 grid gap-3 sm:grid-cols-3">

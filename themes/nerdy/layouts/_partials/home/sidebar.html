@@ -1,9 +1,13 @@
 {{ $sidebar := hugo.Data.sidebar | default dict }}
 {{ if or $sidebar.profile $sidebar.sections }}
-  <aside class="nerdy-sticky-sidebar lg:sticky lg:top-12 lg:col-span-5 lg:h-fit lg:self-start">
-    <div class="flex flex-col gap-4">
+  <aside class="nerdy-sticky-sidebar lg:sticky lg:top-[4.5rem] lg:col-span-5 lg:h-fit lg:self-start">
+    {{/* Between md and lg the column is full width, so stack the small cards
+         two-up instead of stretching each one across the whole row. */}}
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:[&>*:last-child]:col-span-2 lg:grid-cols-1 lg:[&>*:last-child]:col-span-1">
       {{ with $sidebar.profile }}
-        {{ partial "home/sidebar/profile.html" . }}
+        <div class="md:col-span-2 lg:col-span-1">
+          {{ partial "home/sidebar/profile.html" . }}
+        </div>
       {{ end }}
 
       {{ range ($sidebar.sections | default slice) }}

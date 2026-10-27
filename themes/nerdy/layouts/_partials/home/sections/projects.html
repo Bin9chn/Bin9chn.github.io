@@ -1,6 +1,9 @@
+{{- $odd := eq (mod (len .items) 2) 1 -}}
 <section class="mt-4" id="{{ .id }}">
   {{ partial "components/section-heading.html" (dict "icon" .icon "title" .title "prefix" "<<" "suffix" ">>") }}
-  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+  {{/* With an odd number of cards the last one spans the row so the grid does
+       not end on a half-empty line. */}}
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2{{ if $odd }} md:[&>*:last-child]:col-span-2{{ end }}">
     {{ range .items }}
       {{ partial "home/cards/project.html" . }}
     {{ end }}

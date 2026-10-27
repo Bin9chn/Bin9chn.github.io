@@ -9,46 +9,65 @@
     (dict "label" $category "class" "text-accent-purple")
   }}
 
+  {{/* Resolve the cover once so it can sit next to the title instead of pushing
+       the article a full screen down. */}}
+  {{ $cover := false }}
+  {{ with .Params.featuredImage }}
+    {{ with $.Resources.GetMatch . }}
+      {{ $cover = . }}
+      {{ if and (gt $cover.Width 0) (gt $cover.Width 1600) }}
+        {{ $cover = .Resize "1600x webp q85" }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
   <div class="nerdy-page-surface nerdy-page-surface--post">
     <div class="nerdy-ambient-bg"></div>
     <div class="nerdy-top-glow max-w-3xl"></div>
 
-    <div class="nerdy-container pt-6">
-      {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags) }}
-    </div>
+    <div class="nerdy-container pb-16 pt-6">
+      <div class="mx-auto max-w-6xl">
+        <div class="grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+          {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags "margin" "mb-0") }}
 
-    <div class="nerdy-container pb-16">
-      {{ with .Params.featuredImage }}
-        {{ with $.Resources.GetMatch . }}
-          {{ $cover := . }}
-          {{ if and (gt $cover.Width 0) (gt $cover.Width 1600) }}
-            {{ $cover = .Resize "1600x webp q85" }}
-          {{ end }}
-          <figure class="mx-auto mb-8 max-w-5xl overflow-hidden rounded-2xl border border-slate-300/80 bg-white/95 p-2 shadow-xl shadow-slate-300/30 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">
-            <img class="h-auto w-full rounded-xl" src="{{ $cover.RelPermalink }}" alt="{{ $.Title }}" width="{{ $cover.Width }}" height="{{ $cover.Height }}" loading="eager" decoding="async">
-          </figure>
-        {{ end }}
-      {{ end }}
-
-      <article class="nerdy-card mx-auto max-w-5xl p-5 sm:p-8">
-        <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">
-          {{ .Content }}
-        </div>
-      </article>
-
-      <footer class="mx-auto mt-8 flex max-w-5xl flex-wrap items-center justify-between gap-4 border-t border-slate-300/70 pt-6 text-sm dark:border-slate-700">
-        <div class="flex flex-wrap gap-2">
-          {{ range .GetTerms "tags" }}
-            <a class="nerdy-chip nerdy-chip-cyan" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+          {{ with $cover }}
+            <figure class="overflow-hidden rounded-xl border border-slate-300/80 bg-white/95 p-1.5 shadow-lg shadow-slate-300/25 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">
+              <img class="h-auto w-full rounded-lg" src="{{ .RelPermalink }}" alt="{{ $.Title }} 封面" width="{{ .Width }}" height="{{ .Height }}" loading="eager" decoding="async">
+            </figure>
           {{ end }}
         </div>
-        <div class="flex flex-wrap gap-4 font-mono text-xs">
-          <a class="nerdy-link" href="{{ "posts/" | relLangURL }}">← 返回文章列表</a>
-          {{ with .Params.sourceUrl }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看原站 ↗</a>{{ end }}
-        </div>
-      </footer>
-    </div>
 
-    {{ partial "posts/components/toc.html" . }}
+        <div class="mt-10 grid gap-10 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
+          <div class="min-w-0">
+            <article class="nerdy-card p-5 sm:p-8">
+              <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">
+                {{ .Content }}
+              </div>
+            </article>
+
+            <footer class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-300/70 pt-6 text-sm dark:border-slate-700">
+              <div class="flex flex-wrap gap-2">
+                {{/* Taxonomy pages are disabled site-wide, so GetTerms is empty:
+                     fall back to plain chips to keep the footer row balanced. */}}
+                {{ $terms := .GetTerms "tags" }}
+                {{ if $terms }}
+                  {{ range $terms }}
+                    <a class="nerdy-chip nerdy-chip-cyan" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+                  {{ end }}
+                {{ else }}
+                  {{ range .Params.tags }}<span class="nerdy-chip nerdy-chip-cyan">#{{ . }}</span>{{ end }}
+                {{ end }}
+              </div>
+              <div class="flex flex-wrap gap-4 font-mono text-xs">
+                <a class="nerdy-link" href="{{ "posts/" | relLangURL }}">← 返回文章列表</a>
+                {{ with .Params.sourceUrl }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看原站 ↗</a>{{ end }}
+              </div>
+            </footer>
+          </div>
+
+          {{ partial "posts/components/toc.html" . }}
+        </div>
+      </div>
+    </div>
   </div>
 {{ end }}

@@ -25,6 +25,11 @@ body {
   background-attachment: fixed;
 }
 
+/* Home sidebar: tighter cards so the whole column fits on one screen. */
+.nerdy-sticky-sidebar .nerdy-sidebar-card {
+  padding: 1.05rem 1.15rem;
+}
+
 .nerdy-prose p,
 .nerdy-prose li {
   line-height: 1.9;

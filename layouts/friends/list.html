@@ -1,7 +1,7 @@
 {{ define "main" }}
   {{ $friends := hugo.Data.friends.friends }}
   {{ $count := len $friends }}
-  {{ $applyURL := "https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" }}
+  {{ $applyURL := "friends/apply/" | relLangURL }}
 
   <div class="nerdy-page-surface">
     <div class="nerdy-ambient-bg"></div>
@@ -15,7 +15,7 @@
           <span class="font-mono text-[11px] uppercase tracking-widest nerdy-muted-soft">
             total // {{ $count }} site{{ if ne $count 1 }}s{{ end }}
           </span>
-          <a class="nerdy-link font-mono text-xs" href="{{ $applyURL }}" target="_blank" rel="noopener">申请友链 ↗</a>
+          <a class="nerdy-link font-mono text-xs" href="{{ $applyURL }}">申请友链 ↗</a>
         </div>
 
         <div class="grid gap-3 md:grid-cols-2">
@@ -44,10 +44,10 @@
 
           {{/* Keeps the grid balanced while the list is short, and doubles as the apply entry.
                With an even number of friends it would leave a hole, so it spans the row. */}}
-          <a class="group flex min-h-[7rem] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-400/70 bg-white/50 px-5 py-6 text-center transition-colors hover:border-accent-cyan/60 hover:bg-white dark:border-slate-600/70 dark:bg-slate-900/30 dark:hover:bg-slate-900/60{{ if eq (mod $count 2) 0 }} md:col-span-2{{ end }}" href="{{ $applyURL }}" target="_blank" rel="noopener">
+          <a class="group flex min-h-[7rem] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-400/70 bg-white/50 px-5 py-6 text-center transition-colors hover:border-accent-cyan/60 hover:bg-white dark:border-slate-600/70 dark:bg-slate-900/30 dark:hover:bg-slate-900/60{{ if eq (mod $count 2) 0 }} md:col-span-2{{ end }}" href="{{ $applyURL }}">
             <span class="font-mono text-2xl leading-none text-accent-cyan transition-transform group-hover:rotate-90" aria-hidden="true">+</span>
             <span class="text-sm font-bold text-slate-800 dark:text-slate-200">申请友链</span>
-            <span class="text-xs leading-5 nerdy-muted-soft">通过 GitHub Issue 提交站点名称、地址、简介与头像</span>
+            <span class="text-xs leading-5 nerdy-muted-soft">填写站点名称、地址、简介与头像，一键生成申请</span>
           </a>
         </div>
 

@@ -97,4 +97,11 @@ featuredImage = "images/cover.png"
   -Tags "安全研究", "CTF"
 ```
 
-添加后运行 `npm run server` 预览，提交并 push 即可发布。其他站点可以通过友链页的“申请友链”按钮提交 GitHub Issue。
+添加后运行 `npm run server` 预览，提交并 push 即可发布。
+
+访客侧走 `/friends/apply/`（`layouts/friends/apply.html` + `assets/js/friend-apply.js`）：
+
+- 表单校验站点名称、地址、简介、头像、标签与邮箱，右侧实时预览卡片效果
+- 提交不经过任何后端，而是在浏览器里生成一条预填好标题和正文的 GitHub Issue，访客确认发布后才进入仓库
+- 正文同时附上一段可直接写进 `data/friends.json` 的 JSON
+- 头像建议下载到 `static/images/friends/` 后本地引用（现有两条友链都是这么做的），避免对方换图后破图

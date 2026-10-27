@@ -55,7 +55,6 @@ sections:
         url: /friends/
         icon: library
       - label: 申请友链
-        description: 通过 GitHub Issue 提交站点信息
-        url: https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml
+        description: 填写表单，生成预填好的申请
+        url: /friends/apply/
         icon: external
-        external: true

@@ -1,0 +1,202 @@
+{{ define "main" }}
+  {{ $siteAvatar := printf "%simages/avatar.png" site.Home.Permalink }}
+  {{ $githubTemplate := printf "https://github.com/%s/issues/new?template=friend-link.yml" "Bin9chn/Bin9chn.github.io" }}
+
+  {{/* Shared classes: one place to keep every input consistent. */}}
+  {{ $input := "w-full rounded-lg border border-slate-300/80 bg-white/90 px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition-colors placeholder:text-slate-400 focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500" }}
+  {{ $label := "mb-1.5 flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400" }}
+  {{ $help := "mt-1.5 text-xs leading-5 text-slate-500 dark:text-slate-500" }}
+
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-6xl">
+        {{ partial "components/page-heading.html" (dict
+          "title" "申请友链"
+          "description" "填写站点信息，提交后会在 GitHub 生成一条预填好的申请 Issue，审核通过后加入友链页。"
+          "eyebrow" "~/friends/apply"
+          "accent" "Apply"
+        ) }}
+
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-start">
+          <form class="nerdy-card p-5 sm:p-7" data-friend-form novalidate>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label class="{{ $label }}" for="friend-name">站点名称 <span class="text-rose-500">*</span></label>
+                <input class="{{ $input }}" id="friend-name" name="name" type="text" maxlength="40" autocomplete="organization" placeholder="例如：Coinsheep" required>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="name"></p>
+              </div>
+
+              <div>
+                <label class="{{ $label }}" for="friend-url">站点地址 <span class="text-rose-500">*</span></label>
+                <input class="{{ $input }}" id="friend-url" name="url" type="text" inputmode="url" maxlength="200" autocomplete="url" placeholder="https://example.com/" required>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="url"></p>
+              </div>
+
+              <div class="sm:col-span-2">
+                <div class="flex items-baseline justify-between gap-3">
+                  <label class="{{ $label }} mb-0" for="friend-description">一句话简介 <span class="text-rose-500">*</span></label>
+                  <span class="font-mono text-[11px] text-slate-400 dark:text-slate-500" data-counter>0/120</span>
+                </div>
+                <textarea class="{{ $input }} mt-1.5 resize-none" id="friend-description" name="description" rows="3" maxlength="120" placeholder="这个站点主要写什么？例如：记录 Web 安全、漏洞复现与代码审计。" required></textarea>
+                <p class="{{ $help }}">会直接显示在友链卡片上，建议 20–60 字。</p>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="description"></p>
+              </div>
+
+              <div>
+                <label class="{{ $label }}" for="friend-avatar">头像地址</label>
+                <input class="{{ $input }}" id="friend-avatar" name="avatar" type="text" inputmode="url" maxlength="200" placeholder="https://example.com/avatar.png">
+                <p class="{{ $help }}">留空则用站点名首字生成占位头像。</p>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="avatar"></p>
+              </div>
+
+              <div>
+                <label class="{{ $label }}" for="friend-tags">标签</label>
+                <input class="{{ $input }}" id="friend-tags" name="tags" type="text" maxlength="80" placeholder="Web安全, 漏洞复现, CTF">
+                <p class="{{ $help }}">用逗号分隔，最多 4 个，每个不超过 12 字。</p>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="tags"></p>
+              </div>
+
+              <div>
+                <label class="{{ $label }}" for="friend-email">联系邮箱</label>
+                <input class="{{ $input }}" id="friend-email" name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com">
+                <p class="{{ $help }}">可选，只用于沟通，不会公开。</p>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="email"></p>
+              </div>
+
+              <div>
+                <label class="{{ $label }}" for="friend-rss">RSS 订阅</label>
+                <input class="{{ $input }}" id="friend-rss" name="rss" type="text" inputmode="url" maxlength="200" placeholder="https://example.com/index.xml">
+                <p class="{{ $help }}">可选，方便订阅更新。</p>
+                <p class="{{ $help }} hidden text-rose-500" data-error-for="rss"></p>
+              </div>
+            </div>
+
+            <div class="mt-6 rounded-lg border border-slate-300/70 bg-slate-50/80 p-4 dark:border-slate-700/70 dark:bg-slate-900/40">
+              <label class="flex cursor-pointer items-start gap-3 text-sm leading-6" for="friend-confirm">
+                <input class="mt-1 h-4 w-4 shrink-0 cursor-pointer rounded border-slate-400 text-accent-cyan focus:ring-accent-cyan/30 dark:border-slate-600 dark:bg-slate-800" id="friend-confirm" name="confirm" type="checkbox">
+                <span class="nerdy-muted">
+                  我已在站点添加
+                  <a class="nerdy-link font-mono text-xs" href="{{ site.Home.RelPermalink }}" target="_blank" rel="noopener">Bin9chn</a>
+                  的友链，并确认站点内容相关、可长期访问、有原创内容。
+                </span>
+              </label>
+              <p class="{{ $help }} hidden text-rose-500" data-error-for="confirm"></p>
+            </div>
+
+            <div class="mt-6 flex flex-col gap-3 border-t border-slate-300/70 pt-5 sm:flex-row sm:items-center sm:justify-between dark:border-slate-700/70">
+              <p class="text-xs leading-5 nerdy-muted-soft" data-form-summary role="status" aria-live="polite">还有必填项没填好，补齐后再提交。</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <button class="rounded-lg border border-slate-300/80 px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider text-slate-600 transition-colors hover:border-accent-cyan/50 hover:text-accent-cyan dark:border-slate-700 dark:text-slate-300" type="button" data-copy-json>复制 JSON</button>
+                <a class="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-cyan dark:bg-accent-cyan dark:text-slate-950 dark:hover:bg-cyan-300" data-apply-submit href="{{ $githubTemplate }}" target="_blank" rel="noopener">在 GitHub 提交 ↗</a>
+              </div>
+            </div>
+
+            <noscript>
+              <p class="mt-4 rounded-lg border border-amber-400/60 bg-amber-50 px-3 py-2 text-xs text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200">
+                当前浏览器禁用了 JavaScript，表单无法预填。可以直接使用
+                <a class="underline" href="{{ $githubTemplate }}" target="_blank" rel="noopener">GitHub Issue 模板</a>
+                提交申请。
+              </p>
+            </noscript>
+          </form>
+
+          <aside class="flex flex-col gap-4">
+            <section class="nerdy-card p-4">
+              <div class="mb-3 flex items-center justify-between gap-3">
+                <span class="font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft">卡片预览</span>
+                <span class="font-mono text-[10px] nerdy-muted-soft">live</span>
+              </div>
+
+              {{/* Mirrors the real card on /friends/ so there are no surprises. */}}
+              <div class="nerdy-card nerdy-card-accent-cyan grid grid-cols-[3.6rem_minmax(0,1fr)_1rem] items-start gap-4 p-4">
+                <span class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-slate-300/80 bg-white p-1.5 dark:border-slate-700 dark:bg-slate-900">
+                  <img class="hidden h-full w-full object-contain" data-preview-avatar alt="" loading="lazy">
+                  <span class="font-mono text-xl text-accent-cyan" data-preview-avatar-fallback>?</span>
+                </span>
+                <span class="min-w-0">
+                  <strong class="nerdy-card-title block truncate text-base" data-preview-name>站点名称</strong>
+                  <span class="mt-1 block text-sm leading-6 nerdy-muted" data-preview-description>这里会显示你填写的一句话简介，最终效果与友链页一致。</span>
+                  <span class="mt-2 flex flex-wrap gap-1.5" data-preview-tags>
+                    <span class="nerdy-chip nerdy-chip-emerald opacity-50">标签</span>
+                  </span>
+                </span>
+                <span class="text-accent-cyan" aria-hidden="true">↗</span>
+              </div>
+              <p class="mt-2 truncate text-center font-mono text-[10px] nerdy-muted-soft" data-preview-url>example.com</p>
+            </section>
+
+            <section class="nerdy-card p-4">
+              <h2 class="font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft">本站信息</h2>
+              <dl class="mt-3 flex flex-col gap-2 text-xs">
+                <div class="flex gap-2">
+                  <dt class="w-10 shrink-0 nerdy-muted-soft">名称</dt>
+                  <dd class="min-w-0 truncate text-slate-800 dark:text-slate-200">{{ site.Title }}</dd>
+                </div>
+                <div class="flex gap-2">
+                  <dt class="w-10 shrink-0 nerdy-muted-soft">地址</dt>
+                  <dd class="min-w-0 truncate"><a class="nerdy-link font-mono" href="{{ site.Home.RelPermalink }}">{{ site.Home.Permalink }}</a></dd>
+                </div>
+                <div class="flex gap-2">
+                  <dt class="w-10 shrink-0 nerdy-muted-soft">头像</dt>
+                  <dd class="min-w-0 truncate"><a class="nerdy-link font-mono" href="{{ $siteAvatar }}">{{ $siteAvatar }}</a></dd>
+                </div>
+              </dl>
+              <button class="mt-3 w-full rounded-lg border border-slate-300/80 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-slate-600 transition-colors hover:border-accent-cyan/50 hover:text-accent-cyan dark:border-slate-700 dark:text-slate-300" type="button" data-copy-site data-site-name="{{ site.Title }}" data-site-url="{{ site.Home.Permalink }}" data-site-desc="{{ site.Params.description }}" data-site-avatar="{{ $siteAvatar }}">复制本站信息</button>
+            </section>
+
+            <section class="rounded-xl border border-slate-300/70 bg-white/60 p-4 text-xs leading-6 nerdy-muted dark:border-slate-700/60 dark:bg-slate-900/30">
+              <p class="font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft">审核说明</p>
+              <p class="mt-2">人工审核，通常 3–7 天内处理。通过后会直接出现在友链页，不另行通知；被拒一般也不会单独回复，见下方收录标准。</p>
+            </section>
+          </aside>
+        </div>
+
+        <section class="mt-8 grid gap-4 md:grid-cols-2">
+          <div class="nerdy-card p-5">
+            <h2 class="font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft">收录标准</h2>
+            <ul class="mt-3 flex flex-col gap-2 text-sm leading-6 nerdy-muted">
+              <li class="flex gap-2"><span class="text-accent-cyan">·</span>内容与网络安全、CTF、开发或技术写作相关，且以原创为主。</li>
+              <li class="flex gap-2"><span class="text-accent-cyan">·</span>已正常运行，能稳定访问；纯采集站、镜像站与导航站不收。</li>
+              <li class="flex gap-2"><span class="text-accent-cyan">·</span>站点上没有大量广告、诱导下载或与主题无关的软文。</li>
+              <li class="flex gap-2"><span class="text-accent-cyan">·</span>已在本站添加我的友链（互相链接是前提，不是交换条件）。</li>
+            </ul>
+          </div>
+
+          <div class="nerdy-card p-5">
+            <h2 class="font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft">常见问题</h2>
+            <div class="mt-3 flex flex-col gap-3 text-sm leading-6 nerdy-muted">
+              <div>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">提交后会发生什么？</p>
+                <p>表单会生成一条预填好的 GitHub Issue，你确认发布后我才能看到。不提交 Issue 等于没有申请。</p>
+              </div>
+              <div>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">头像可以是外链吗？</p>
+                <p>可以，但请用稳定的地址。通过后我会把头像下载到站内，避免你换图导致友链卡片破图。</p>
+              </div>
+              <div>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">为什么需要先加本站？</p>
+                <p>友链本质是互相推荐。只想单向收录的站点，一般不会通过。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  {{ with resources.Get "js/friend-apply.js" }}
+    {{ $opts := dict "minify" (not hugo.IsDevelopment) }}
+    {{ with . | js.Build $opts }}
+      {{ if hugo.IsDevelopment }}
+        <script src="{{ .RelPermalink }}" defer></script>
+      {{ else }}
+        {{ with . | fingerprint }}
+          <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}

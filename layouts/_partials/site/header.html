@@ -8,7 +8,7 @@
     <div class="flex items-center gap-4">
       <div class="hidden items-center gap-5 md:flex">
         {{ range site.Menus.main }}
-          <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground" href="{{ .URL }}">{{ .Name }}</a>
+          <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground" href="{{ .URL | relLangURL }}">{{ .Name }}</a>
         {{ end }}
       </div>
 
@@ -24,7 +24,7 @@
 
     <div class="absolute inset-x-4 top-[calc(100%+0.5rem)] z-50 rounded-xl border border-border bg-background/95 p-2 shadow-xl backdrop-blur-xl md:hidden" x-cloak x-show="menuOpen" x-on:click.outside="menuOpen = false">
       {{ range site.Menus.main }}
-        <a class="block rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground" href="{{ .URL }}" x-on:click="menuOpen = false">{{ .Name }}</a>
+        <a class="block rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground" href="{{ .URL | relLangURL }}" x-on:click="menuOpen = false">{{ .Name }}</a>
       {{ end }}
     </div>
   </nav>

@@ -21,6 +21,17 @@
         "漏洞复现",
         "个人博客"
       ]
+    },
+    {
+      "name": "Jay's CTF life",
+      "url": "https://asd12542.github.io/",
+      "description": "Jay 的 CTF 题解仓库，记录 Web 方向每道题的思路与复现过程。",
+      "avatar": "/images/friends/jay.png",
+      "tags": [
+        "CTF",
+        "Web安全",
+        "题解"
+      ]
     }
   ]
 }

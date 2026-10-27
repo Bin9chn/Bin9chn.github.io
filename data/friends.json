@@ -10,6 +10,17 @@
         "CTF",
         "团队"
       ]
+    },
+    {
+      "name": "Coinsheep",
+      "url": "https://dnjs15.github.io/",
+      "description": "Coinsheep 的个人技术博客，记录 Web 安全、漏洞复现与代码审计。",
+      "avatar": "/images/friends/coinsheep.jpg",
+      "tags": [
+        "Web安全",
+        "漏洞复现",
+        "个人博客"
+      ]
     }
   ]
 }

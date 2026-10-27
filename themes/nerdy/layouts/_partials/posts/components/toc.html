@@ -25,8 +25,11 @@
 
 {{- with $tocItems -}}
   {{/* Rendered as the second column of the article grid: readable at a glance
-       instead of a 32px rail that only expands on hover. */}}
-  <aside class="hidden xl:block">
+       instead of a 32px rail that only expands on hover.
+       self-stretch is what makes the sticky child below work: a grid item only
+       keeps its content height (and the rail then scrolls away with the page)
+       unless the item itself spans the full row height. */}}
+  <aside class="hidden xl:block xl:self-stretch">
     <nav class="toc-rail" aria-label="本页目录">
       <p class="toc-rail-label">on this page</p>
       <ul class="flex flex-col">

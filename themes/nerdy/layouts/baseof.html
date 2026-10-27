@@ -8,7 +8,9 @@
     <a class="nerdy-skip-link" href="#main-content">Skip to main content</a>
     {{ partial "site/theme-toggle-float.html" . }}
     {{ if and (not .IsHome) (not $isPostsSurface) }}{{ partial "site/header.html" . }}{{ end }}
-    <main id="main-content" tabindex="-1" class="{{ if or .IsHome $isPostsSurface }}w-full{{ else }}mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8{{ end }}">
+    {{/* Templates own their horizontal container (nerdy-container) so the page
+         surface, including its grid background, can span the full width. */}}
+    <main id="main-content" tabindex="-1" class="w-full">
       {{ block "main" . }}{{ end }}
     </main>
     {{ if and (not .IsHome) (not $isPostsSurface) }}{{ partial "site/footer.html" . }}{{ end }}

@@ -1,19 +1,26 @@
 {{ define "main" }}
-  <div class="mx-auto max-w-5xl">
-    {{ partial "components/page-heading.html" (dict "title" "项目" "description" "公开的安全研究、离线工具与密码学工程。" "eyebrow" "~/projects" "accent" "Projects") }}
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
 
-    <div class="grid gap-4 sm:grid-cols-2">
-      {{ range .Pages.ByWeight }}
-        <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan flex min-h-56 flex-col p-5" href="{{ .RelPermalink }}">
-          <div class="flex items-center justify-between gap-3 font-mono text-[10px]">
-            <span class="nerdy-muted-soft">{{ .Params.code | default "PROJECT" }}</span>
-            <span class="nerdy-chip nerdy-chip-emerald">{{ .Params.status | default "ACTIVE" }}</span>
-          </div>
-          <h2 class="nerdy-card-title mt-7 text-xl font-bold">{{ .Title }}</h2>
-          <p class="mt-3 text-sm leading-6 nerdy-muted">{{ .Params.summary | default .Summary }}</p>
-          {{ with .Params.stack }}<p class="mt-auto pt-5 font-mono text-[10px] text-accent-cyan">{{ delimit . " / " }}</p>{{ end }}
-        </a>
-      {{ end }}
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-5xl">
+        {{ partial "components/page-heading.html" (dict "title" "项目" "description" "公开的安全研究、离线工具与密码学工程。" "eyebrow" "~/projects" "accent" "Projects") }}
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          {{ range .Pages.ByWeight }}
+            <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan flex min-h-56 flex-col p-5" href="{{ .RelPermalink }}">
+              <div class="flex items-center justify-between gap-3 font-mono text-[10px]">
+                <span class="nerdy-muted-soft">{{ .Params.code | default "PROJECT" }}</span>
+                <span class="nerdy-chip nerdy-chip-emerald">{{ .Params.status | default "ACTIVE" }}</span>
+              </div>
+              <h2 class="nerdy-card-title mt-7 text-xl font-bold">{{ .Title }}</h2>
+              <p class="mt-3 text-sm leading-6 nerdy-muted">{{ .Params.summary | default .Summary }}</p>
+              {{ with .Params.stack }}<p class="mt-auto pt-5 font-mono text-[10px] text-accent-cyan">{{ delimit . " / " }}</p>{{ end }}
+            </a>
+          {{ end }}
+        </div>
+      </div>
     </div>
   </div>
 {{ end }}

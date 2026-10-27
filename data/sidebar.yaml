@@ -46,3 +46,16 @@ sections:
       - Traffic Analysis
       - Incident Response
       - Security Tooling
+  - id: friend-links
+    type: links
+    title: Links
+    items:
+      - label: 友链
+        description: 安全研究、技术博客与相关项目站点
+        url: /friends/
+        icon: library
+      - label: 申请友链
+        description: 通过 GitHub Issue 提交站点信息
+        url: https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml
+        icon: external
+        external: true

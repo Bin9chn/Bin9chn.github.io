@@ -1,45 +1,60 @@
 {{ define "main" }}
   {{ $friends := hugo.Data.friends.friends }}
-  <div class="mx-auto max-w-5xl">
-    {{ partial "components/page-heading.html" (dict "title" "友链" "description" "安全研究、技术博客和相关项目站点。" "eyebrow" "~/friends" "accent" "Links") }}
+  {{ $count := len $friends }}
+  {{ $applyURL := "https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" }}
 
-    {{ if $friends }}
-      <div class="grid gap-3 md:grid-cols-2">
-        {{ range $friends }}
-          {{ $friend := . }}
-          <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan grid grid-cols-[3.6rem_minmax(0,1fr)_1rem] items-start gap-4 p-4" href="{{ .url | safeURL }}" target="_blank" rel="noopener">
-            <span class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-slate-300/80 bg-white p-1.5 dark:border-slate-700 dark:bg-slate-900">
-              {{ with .avatar }}
-                <img class="h-full w-full object-contain" src="{{ . | safeURL }}" alt="{{ $friend.name }}" loading="lazy">
-              {{ else }}
-                <span class="font-mono text-xl text-accent-cyan">{{ substr $friend.name 0 1 }}</span>
-              {{ end }}
-            </span>
-            <span class="min-w-0">
-              <strong class="nerdy-card-title block text-base">{{ .name }}</strong>
-              <span class="mt-1 block text-sm leading-6 nerdy-muted">{{ .description }}</span>
-              {{ with .tags }}
-                <span class="mt-2 flex flex-wrap gap-1.5">
-                  {{ range . }}<span class="nerdy-chip nerdy-chip-emerald">{{ . }}</span>{{ end }}
-                </span>
-              {{ end }}
-            </span>
-            <span class="text-accent-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-5xl">
+        {{ partial "components/page-heading.html" (dict "title" "友链" "description" "安全研究、技术博客和相关项目站点。" "eyebrow" "~/friends" "accent" "Links") }}
+
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-300/70 pt-4 dark:border-slate-700/60">
+          <span class="font-mono text-[11px] uppercase tracking-widest nerdy-muted-soft">
+            total // {{ $count }} site{{ if ne $count 1 }}s{{ end }}
+          </span>
+          <a class="nerdy-link font-mono text-xs" href="{{ $applyURL }}" target="_blank" rel="noopener">申请友链 ↗</a>
+        </div>
+
+        <div class="grid gap-3 md:grid-cols-2">
+          {{ range $friends }}
+            {{ $friend := . }}
+            <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan grid grid-cols-[3.6rem_minmax(0,1fr)_1rem] items-start gap-4 p-4" href="{{ .url | safeURL }}" target="_blank" rel="noopener">
+              <span class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-slate-300/80 bg-white p-1.5 dark:border-slate-700 dark:bg-slate-900">
+                {{ with .avatar }}
+                  <img class="h-full w-full object-contain" src="{{ . | safeURL }}" alt="{{ $friend.name }}" loading="lazy">
+                {{ else }}
+                  <span class="font-mono text-xl text-accent-cyan">{{ substr $friend.name 0 1 }}</span>
+                {{ end }}
+              </span>
+              <span class="min-w-0">
+                <strong class="nerdy-card-title block text-base">{{ .name }}</strong>
+                <span class="mt-1 block text-sm leading-6 nerdy-muted">{{ .description }}</span>
+                {{ with .tags }}
+                  <span class="mt-2 flex flex-wrap gap-1.5">
+                    {{ range . }}<span class="nerdy-chip nerdy-chip-emerald">{{ . }}</span>{{ end }}
+                  </span>
+                {{ end }}
+              </span>
+              <span class="text-accent-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
+            </a>
+          {{ end }}
+
+          {{/* Keeps the grid balanced while the list is short, and doubles as the apply entry. */}}
+          <a class="group flex min-h-[7rem] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-400/70 bg-white/50 px-5 py-6 text-center transition-colors hover:border-accent-cyan/60 hover:bg-white dark:border-slate-600/70 dark:bg-slate-900/30 dark:hover:bg-slate-900/60" href="{{ $applyURL }}" target="_blank" rel="noopener">
+            <span class="font-mono text-2xl leading-none text-accent-cyan transition-transform group-hover:rotate-90" aria-hidden="true">+</span>
+            <span class="text-sm font-bold text-slate-800 dark:text-slate-200">申请友链</span>
+            <span class="text-xs leading-5 nerdy-muted-soft">通过 GitHub Issue 提交站点名称、地址、简介与头像</span>
           </a>
-        {{ end }}
-      </div>
-    {{ else }}
-      <div class="nerdy-card p-8 text-center sm:p-12">
-        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-accent-cyan/30 bg-accent-cyan/10 font-mono text-2xl text-accent-cyan">+</div>
-        <h2 class="mt-5 text-2xl font-bold">友链正在整理</h2>
-        <p class="mx-auto mt-3 max-w-lg text-sm leading-6 nerdy-muted">欢迎提交站点名称、地址、简介和头像地址。我会审核后加入这里。</p>
-        <a class="nerdy-button mt-6 inline-flex" href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">申请友链 ↗</a>
-      </div>
-    {{ end }}
+        </div>
 
-    <div class="mt-8 flex flex-col gap-3 border-t border-slate-300/70 pt-5 text-sm sm:flex-row sm:items-center sm:justify-between dark:border-slate-700">
-      <p class="nerdy-muted">友情链接仅收录可长期访问且内容相关的站点。</p>
-      <a class="nerdy-link font-mono text-xs" href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">申请友链 ↗</a>
+        <div class="mt-8 flex flex-col gap-3 rounded-xl border border-slate-300/70 bg-white/60 px-4 py-3 text-xs sm:flex-row sm:items-center sm:justify-between dark:border-slate-700/60 dark:bg-slate-900/30">
+          <p class="nerdy-muted">友情链接仅收录可长期访问且内容相关的站点。</p>
+          <span class="font-mono nerdy-muted-soft">~/friends</span>
+        </div>
+      </div>
     </div>
   </div>
 {{ end }}

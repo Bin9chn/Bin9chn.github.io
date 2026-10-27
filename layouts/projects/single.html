@@ -1,20 +1,27 @@
 {{ define "main" }}
-  <div class="mx-auto max-w-5xl">
-    {{ partial "components/page-heading.html" (dict "title" .Title "description" (.Params.summary | default .Summary) "eyebrow" (printf "~/%s" (.Params.code | default "project")) "accent" (.Params.status | default "Active")) }}
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
 
-    <dl class="mb-6 grid gap-3 sm:grid-cols-3">
-      {{ with .Params.stack }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">技术栈</dt><dd class="mt-2 text-sm">{{ delimit . " / " }}</dd></div>{{ end }}
-      {{ with .Params.since }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">开始时间</dt><dd class="mt-2 text-sm">{{ . }}</dd></div>{{ end }}
-      {{ with .Params.repo }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">源码</dt><dd class="mt-2 text-sm"><a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">GitHub ↗</a></dd></div>{{ end }}
-    </dl>
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-5xl">
+        {{ partial "components/page-heading.html" (dict "title" .Title "description" (.Params.summary | default .Summary) "eyebrow" (printf "~/%s" (.Params.code | default "project")) "accent" (.Params.status | default "Active")) }}
 
-    <article class="nerdy-card p-5 sm:p-8">
-      <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">{{ .Content }}</div>
-    </article>
+        <dl class="mb-6 grid gap-3 sm:grid-cols-3">
+          {{ with .Params.stack }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">技术栈</dt><dd class="mt-2 text-sm">{{ delimit . " / " }}</dd></div>{{ end }}
+          {{ with .Params.since }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">开始时间</dt><dd class="mt-2 text-sm">{{ . }}</dd></div>{{ end }}
+          {{ with .Params.repo }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">源码</dt><dd class="mt-2 text-sm"><a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">GitHub ↗</a></dd></div>{{ end }}
+        </dl>
 
-    <div class="mt-6 flex flex-wrap justify-between gap-4 font-mono text-xs">
-      <a class="nerdy-link" href="{{ "projects/" | relLangURL }}">← 返回项目列表</a>
-      {{ with .Params.repo }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看源码 ↗</a>{{ end }}
+        <article class="nerdy-card p-5 sm:p-8">
+          <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">{{ .Content }}</div>
+        </article>
+
+        <div class="mt-6 flex flex-wrap justify-between gap-4 font-mono text-xs">
+          <a class="nerdy-link" href="{{ "projects/" | relLangURL }}">← 返回项目列表</a>
+          {{ with .Params.repo }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看源码 ↗</a>{{ end }}
+        </div>
+      </div>
     </div>
   </div>
 {{ end }}

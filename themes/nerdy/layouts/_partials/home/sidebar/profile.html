@@ -1,6 +1,7 @@
 <section class="nerdy-sidebar-card">
-  <div class="mb-4 flex items-center gap-3.5">
-    <div class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-300/80 bg-slate-100/90 dark:border-slate-600 dark:bg-slate-900/70">
+  {{/* Phones get a compact identity bar so the log list stays above the fold. */}}
+  <div class="mb-2 flex items-center gap-3 sm:mb-4 sm:gap-3.5">
+    <div class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-300/80 bg-slate-100/90 sm:h-14 sm:w-14 sm:rounded-xl dark:border-slate-600 dark:bg-slate-900/70">
       {{- with .avatar }}
         {{- $avatarURL := . -}}
         {{- $avatarWidth := 64 -}}
@@ -15,34 +16,34 @@
         {{- end }}
         <img class="h-full w-full object-cover" src="{{ $avatarURL }}" alt="{{ $.name | default "Profile avatar" }}" width="{{ $avatarWidth }}" height="{{ $avatarHeight }}" loading="eager" decoding="async" fetchpriority="high">
       {{- else }}
-        <span class="font-mono text-2xl text-accent-cyan">{}</span>
+        <span class="font-mono text-xl text-accent-cyan sm:text-2xl">{}</span>
       {{- end }}
     </div>
-    <div>
-      <h1 class="text-lg font-bold tracking-tight text-slate-950 dark:text-white">{{ .name }}</h1>
-      <p class="mt-0.5 font-mono text-xs text-accent-cyan">{{ .title }}</p>
+    <div class="min-w-0">
+      <h1 class="text-base font-bold tracking-tight text-slate-950 sm:text-lg dark:text-white">{{ .name }}</h1>
+      <p class="mt-0.5 truncate font-mono text-[11px] text-accent-cyan sm:text-xs">{{ .title }}</p>
     </div>
   </div>
 
-  {{ with .description }}<p class="mb-4 text-[13px] leading-5 nerdy-muted">{{ . }}</p>{{ end }}
+  {{ with .description }}<p class="mb-2 line-clamp-1 text-[12px] leading-5 nerdy-muted sm:mb-4 sm:line-clamp-none sm:text-[13px]">{{ . }}</p>{{ end }}
 
   {{ with .status }}
-    <div class="mb-4 flex flex-col gap-1.5 rounded-lg border border-slate-300/70 bg-slate-50/95 p-3 font-mono text-xs shadow-inner dark:border-slate-700 dark:bg-slate-900/45">
-      <div class="flex items-center gap-3">
-        <span class="h-2 w-2 animate-pulse rounded-full bg-accent-emerald shadow-[0_0_10px_rgba(16,185,129,0.75)]"></span>
+    <div class="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0 rounded-lg border border-slate-300/70 bg-slate-50/95 px-2 py-1 font-mono text-[11px] shadow-inner sm:mb-4 sm:flex-col sm:items-start sm:gap-1.5 sm:p-3 sm:text-xs dark:border-slate-700 dark:bg-slate-900/45">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-accent-emerald shadow-[0_0_10px_rgba(16,185,129,0.75)] sm:h-2 sm:w-2"></span>
         <span class="text-slate-800 dark:text-slate-300">{{ .label }}: <span class="font-bold text-slate-950 dark:text-white">{{ .value }}</span></span>
       </div>
-      <div class="pl-5 nerdy-muted">└─ {{ .preference_label }}: <span class="text-accent-cyan">{{ .preference }}</span></div>
+      <div class="hidden pl-5 nerdy-muted sm:block">└─ {{ .preference_label }}: <span class="text-accent-cyan">{{ .preference }}</span></div>
     </div>
   {{ end }}
 
   {{ with .links }}
-    {{/* Two columns keeps every link readable while saving three rows of height. */}}
-    <div class="grid grid-cols-1 gap-y-1 sm:grid-cols-2 sm:gap-x-3">
+    {{/* Phones: one icon row (labels in title/aria-label). Tablets and up: two columns. */}}
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 sm:grid sm:grid-cols-2 sm:gap-x-3 sm:gap-y-1">
       {{ range . }}
-        <a class="group flex min-w-0 items-center gap-2 py-1.5 text-xs nerdy-muted transition-colors hover:text-slate-950 sm:py-0 dark:hover:text-white" href="{{ .url }}" {{ if hasPrefix .url "http" }}target="_blank" rel="noopener noreferrer"{{ end }}>
+        <a class="group flex min-h-8 min-w-8 items-center justify-center gap-1.5 py-1 text-[11px] nerdy-muted transition-colors hover:text-slate-950 sm:min-h-0 sm:min-w-0 sm:justify-start sm:gap-2 sm:py-0 sm:text-xs dark:hover:text-white" href="{{ .url }}" title="{{ .label }}" aria-label="{{ .label }}" {{ if hasPrefix .url "http" }}target="_blank" rel="noopener noreferrer"{{ end }}>
           <span class="shrink-0 transition-colors group-hover:text-accent-cyan">{{ partial "components/icon.html" (dict "name" .icon "class" "h-4 w-4") }}</span>
-          <span class="truncate">{{ .label }}</span>
+          <span class="hidden truncate sm:inline">{{ .label }}</span>
         </a>
       {{ end }}
     </div>

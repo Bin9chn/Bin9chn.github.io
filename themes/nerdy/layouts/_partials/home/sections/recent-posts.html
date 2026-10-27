@@ -5,7 +5,7 @@
 {{- $hasPosts := gt (len $posts) 0 -}}
 {{- $hasFallbackPosts := gt (len $fallbackPosts) 0 -}}
 
-<section class="mt-8" id="{{ .id }}">
+<section class="mt-0 lg:mt-8" id="{{ .id }}">
   {{ partial "components/section-heading.html" (dict "icon" .icon "title" .title "prefix" "<<" "suffix" ">>") }}
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     {{ if $hasPosts }}

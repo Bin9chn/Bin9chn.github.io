@@ -12,7 +12,7 @@ profile:
     - icon: github
       label: github.com/Bin9chn
       url: https://github.com/Bin9chn
-    - icon: website
+    - icon: article
       label: blog.csdn.net/BEICHENst
       url: https://blog.csdn.net/BEICHENst
     - icon: rss

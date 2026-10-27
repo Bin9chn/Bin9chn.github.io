@@ -9,13 +9,13 @@
       <span class="{{ $accentClasses.chip }} shrink-0 uppercase">{{ . }}</span>
     {{ end }}
   </div>
-  <p class="mb-7 line-clamp-2 text-sm leading-6 nerdy-muted">{{ .description }}</p>
+  <p class="mb-4 line-clamp-2 text-sm leading-6 nerdy-muted sm:mb-7">{{ .description }}</p>
   {{ if or .links .stars }}
     <div class="mt-auto flex flex-wrap items-center gap-4">
       {{ with .links }}
         <div class="flex flex-wrap items-center gap-4">
           {{ range . }}
-            <a class="inline-flex h-3 items-center gap-1 font-mono text-xs nerdy-link" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+            <a class="inline-flex min-h-8 items-center gap-1 font-mono text-xs nerdy-link sm:min-h-0 sm:h-3" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
               <span class="flex h-3 w-3 shrink-0 items-center justify-center">
                 {{ partial "components/icon.html" (dict "name" .icon "class" "block h-3 w-3") }}
               </span>

@@ -1,8 +1,9 @@
 <section class="nerdy-sidebar-card">
-  <h2 class="mb-3 font-mono text-xs font-bold uppercase tracking-widest nerdy-muted-soft">{{ .title }}</h2>
-  <div class="flex flex-wrap gap-1.5">
+  <h2 class="mb-2 font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft sm:mb-3 sm:text-xs">{{ .title }}</h2>
+  {{/* Phones scroll the chips on one line; tablets and up wrap them. */}}
+  <div class="nerdy-scroll-fade-x hide-scrollbar -mx-1 flex flex-nowrap items-center gap-1.5 overflow-x-auto px-1 sm:mx-0 sm:flex-wrap sm:px-0">
     {{ range .items }}
-      <span class="nerdy-chip nerdy-chip-cyan">{{ . }}</span>
+      <span class="nerdy-chip nerdy-chip-cyan shrink-0">{{ . }}</span>
     {{ end }}
   </div>
 </section>

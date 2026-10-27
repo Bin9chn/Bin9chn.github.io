@@ -11,7 +11,7 @@
   <div class="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-accent-cyan/10 via-indigo-300/8 to-fuchsia-300/8 blur-2xl dark:from-accent-cyan/20 dark:via-indigo-500/10 dark:to-fuchsia-500/15"></div>
   <div
     class="flex w-full flex-col overflow-hidden rounded-2xl border border-slate-300/90 bg-white/95 shadow-2xl shadow-slate-300/30 ring-1 ring-slate-900/10 backdrop-blur-md transition-all duration-200 dark:border-slate-700/80 dark:bg-slate-950/95 dark:shadow-black/30 dark:ring-black/50"
-    x-bind:class="isFullscreen ? 'fixed inset-3 z-[60] h-auto min-h-0 max-h-none !w-auto sm:inset-6' : 'relative z-10 h-[400px] min-h-[400px] max-h-[400px] sm:h-[470px] sm:min-h-[470px] sm:max-h-[470px]'"
+    x-bind:class="isFullscreen ? 'fixed inset-3 z-[60] h-auto min-h-0 max-h-none !w-auto sm:inset-6' : 'relative z-10 h-[320px] min-h-[320px] max-h-[320px] sm:h-[470px] sm:min-h-[470px] sm:max-h-[470px]'"
     x-data='terminalPortfolio({{ $terminalConfig | jsonify }})'
     x-on:theme-changed.window="recordThemeChange($event.detail.dark)"
     x-on:keydown.escape.window="exitFullscreen()"

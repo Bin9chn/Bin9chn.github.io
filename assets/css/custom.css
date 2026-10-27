@@ -30,6 +30,20 @@ body {
   padding: 1.05rem 1.15rem;
 }
 
+/* Phones: keep the identity block short so recent posts land in the first screen. */
+@media (max-width: 639.98px) {
+  .nerdy-sticky-sidebar .nerdy-sidebar-card {
+    padding: 0.7rem 0.85rem;
+    border-radius: 1rem;
+  }
+
+  /* Chips scroll on one line; fade the edge so the cut-off reads as "more to come". */
+  .nerdy-scroll-fade-x {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 1.75rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 1.75rem), transparent);
+  }
+}
+
 .nerdy-prose p,
 .nerdy-prose li {
   line-height: 1.9;

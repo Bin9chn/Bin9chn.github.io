@@ -15,7 +15,6 @@ tags:
   - "玄机"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## ![玄机：实战Live勒索病毒溯源排查 配图 1](images/image-01.png)

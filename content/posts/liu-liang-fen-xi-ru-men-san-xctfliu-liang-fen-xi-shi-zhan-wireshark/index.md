@@ -13,7 +13,6 @@ tags:
   - "网络安全"
   - "sql"
   - "CTF"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## 前言

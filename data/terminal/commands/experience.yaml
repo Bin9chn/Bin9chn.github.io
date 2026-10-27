@@ -1,0 +1,19 @@
+name: experience
+label: Experience
+description: 团队与研究履历
+quick: true
+weight: 30
+roles:
+  - title: Founder / Security Researcher
+    company: 凌日网络与信息安全团队（LapR1skT）
+    period: 2024 - Present
+    highlights:
+      - 负责团队建设、技术方向与安全研究。
+      - 组织 CTF、漏洞复现和网络安全技术内容建设。
+  - title: Independent Security Research & Open Source
+    company: Personal Research
+    period: 2023 - Present
+    highlights:
+      - 持续开展协议安全、漏洞分析、流量取证与应急响应研究。
+      - 开发并维护本地优先安全工具和密码学工具链。
+      - 在 GitHub 与 CSDN 持续发布技术文章、WriteUP 和开源项目。

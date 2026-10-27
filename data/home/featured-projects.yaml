@@ -1,0 +1,29 @@
+id: featured-projects
+type: projects
+icon: code
+title: Featured Projects
+items:
+  - title: LapCry
+    description: 本地优先的桌面加解密与数据处理工作台，支持编码、加密、压缩、解析和可复现配方。
+    accent: emerald
+    type: Tooling
+    links:
+      - label: Code
+        url: https://github.com/Bin9chn/LapCry_public
+        icon: github
+  - title: HTTP/2 Bomb
+    description: 围绕 HPACK 压缩放大与 HTTP/2 流控停滞开展的协议资源耗尽研究。
+    accent: purple
+    type: Research
+    links:
+      - label: Code
+        url: https://github.com/Bin9chn/http2-bomb
+        icon: github
+  - title: LRT CryptoCTF Tools
+    description: 面向 CTF 密码学场景的桌面工具，覆盖编码、古典密码和现代密码学。
+    accent: cyan
+    type: CTF
+    links:
+      - label: Code
+        url: https://github.com/Bin9chn/LRT-CryptoCTF-Tools
+        icon: github

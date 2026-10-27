@@ -12,7 +12,6 @@ tags:
   - "windows"
   - "网络安全"
   - "CTF"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## 背景介绍

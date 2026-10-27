@@ -16,7 +16,6 @@ tags:
   - "web安全"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 > 本文是上一篇Redis未授权访问导致远程代码执行的补充版，重点补充完整操作流程、每一步的作用、脚本执行逻辑、如何连接Redis、如何判断失败原因，以及如何最终读取`/root/flag.txt`。

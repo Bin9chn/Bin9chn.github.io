@@ -1,55 +1,45 @@
-{{ define "title" }}
-  友链 · {{ .Site.Title }}
-{{ end }}
+{{ define "main" }}
+  {{ $friends := hugo.Data.friends.friends }}
+  <div class="mx-auto max-w-5xl">
+    {{ partial "components/page-heading.html" (dict "title" "友链" "description" "安全研究、技术博客和相关项目站点。" "eyebrow" "~/friends" "accent" "Links") }}
 
-{{ define "content" }}
-{{ $friends := hugo.Data.friends.friends }}
-
-<section class="container friends-page">
-  <header class="page-head">
-    <p class="eyebrow">FRIENDS / LINKS</p>
-    <h1>友链</h1>
-    <p>这里收录安全研究、技术博客和相关项目站点。</p>
-  </header>
-
-  {{ if $friends }}
-  <div class="friend-grid">
-    {{ range $friends }}
-    <a class="friend-card glass-panel" href="{{ .url | safeURL }}" target="_blank" rel="noopener">
-      <span class="friend-avatar">
-        {{ with .avatar }}
-          <img src="{{ . | safeURL }}" alt="" loading="lazy">
-        {{ else }}
-          <span>{{ substr .name 0 1 }}</span>
+    {{ if $friends }}
+      <div class="grid gap-3 md:grid-cols-2">
+        {{ range $friends }}
+          {{ $friend := . }}
+          <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan grid grid-cols-[3.6rem_minmax(0,1fr)_1rem] items-start gap-4 p-4" href="{{ .url | safeURL }}" target="_blank" rel="noopener">
+            <span class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-slate-300/80 bg-white p-1.5 dark:border-slate-700 dark:bg-slate-900">
+              {{ with .avatar }}
+                <img class="h-full w-full object-contain" src="{{ . | safeURL }}" alt="{{ $friend.name }}" loading="lazy">
+              {{ else }}
+                <span class="font-mono text-xl text-accent-cyan">{{ substr $friend.name 0 1 }}</span>
+              {{ end }}
+            </span>
+            <span class="min-w-0">
+              <strong class="nerdy-card-title block text-base">{{ .name }}</strong>
+              <span class="mt-1 block text-sm leading-6 nerdy-muted">{{ .description }}</span>
+              {{ with .tags }}
+                <span class="mt-2 flex flex-wrap gap-1.5">
+                  {{ range . }}<span class="nerdy-chip nerdy-chip-emerald">{{ . }}</span>{{ end }}
+                </span>
+              {{ end }}
+            </span>
+            <span class="text-accent-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
+          </a>
         {{ end }}
-      </span>
-      <span class="friend-copy">
-        <strong>{{ .name }}</strong>
-        <span>{{ .description }}</span>
-        {{ with .tags }}
-        <span class="friend-tags">
-          {{ range . }}<i>{{ . }}</i>{{ end }}
-        </span>
-        {{ end }}
-      </span>
-      <span class="post-row-arrow" aria-hidden="true">↗</span>
-    </a>
+      </div>
+    {{ else }}
+      <div class="nerdy-card p-8 text-center sm:p-12">
+        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-accent-cyan/30 bg-accent-cyan/10 font-mono text-2xl text-accent-cyan">+</div>
+        <h2 class="mt-5 text-2xl font-bold">友链正在整理</h2>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-6 nerdy-muted">欢迎提交站点名称、地址、简介和头像地址。我会审核后加入这里。</p>
+        <a class="nerdy-button mt-6 inline-flex" href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">申请友链 ↗</a>
+      </div>
     {{ end }}
-  </div>
-  {{ else }}
-  <div class="friends-empty glass-panel">
-    <span class="friend-empty-mark" aria-hidden="true">+</span>
-    <h2>友链正在整理</h2>
-    <p>欢迎提交站点名称、地址、简介和头像地址。我会审核后加入这里。</p>
-    <a class="button-link" href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">
-      申请友链 <span aria-hidden="true">↗</span>
-    </a>
-  </div>
-  {{ end }}
 
-  <footer class="friends-foot">
-    <p>友情链接仅收录可长期访问且内容相关的站点。</p>
-    <a href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">申请友链 ↗</a>
-  </footer>
-</section>
+    <div class="mt-8 flex flex-col gap-3 border-t border-slate-300/70 pt-5 text-sm sm:flex-row sm:items-center sm:justify-between dark:border-slate-700">
+      <p class="nerdy-muted">友情链接仅收录可长期访问且内容相关的站点。</p>
+      <a class="nerdy-link font-mono text-xs" href="https://github.com/Bin9chn/Bin9chn.github.io/issues/new?template=friend-link.yml" target="_blank" rel="noopener">申请友链 ↗</a>
+    </div>
+  </div>
 {{ end }}

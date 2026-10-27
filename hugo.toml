@@ -1,14 +1,22 @@
 baseURL = "https://bin9chn.github.io/"
 title = "Bin9chn"
-theme = "hugo-coder"
+theme = "nerdy"
 locale = "zh-cn"
 defaultContentLanguage = "zh-cn"
 hasCJKLanguage = true
 enableEmoji = false
 enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[security.exec]
+allow = ['^(dart-)?sass$', '^go$', '^git$', '^node$', '^postcss$', '^tailwindcss$']
 
 [pagination]
-pagerSize = 12
+pagerSize = 10
+
+[params]
+description = "Bin9chn 的网络安全研究与工程项目笔记，关注协议安全、CTF、流量分析、漏洞研究和安全工具。"
+keywords = "网络安全,协议安全,CTF,漏洞研究,HTTP/2,Bin9chn"
 
 [markup]
 [markup.highlight]
@@ -20,41 +28,55 @@ lineNos = false
 [markup.goldmark.renderer]
 unsafe = true
 
-[taxonomies]
-category = "categories"
-series = "series"
-tag = "tags"
-author = "authors"
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3
 
-[params]
-author = "Bin9chn"
-info = ["Protocol Security", "Offensive Engineering", "Local-first Tooling"]
-description = "Bin9chn 的网络安全研究与工程项目笔记，关注协议安全、离线数据处理和密码学工具。"
-keywords = "网络安全,协议安全,HTTP/2,HPACK,密码学,CTF,安全工具,Bin9chn"
-avatarURL = "images/avatar.png"
-faviconSVG = "/images/favicon.svg"
-dateFormat = "2006.01.02"
-since = 2023
-colorScheme = "auto"
-hideColorSchemeToggle = false
-customSCSS = ["scss/glass.scss"]
-maxSeeAlsoItems = 4
+[build]
+[build.buildStats]
+enable = true
 
-[[params.social]]
-name = "GitHub"
-icon = "fa-brands fa-github fa-2x"
-weight = 1
-url = "https://github.com/Bin9chn"
-rel = "me"
-target = "_blank"
+[[build.cachebusters]]
+source = 'assets/notwatching/hugo_stats\.json'
+target = "css"
 
-[[params.social]]
-name = "RSS"
-icon = "fa-solid fa-rss fa-2x"
-weight = 2
-url = "/index.xml"
-rel = "alternate"
-type = "application/rss+xml"
+[[build.cachebusters]]
+source = '(postcss|tailwind)\.config\.(js|mjs|ts)'
+target = "css"
+
+[module]
+[[module.mounts]]
+source = "archetypes"
+target = "archetypes"
+
+[[module.mounts]]
+source = "assets"
+target = "assets"
+
+[[module.mounts]]
+source = "content"
+target = "content"
+
+[[module.mounts]]
+source = "data"
+target = "data"
+
+[[module.mounts]]
+source = "i18n"
+target = "i18n"
+
+[[module.mounts]]
+source = "layouts"
+target = "layouts"
+
+[[module.mounts]]
+source = "static"
+target = "static"
+
+[[module.mounts]]
+source = "hugo_stats.json"
+target = "assets/notwatching/hugo_stats.json"
+disableWatch = true
 
 [[menu.main]]
 name = "文章"

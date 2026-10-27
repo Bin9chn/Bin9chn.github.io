@@ -1,0 +1,78 @@
+:root {
+  --accent-cyan: oklch(0.5 0.12 205);
+  --accent-emerald: oklch(0.5 0.13 163);
+  --accent-purple: oklch(0.48 0.16 300);
+  --accent-amber: oklch(0.61 0.14 72);
+}
+
+.dark {
+  --accent-cyan: oklch(0.84 0.14 205);
+  --accent-emerald: oklch(0.82 0.15 163);
+  --accent-purple: oklch(0.78 0.13 300);
+  --accent-amber: oklch(0.88 0.16 85);
+}
+
+.nerdy-ambient-bg,
+.nerdy-top-glow {
+  display: none;
+}
+
+body {
+  overflow-wrap: break-word;
+}
+
+.nerdy-page-surface {
+  background-attachment: fixed;
+}
+
+.nerdy-prose p,
+.nerdy-prose li {
+  line-height: 1.9;
+  text-align: left;
+}
+
+.nerdy-prose p {
+  margin-top: 1.4em;
+  margin-bottom: 1.4em;
+}
+
+.nerdy-prose :where(pre):not(:where(.not-prose, .not-prose *)) {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nerdy-prose :where(a):not(:where(.not-prose, .not-prose *)) {
+  overflow-wrap: anywhere;
+}
+
+.nerdy-prose :where(table):not(:where(.not-prose, .not-prose *)) {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.nerdy-prose :where(img):not(:where(.not-prose, .not-prose *)) {
+  margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+  .nerdy-container {
+    padding-inline: 1rem;
+  }
+
+  .nerdy-prose {
+    font-size: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

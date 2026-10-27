@@ -14,7 +14,6 @@ tags:
   - "ctf"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## 一、环境搭建

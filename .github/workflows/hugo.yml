@@ -32,14 +32,28 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Build
-        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        env:
+          HUGO_BASEURL: "${{ steps.pages.outputs.base_url }}/"
+        run: |
+          export PATH="$PWD/node_modules/.bin:$PATH"
+          hugo --renderToMemory --baseURL "$HUGO_BASEURL"
+          hugo --minify --gc --cleanDestinationDir --baseURL "$HUGO_BASEURL"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

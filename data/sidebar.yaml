@@ -1,0 +1,48 @@
+profile:
+  name: "Bin9chn"
+  title: "网络安全研究者 / 凌日团队创始人"
+  avatar: "images/avatar.png"
+  description: 关注协议安全、漏洞研究、流量分析、应急响应与本地优先安全工具。
+  status:
+    label: Focus
+    value: Security Research
+    preference_label: Team
+    preference: LapR1skT Founder
+  links:
+    - icon: github
+      label: github.com/Bin9chn
+      url: https://github.com/Bin9chn
+    - icon: website
+      label: blog.csdn.net/BEICHENst
+      url: https://blog.csdn.net/BEICHENst
+    - icon: rss
+      label: /index.xml
+      url: /index.xml
+    - icon: website
+      label: lrtctf.top
+      url: http://www.lrtctf.top:50082/
+
+sections:
+  - id: profile-stats
+    type: stats
+    title: Research Snapshot
+    items:
+      - label: Posts
+        value: "35"
+        accent: cyan
+      - label: Projects
+        value: "5"
+        accent: emerald
+      - label: "Team"
+        value: "LapR1skT"
+        accent: purple
+  - id: research-focus
+    type: tags
+    title: Research Focus
+    items:
+      - Protocol Security
+      - Web Security
+      - CTF
+      - Traffic Analysis
+      - Incident Response
+      - Security Tooling

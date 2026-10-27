@@ -14,7 +14,6 @@ tags:
   - "sql"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## 网络安全面试指南：SQL注入专题（含题目）

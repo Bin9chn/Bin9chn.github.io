@@ -1,0 +1,20 @@
+{
+  "name": "bin9chn-blog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:stats": "hugo --renderToMemory",
+    "build": "hugo --renderToMemory && hugo --minify --gc --cleanDestinationDir",
+    "server": "hugo --renderToMemory && hugo server --buildDrafts --watch",
+    "dev": "npm run server"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "alpinejs": "^3.15.12"
+  }
+}

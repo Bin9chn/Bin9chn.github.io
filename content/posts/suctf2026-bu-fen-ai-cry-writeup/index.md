@@ -15,7 +15,6 @@ tags:
   - "SUCTF"
   - "WriteUp"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## ****SU\_babyAI****

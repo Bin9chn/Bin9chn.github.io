@@ -16,7 +16,6 @@ tags:
   - "hnctf2022"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 #### **查看附件，是python2的环境**

@@ -14,7 +14,6 @@ tags:
   - "安全"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ### 1\. 基础知识打牢阶段

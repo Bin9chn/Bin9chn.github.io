@@ -13,7 +13,6 @@ tags:
   - "安全"
   - "网络安全"
   - "CTF"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 CTF（ Capture The Flag）流量分析题是网络安全竞赛中的重要环节，参赛者需要通过分析网络数据包来解决问题。以下是一些常见的CTF流量分析题型及其解决方法。

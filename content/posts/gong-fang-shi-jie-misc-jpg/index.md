@@ -12,7 +12,6 @@ tags:
   - "服务器"
   - "网络安全"
   - "CTF"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ![攻防世界-Misc-jpg 配图 2](images/image-02.png)

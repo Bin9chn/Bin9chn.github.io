@@ -1,26 +1,20 @@
-{{ define "title" }}
-  {{ .Title }} · {{ .Site.Title }}
-{{ end }}
+{{ define "main" }}
+  <div class="mx-auto max-w-5xl">
+    {{ partial "components/page-heading.html" (dict "title" .Title "description" (.Params.summary | default .Summary) "eyebrow" (printf "~/%s" (.Params.code | default "project")) "accent" (.Params.status | default "Active")) }}
 
-{{ define "content" }}
-<article class="container project-page">
-  <header class="page-head project-head">
-    <p class="eyebrow">{{ .Params.code | default "PROJECT" }} / {{ .Params.status | default "ACTIVE" }}</p>
-    <h1>{{ .Title }}</h1>
-    <p>{{ .Params.summary | default .Summary }}</p>
-  </header>
+    <dl class="mb-6 grid gap-3 sm:grid-cols-3">
+      {{ with .Params.stack }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">技术栈</dt><dd class="mt-2 text-sm">{{ delimit . " / " }}</dd></div>{{ end }}
+      {{ with .Params.since }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">开始时间</dt><dd class="mt-2 text-sm">{{ . }}</dd></div>{{ end }}
+      {{ with .Params.repo }}<div class="nerdy-card p-4"><dt class="font-mono text-[10px] nerdy-muted-soft">源码</dt><dd class="mt-2 text-sm"><a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">GitHub ↗</a></dd></div>{{ end }}
+    </dl>
 
-  <dl class="project-meta">
-    {{ with .Params.stack }}<div><dt>技术栈</dt><dd>{{ delimit . " / " }}</dd></div>{{ end }}
-    {{ with .Params.since }}<div><dt>开始时间</dt><dd>{{ . }}</dd></div>{{ end }}
-    {{ with .Params.repo }}<div><dt>源码</dt><dd><a href="{{ . }}" target="_blank" rel="noopener">GitHub ↗</a></dd></div>{{ end }}
-  </dl>
+    <article class="nerdy-card p-5 sm:p-8">
+      <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">{{ .Content }}</div>
+    </article>
 
-  <div class="article-content project-content glass-panel">{{ .Content }}</div>
-
-  <footer class="article-actions">
-    <a href="{{ "projects/" | relLangURL }}">← 返回项目列表</a>
-    {{ with .Params.repo }}<a href="{{ . }}" target="_blank" rel="noopener">查看源码 ↗</a>{{ end }}
-  </footer>
-</article>
+    <div class="mt-6 flex flex-wrap justify-between gap-4 font-mono text-xs">
+      <a class="nerdy-link" href="{{ "projects/" | relLangURL }}">← 返回项目列表</a>
+      {{ with .Params.repo }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看源码 ↗</a>{{ end }}
+    </div>
+  </div>
 {{ end }}

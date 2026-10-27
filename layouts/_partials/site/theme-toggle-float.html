@@ -1,0 +1,9 @@
+{{/* Floating toggle is only needed on pages without the sticky header (home / posts surface).
+      Every other page renders the toggle inline inside the header, so a float would overlap the nav. */}}
+{{- $isPostsSurface := or (eq .Section "posts") (eq .Type "posts") -}}
+{{- $hasHeader := and (not .IsHome) (not $isPostsSurface) -}}
+{{- if not $hasHeader -}}
+  <div class="fixed bottom-5 right-4 z-[80] sm:bottom-auto sm:top-4 sm:right-6 lg:right-8">
+    {{ partial "components/theme-toggle.html" (dict "variant" "icon" "class" "shadow-xl shadow-slate-300/30 backdrop-blur-md ring-1 ring-slate-900/5 dark:shadow-black/30 dark:ring-white/10") }}
+  </div>
+{{- end -}}

@@ -3,14 +3,14 @@
 {{- if $resource -}}
   {{- $image := $resource -}}
   {{- if and (gt $resource.Width 0) (ne $resource.MediaType.SubType "gif") (gt $resource.Width 1600) -}}
-    {{- $image = $resource.Resize "1600x webp q84" -}}
+    {{- $image = $resource.Resize "1600x webp q85" -}}
   {{- end -}}
-  <figure class="article-figure">
+  <figure class="my-8 text-center">
     <a href="{{ $resource.RelPermalink }}">
-      <img src="{{ $image.RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+      <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 shadow-lg dark:border-slate-700" src="{{ $image.RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
     </a>
-    {{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}
+    {{ with .Title }}<figcaption class="mt-3 text-sm nerdy-muted">{{ . }}</figcaption>{{ end }}
   </figure>
 {{- else -}}
-  <img src="{{ .Destination | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 dark:border-slate-700" src="{{ .Destination | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
 {{- end -}}

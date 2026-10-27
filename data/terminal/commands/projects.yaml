@@ -1,0 +1,29 @@
+name: projects
+label: Projects
+description: 核心开源项目
+quick: true
+weight: 40
+items:
+  - name: LapCry
+    type: Security Tooling
+    tech:
+      - .NET 8
+      - WebView2
+      - JavaScript
+    description: 本地优先的桌面加解密与数据处理工作台。
+    url: https://github.com/Bin9chn/LapCry_public
+  - name: HTTP/2 Bomb
+    type: Protocol Research
+    tech:
+      - HTTP/2
+      - HPACK
+      - Python
+    description: HPACK 压缩放大与流控停滞组合风险研究。
+    url: https://github.com/Bin9chn/http2-bomb
+  - name: LRT CryptoCTF Tools
+    type: CTF Tooling
+    tech:
+      - Python
+      - Cryptography
+    description: 面向 CTF 密码学题目的桌面分析工具。
+    url: https://github.com/Bin9chn/LRT-CryptoCTF-Tools

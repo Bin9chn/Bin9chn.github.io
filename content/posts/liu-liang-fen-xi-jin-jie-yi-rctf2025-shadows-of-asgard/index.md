@@ -13,7 +13,6 @@ tags:
   - "开发语言"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ## 前言

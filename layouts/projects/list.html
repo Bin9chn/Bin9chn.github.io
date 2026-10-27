@@ -1,30 +1,19 @@
-{{ define "title" }}
-  项目 · {{ .Site.Title }}
-{{ end }}
+{{ define "main" }}
+  <div class="mx-auto max-w-5xl">
+    {{ partial "components/page-heading.html" (dict "title" "项目" "description" "公开的安全研究、离线工具与密码学工程。" "eyebrow" "~/projects" "accent" "Projects") }}
 
-{{ define "content" }}
-<section class="container archive-page">
-  <header class="page-head">
-    <p class="eyebrow">PROJECTS</p>
-    <h1>项目</h1>
-    <p>公开的安全研究、工具与实验项目。</p>
-  </header>
-
-  <div class="project-list">
-    {{ range .Pages.ByWeight }}
-    <a class="project-card glass-panel" href="{{ .RelPermalink }}">
-      <span class="project-code">{{ .Params.code | default "PROJECT" }}</span>
-      <span class="project-card-main">
-        <span class="project-title-line">
-          <strong>{{ .Title }}</strong>
-          <span>{{ .Params.status | default "ACTIVE" }}</span>
-        </span>
-        <span>{{ .Params.summary | default .Summary | plainify }}</span>
-        {{ with .Params.stack }}<span class="project-stack">{{ delimit . " / " }}</span>{{ end }}
-      </span>
-      <span class="post-row-arrow" aria-hidden="true">↗</span>
-    </a>
-    {{ end }}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{ range .Pages.ByWeight }}
+        <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan flex min-h-56 flex-col p-5" href="{{ .RelPermalink }}">
+          <div class="flex items-center justify-between gap-3 font-mono text-[10px]">
+            <span class="nerdy-muted-soft">{{ .Params.code | default "PROJECT" }}</span>
+            <span class="nerdy-chip nerdy-chip-emerald">{{ .Params.status | default "ACTIVE" }}</span>
+          </div>
+          <h2 class="nerdy-card-title mt-7 text-xl font-bold">{{ .Title }}</h2>
+          <p class="mt-3 text-sm leading-6 nerdy-muted">{{ .Params.summary | default .Summary }}</p>
+          {{ with .Params.stack }}<p class="mt-auto pt-5 font-mono text-[10px] text-accent-cyan">{{ delimit . " / " }}</p>{{ end }}
+        </a>
+      {{ end }}
+    </div>
   </div>
-</section>
 {{ end }}

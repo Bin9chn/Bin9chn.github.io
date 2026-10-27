@@ -1,0 +1,54 @@
+{{ define "main" }}
+  {{ $category := "Research Note" }}
+  {{ with index .Params.categories 0 }}{{ $category = . }}{{ end }}
+  {{ $path := slice
+    (dict "tag" "a" "label" "bin9chn@research" "href" (relURL "/") "class" "nerdy-muted transition-colors hover:text-slate-950 hover:underline dark:hover:text-white")
+    (dict "label" ":")
+    (dict "tag" "a" "label" "~/posts" "href" (relURL "posts/") "class" "text-accent-cyan transition-colors hover:underline")
+    (dict "label" "/")
+    (dict "label" $category "class" "text-accent-purple")
+  }}
+
+  <div class="nerdy-page-surface nerdy-page-surface--post">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow max-w-3xl"></div>
+
+    <div class="nerdy-container pt-6">
+      {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags) }}
+    </div>
+
+    <div class="nerdy-container pb-16">
+      {{ with .Params.featuredImage }}
+        {{ with $.Resources.GetMatch . }}
+          {{ $cover := . }}
+          {{ if and (gt $cover.Width 0) (gt $cover.Width 1600) }}
+            {{ $cover = .Resize "1600x webp q85" }}
+          {{ end }}
+          <figure class="mx-auto mb-8 max-w-5xl overflow-hidden rounded-2xl border border-slate-300/80 bg-white/95 p-2 shadow-xl shadow-slate-300/30 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">
+            <img class="h-auto w-full rounded-xl" src="{{ $cover.RelPermalink }}" alt="{{ $.Title }}" width="{{ $cover.Width }}" height="{{ $cover.Height }}" loading="eager" decoding="async">
+          </figure>
+        {{ end }}
+      {{ end }}
+
+      <article class="nerdy-card mx-auto max-w-5xl p-5 sm:p-8">
+        <div class="nerdy-prose prose prose-slate max-w-none dark:prose-invert">
+          {{ .Content }}
+        </div>
+      </article>
+
+      <footer class="mx-auto mt-8 flex max-w-5xl flex-wrap items-center justify-between gap-4 border-t border-slate-300/70 pt-6 text-sm dark:border-slate-700">
+        <div class="flex flex-wrap gap-2">
+          {{ range .GetTerms "tags" }}
+            <a class="nerdy-chip nerdy-chip-cyan" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+          {{ end }}
+        </div>
+        <div class="flex flex-wrap gap-4 font-mono text-xs">
+          <a class="nerdy-link" href="{{ "posts/" | relLangURL }}">← 返回文章列表</a>
+          {{ with .Params.sourceUrl }}<a class="nerdy-link" href="{{ . }}" target="_blank" rel="noopener">查看原站 ↗</a>{{ end }}
+        </div>
+      </footer>
+    </div>
+
+    {{ partial "posts/components/toc.html" . }}
+  </div>
+{{ end }}

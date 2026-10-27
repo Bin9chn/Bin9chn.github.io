@@ -1,0 +1,18 @@
+name: contact
+label: Contact
+description: 联系方式与公开主页
+quick: true
+weight: 50
+intro: 项目、研究交流或友链申请可以通过以下入口联系。
+email: ""
+links:
+  - label: GitHub
+    text: github.com/Bin9chn
+    url: https://github.com/Bin9chn
+  - label: CSDN
+    text: blog.csdn.net/BEICHENst
+    url: https://blog.csdn.net/BEICHENst
+  - label: RSS
+    text: /index.xml
+    url: /index.xml
+outro: 也可以通过站点中的友链申请入口提交信息。

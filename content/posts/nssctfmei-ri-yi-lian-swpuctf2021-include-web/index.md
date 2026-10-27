@@ -14,7 +14,6 @@ tags:
   - "android studio"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 这道题是出自SWPUCTF2021的新生赛。

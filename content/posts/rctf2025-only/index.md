@@ -12,7 +12,6 @@ tags:
   - "ctf"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 ![RCTF2025-only 配图 1](images/image-01.png)

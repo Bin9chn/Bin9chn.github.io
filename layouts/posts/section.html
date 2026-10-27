@@ -1,0 +1,21 @@
+{{ define "main" }}
+  {{ $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+  {{ $path := slice
+    (dict "tag" "a" "label" "bin9chn@research" "href" (relURL "/") "class" "nerdy-muted transition-colors hover:text-slate-950 hover:underline dark:hover:text-white")
+    (dict "label" ":")
+    (dict "tag" "a" "label" "~/posts" "href" (relURL "posts/") "class" "text-accent-cyan")
+  }}
+
+  <div class="nerdy-page-surface nerdy-page-surface--post">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pb-16 pt-10 text-slate-800 dark:text-slate-300" x-data="{ currentPage: 1 }">
+      {{ partial "posts/components/heading.html" (dict "path" $path "title" "文章" "accent" "Index" "description" (printf "共 %d 篇，记录网络安全、CTF、流量分析、漏洞研究与工程实践。" (len $posts))) }}
+
+      <main class="min-w-0">
+        {{ partial "posts/index/table.html" (dict "pages" $posts "tablePath" "~/posts/") }}
+      </main>
+    </div>
+  </div>
+{{ end }}

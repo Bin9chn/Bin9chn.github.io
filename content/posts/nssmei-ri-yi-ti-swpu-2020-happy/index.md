@@ -14,7 +14,6 @@ tags:
   - "CRYPTO"
   - "CTF"
   - "网络安全"
-  - "CSDN迁移"
 featuredImage: "images/cover.png"
 ---
 #### ![【NSS每日一题】[SWPU 2020]happy 配图 1](images/image-01.png)

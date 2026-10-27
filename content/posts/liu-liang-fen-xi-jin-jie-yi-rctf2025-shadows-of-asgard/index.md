@@ -15,6 +15,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ## 前言
 
 在上个周末打了一下RCTF国际赛，感觉流量分析的题目还是很有趣的，这里做一个分享。
@@ -40,7 +41,7 @@ Shadows of Asgard附件：
 
 ai 搞了个脚本来解密
 
-```cobol
+```python
 import base64
 import json
 from Crypto.Cipher import AES
@@ -56,7 +57,6 @@ aesKey = bytes(json.loads(base64.b64decode(aesKey_b64)))
 aesIV  = bytes(json.loads(base64.b64decode(aesIV_b64)))
 ciphertext = bytes.fromhex(data_hex)
 
-
 def try_aes_cbc(key, iv, ct):
     try:
         cipher = AES.new(key, AES.MODE_CBC, iv)
@@ -66,7 +66,6 @@ def try_aes_cbc(key, iv, ct):
     except Exception:
         return None
 
-
 def try_aes_ctr(key, iv, ct):
     try:
         # CTR 的 iv 是 nonce
@@ -75,7 +74,6 @@ def try_aes_ctr(key, iv, ct):
         return pt.decode('utf-8', errors='replace')
     except Exception:
         return None
-
 
 # === 尝试解密 ===
 print("=== 尝试 AES-256-CBC ===")
@@ -114,7 +112,6 @@ print(ctr_res if ctr_res else "CTR 解密失败")
 最后交完了给到flag
 
 fileData (b64): UkNURnt0aGV5IGFsd2F5cyBzYXkgUmF2ZW4gaXMgaW5hdXNwaWNpb3VzfQ==
-
 
 ```csharp
 RCTF{they always say Raven is inauspicious}

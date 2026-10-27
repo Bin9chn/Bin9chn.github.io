@@ -15,6 +15,7 @@ tags:
   - "CTF"
 featuredImage: "images/cover.png"
 ---
+
 CTF（ Capture The Flag）流量分析题是网络安全竞赛中的重要环节，参赛者需要通过分析网络数据包来解决问题。以下是一些常见的CTF流量分析题型及其解决方法。
 
 图片提取题型
@@ -41,7 +42,6 @@ CTF（ Capture The Flag）流量分析题是网络安全竞赛中的重要环节
 
 5.  打开图片即可看到flag。
 
-
 ICMP协议信息传输题型
 
 ## **题目：特殊后门 (icmp协议 信息传输)**
@@ -60,10 +60,13 @@ ICMP协议信息传输题型
 
 3.  查看连续的icmp包，提取每个包中的字符，组合得到flag。
 
-
 蓝牙传输协议数据提取题型
 
+![CTF流量分析部分题型 配图 2](images/image-02.png)
+
 选出`ICMP` 包之后跟着找每一个包里面有一个flag的字符
+
+![CTF流量分析部分题型 配图 3](images/image-03.png)
 
 `flag{Icmp_backdoor_can_transfer-some_infomation}`
 
@@ -83,12 +86,17 @@ ICMP协议信息传输题型
 
 3.  解压后得到flag.png，打开即可拿到flag。
 
-
 无线密码破解题型
 
 搜索发现有一个rar压缩包
 
+![CTF流量分析部分题型 配图 4](images/image-04.png)
+
 导出
+
+![CTF流量分析部分题型 配图 5](images/image-05.png)
+
+![CTF流量分析部分题型 配图 6](images/image-06.png)
 
 ## **题目：想蹭网先解开密码 (无线密码破解)**
 
@@ -106,24 +114,25 @@ ICMP协议信息传输题型
 
 3.  使用aircrack-ng进行密码爆破，成功得到flag。
 
-
 数据包筛选与提取题型
 
+![CTF流量分析部分题型 配图 7](images/image-07.png)
+
 `WIFI认证存在四次握手包eapol协议的数据包`
+
+![CTF流量分析部分题型 配图 8](images/image-08.png)
 
 使用kali的`Crunch`生成字典
 
 语法：
 
-
-```cobol
+```text
 crunch <min> <max> [options]
 ```
 
 参数：
 
-
-```cobol
+```text
      min    设定最小字符串长度（必选）
      max    设定最大字符串长度（必选）
 
@@ -148,7 +157,7 @@ crunch <min> <max> [options]
 
 特殊字符
 
-```erlang
+```text
 
      %      代表数字
      ^      代表特殊符号
@@ -156,9 +165,15 @@ crunch <min> <max> [options]
      ,      代表大写字符
 ```
 
+![CTF流量分析部分题型 配图 9](images/image-09.png)
+
+![CTF流量分析部分题型 配图 10](images/image-10.png)
+
 使用`aircrack-ng` 对数据包进行密码爆破
 
 使用教程： [https://www.jianshu.com/p/fd16236057df](https://www.jianshu.com/p/fd16236057df "https://www.jianshu.com/p/fd16236057df")
+
+![CTF流量分析部分题型 配图 11](images/image-11.png)
 
 ## **题目：抓到一只苍蝇 (数据包筛选,数据提取)**
 
@@ -176,26 +191,41 @@ crunch <min> <max> [options]
 
 3.  导出原始数据，去掉文件头，合并成一个文件，解压得到flag。
 
-
 -   先搜索flag
 
 发现一个flag.txt文件
+
+![CTF流量分析部分题型 配图 12](images/image-12.png)
+
+![CTF流量分析部分题型 配图 13](images/image-13.png)
 
 该数据包是通过qq邮箱传的一些文件
 
 然后搜索关键字
 
+![CTF流量分析部分题型 配图 14](images/image-14.png)
+
+![CTF流量分析部分题型 配图 15](images/image-15.png)
+
 `通过POST传入了一个rar文件`
 
 筛选`POST` 协议
+
+![CTF流量分析部分题型 配图 16](images/image-16.png)
 
  这里调用了2个函数，中间应该是传输的过程发送的数据包
 
 `CreateFile`
 
+![CTF流量分析部分题型 配图 17](images/image-17.png)
+
 `CheckFile`
 
+![CTF流量分析部分题型 配图 18](images/image-18.png)
+
 两个文件的md5值一样然后从中间的数据包大小可以看出来
+
+![CTF流量分析部分题型 配图 19](images/image-19.png)
 
  几个数据包加起来
 
@@ -205,7 +235,7 @@ crunch <min> <max> [options]
 
 具体命令dd:
 
-```cobol
+```text
 
 dd if=1 bs=1 skip=364 of=1.1
 
@@ -218,7 +248,9 @@ of 输出文件名
 
 然后导出对应的文件（看分组序号） 然后倒入kali
 
-```cobol
+![CTF流量分析部分题型 配图 20](images/image-20.png)
+
+```text
 
 ┌──(root㉿kali)-[/home/kali/test]
 └─# dd if=1 bs=1 skip=364 of=11
@@ -261,23 +293,39 @@ of 输出文件名
 1  11  2  22  3  33  4  44  5  55  flag.rar
 ```
 
+![CTF流量分析部分题型 配图 21](images/image-21.png)
+
 然后打开压缩包发现文件头损坏
+
+![CTF流量分析部分题型 配图 22](images/image-22.png)
+
+![CTF流量分析部分题型 配图 23](images/image-23.png)
 
 84改为80
 
+![CTF流量分析部分题型 配图 24](images/image-24.png)
+
 这是个exe可执行文件
+
+![CTF流量分析部分题型 配图 25](images/image-25.png)
 
 ... 脏东西
 
 binwalk 提取下
 
+![CTF流量分析部分题型 配图 26](images/image-26.png)
+
  一堆png文件
 
 然后用`formost` 提取出来
 
+![CTF流量分析部分题型 配图 27](images/image-27.png)
+
+![CTF流量分析部分题型 配图 28](images/image-28.png)
+
 扫描二维码获取flag
 
-```cobol
+```text
 https://online-barcode-reader.inliteresearch.com
 
 flag{m1Sc_oxO2_Fly}

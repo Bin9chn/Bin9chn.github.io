@@ -17,6 +17,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ## ****SU\_babyAI****
 
 题目的表面是一个两层的神经网络（一层 Conv1d ，一层 Linear），但这其实是出题人放的烟雾弹。
@@ -25,7 +26,7 @@ Conv1d 层：步长 (stride) 为 2，卷积核大小为 3。本质上就是对�
 
 Linear 层：全连接层，就是进行一次矩阵乘法。
 
-```cobol
+```python
 import torch
 import torch.nn as nn
 import json
@@ -56,7 +57,6 @@ with open("weights.json", "w") as f:
 print("Weights extracted successfully to weights.json")
 
 #{"w_conv": [711570624, 963400576, 994288832], "w_fc": [[297614816, 436414592, 860390144, 664419968, 197614784, 409222944, 233872560, 627448320, 46818032, 422992928, 679420160, 81650776, 883411904, 541613888, 482021664, 298908096, 199588768, 271502432, 876545728, 880926464], [151330976, 320520704, 406166720, 885139328, 531236064, 939406208, 218275424, 815258816, 381472032, 458734304, 82122584, 944455104, 500193952, 289881984, 421138528, 553620672, 953055552, 793955712, 837951360, 175109600], [49511188, 811860544, 673119424, 435815104, 363030624, 237639072, 344360800, 615608128, 468901920, 623588480, 798760576, 926786240, 281757600, 888966080, 878816128, 253852176, 159918880, 229503952, 845853696, 581827136], [932321536, 64909596, 276360800, 661220288, 728794240, 564061888, 523473280, 985239232, 904827136, 467689088, 377599040, 369905856, 704733632, 98109520, 986602816, 898609024, 340310272, 277700640, 270729824, 730310656], [987233472, 469228128, 515120992, 197659952, 37344004, 875660288, 867518528, 355921280, 332149344, 920347648, 461632704, 309683968, 625854208, 739838016, 347660960, 550290816, 593196672, 446681344, 835965760, 967270336], [443480576, 514510176, 326779936, 244568256, 493780256, 540022400, 521128000, 311172544, 984923264, 461161696, 1847509, 994950208, 479924640, 807051008, 446864672, 83577288, 714053504, 52781776, 374880672, 253394336], [396243456, 980173888, 571883200, 795689088, 143121216, 356414912, 167040832, 675041664, 465443712, 294232512, 794939136, 176852464, 102713232, 929851776, 598410944, 102113040, 267942576, 670359808, 30160832, 658604928], [855918976, 246297456, 205985168, 754819200, 523053984, 695651584, 695940992, 110872208, 503072352, 953440384, 602746496, 454487680, 833677120, 381587264, 620641088, 9118840, 375407840, 166761968, 294166528, 11319620], [371568768, 80815520, 684906240, 290054176, 789146240, 583822336, 634642688, 922142592, 285606720, 396721856, 286496480, 468516160, 235006560, 895963968, 415955904, 790245952, 119753320, 979420608, 246546128, 446345024], [138668992, 806997568, 539057024, 544763520, 144570608, 514485312, 573345216, 110101048, 380458016, 541929280, 539392448, 948778368, 408586208, 751448320, 70724616, 702397568, 262888688, 915350336, 521065088, 670870272], [133215816, 210337728, 103923352, 397129184, 63536912, 725864960, 147100016, 434930944, 697721152, 549382912, 334255168, 364794912, 344588736, 356966304, 945786688, 835596160, 120754752, 657875584, 303490880, 108966984], [676221952, 990628544, 127497088, 214150960, 531858304, 686086784, 802917312, 988694656, 314908672, 63965952, 156540480, 499403872, 197203520, 669649408, 902259712, 434448032, 448513824, 579643840, 857690304, 807774720], [185761248, 88477544, 118775720, 91887776, 831682944, 488700768, 84241912, 669947584, 102393224, 292332736, 96007008, 99095312, 348428832, 786959104, 952230848, 477275264, 258574080, 95679968, 476182400, 493619648], [141768240, 844250048, 310929376, 173367168, 351167872, 284791040, 849352192, 559654656, 310701856, 866857664, 691280576, 956124608, 428339072, 835154368, 289582560, 74862496, 462166208, 455068768, 813506880, 234161296], [698318464, 267563488, 348129056, 845140736, 244852112, 830024768, 502683456, 715116480, 819485888, 234979584, 835028096, 841118592, 728383296, 36333460, 578634880, 567642624, 472977856, 334214208, 5871110, 627321344]]}
-
 
 # 1. 填入你提取出来的权重数据和题目已知条件
 w_conv = [711570624, 963400576, 994288832]
@@ -163,7 +163,7 @@ if not flag_found:
 
 ## ****SU\_theif****
 
-```cobol
+```python
 import requests
 import torch
 import numpy as np
@@ -286,7 +286,7 @@ main()
 
 ## ****SU\_easyLLM****
 
-```cobol
+```python
 import hashlib, base64, json, subprocess, sys
 
 def decrypt(password, iv_b64, ct_b64):
@@ -380,7 +380,7 @@ print("\n[!] All 50 challenges tried, no match found")
 
 ## SU\_谁是小偷
 
-```cobol
+```python
 Exp:
 import argparse
 import base64
@@ -393,13 +393,11 @@ import requests
 import torch
 import torch.nn as nn
 
-
 IMG_HW = 19
 KERNEL_HW = 4
 OUT_HW = IMG_HW - KERNEL_HW + 1   # 16
 FEATURES = OUT_HW * OUT_HW        # 256
 INPUT_DIM = IMG_HW * IMG_HW       # 361
-
 
 class Net(nn.Module):
     def __init__(self):
@@ -412,7 +410,6 @@ class Net(nn.Module):
         x = x.view(-1)
         x = self.linear(x)
         return x
-
 
 class Oracle:
     def __init__(self, base_url: str, timeout: float = 20.0, retries: int = 8, retry_sleep: float = 2.0):
@@ -473,7 +470,6 @@ class Oracle:
             data = {"raw": r.text}
         return r.status_code, data
 
-
 def query_affine_map(oracle: Oracle, known_bias: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]:
     shape = (1, 1, IMG_HW, IMG_HW)
 
@@ -497,16 +493,13 @@ def query_affine_map(oracle: Oracle, known_bias: Optional[torch.Tensor] = None) 
     matrix = torch.stack(cols, dim=1)  # [256, 361]
     return matrix, bias
 
-
 def save_affine(path: str, matrix: torch.Tensor, bias: torch.Tensor):
     torch.save({"matrix": matrix, "bias": bias}, path)
     print(f"[*] wrote affine cache to {path}", flush=True)
 
-
 def load_affine(path: str) -> Tuple[torch.Tensor, torch.Tensor]:
     cached = torch.load(path, map_location="cpu")
     return cached["matrix"], cached["bias"]
-
 
 def basis_loss(model: Net, matrix: torch.Tensor, bias: torch.Tensor, device: str) -> torch.Tensor:
     model = model.to(device)
@@ -520,7 +513,6 @@ def basis_loss(model: Net, matrix: torch.Tensor, bias: torch.Tensor, device: str
     pred_bias = model.linear.weight @ (model.conv.bias.view(1) * ones) + model.linear.bias
 
     return torch.mean((pred_matrix - matrix) ** 2) + torch.mean((pred_bias - bias) ** 2)
-
 
 def fit_from_affine(
     matrix: torch.Tensor,
@@ -564,7 +556,6 @@ def fit_from_affine(
     print(f"[*] best loss={best_loss:.8f}", flush=True)
     return best_model
 
-
 def scaled_variant(model: Net, scale: float) -> Net:
     cand = Net()
     cand.load_state_dict(model.state_dict())
@@ -576,14 +567,12 @@ def scaled_variant(model: Net, scale: float) -> Net:
 
     return cand
 
-
 def scale_candidates() -> List[float]:
     vals = {1.0}
     for q in range(-24, 25):
         vals.add(2 ** (q / 4))
     vals.update([0.8, 0.9, 0.95, 1.05, 1.1, 1.2])
     return sorted(vals)
-
 
 def recover_integer_weights(matrix: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
     k = torch.tensor(
@@ -604,7 +593,6 @@ def recover_integer_weights(matrix: torch.Tensor) -> Tuple[torch.Tensor, torch.T
     linear = matrix.double() @ conv_cols.T @ torch.linalg.pinv(conv_cols @ conv_cols.T)
     return k.float(), linear.round().float()
 
-
 def build_exact_function_model(matrix: torch.Tensor, bias: torch.Tensor, conv_bias: float) -> Net:
     conv_weight, linear_weight = recover_integer_weights(matrix)
     model = Net()
@@ -620,13 +608,11 @@ def build_exact_function_model(matrix: torch.Tensor, bias: torch.Tensor, conv_bi
 
     return model
 
-
 def sanity_test(oracle: Oracle) -> torch.Tensor:
     x = torch.zeros((1, 1, IMG_HW, IMG_HW), dtype=torch.float32)
     y = oracle.predict(x)
     print(f"[*] sanity predict ok: output shape = {tuple(y.shape)}", flush=True)
     return y.clone()
-
 
 def try_submit_scales(oracle: Oracle, model: Net) -> bool:
     for scale in scale_candidates():
@@ -637,7 +623,6 @@ def try_submit_scales(oracle: Oracle, model: Net) -> bool:
             print(data["flag"])
             return True
     return False
-
 
 def scan_exact_bias(oracle: Oracle, matrix: torch.Tensor, bias: torch.Tensor, start: float, end: float, step: float):
     n = int(round((end - start) / step)) + 1
@@ -657,7 +642,6 @@ def scan_exact_bias(oracle: Oracle, matrix: torch.Tensor, bias: torch.Tensor, st
 
     print("[!] bias scan finished, no flag", flush=True)
     return False
-
 
 def main():
     ap = argparse.ArgumentParser()
@@ -747,14 +731,13 @@ def main():
     if not ok:
         print("[!] no flag yet", flush=True)
 
-
 if __name__ == "__main__":
     main()
 ```
 
 POC:
 
-```cobol
+```bash
 python .\xiaotou.py --url http://1.95.113.59:10002 --scan-bias-start -10 --scan-bias-end 10 --scan-bias-step 0.1 --timeout 30 --retries 10 --retry-sleep 3
 
 #SUCTF{ch3ck_th3_st4t3_n0t_th3_l0g_5d1f9a6c}
@@ -762,7 +745,7 @@ python .\xiaotou.py --url http://1.95.113.59:10002 --scan-bias-start -10 --scan-
 
 ## restaurant
 
-```cobol
+```python
 import json
 import random
 import re
@@ -772,26 +755,21 @@ from hashlib import sha3_512
 
 import numpy as np
 
-
 HOST = "101.245.107.149"
 PORT = 10020
 MAX_VAL = 256
 P_ZERO = 0.8
 
-
 def H(x: bytes):
     h = sha3_512(x).hexdigest()
     return [int(h[i : i + 2], 16) for i in range(0, 128, 2)]
-
 
 def text_to_matrix(msg: bytes):
     tmp = H(msg)
     return [[tmp[i * 8 + j] for j in range(8)] for i in range(8)]
 
-
 def matrix_rank(mat):
     return int(np.linalg.matrix_rank(np.array(mat, dtype=np.float64)))
-
 
 def minplus_mul(A, B):
     m, n = len(A), len(A[0])
@@ -806,7 +784,6 @@ def minplus_mul(A, B):
                     best = v
             out[i][j] = best
     return out
-
 
 def choose_active_columns(M):
     best = None
@@ -830,7 +807,6 @@ def build_B():
         if matrix_rank(B) >= 7:
             return B
 
-
 def build_P_from_B(K, B):
     # Inactive row is large so it never wins the min.
     P = [[MAX_VAL] * 8 for _ in range(8)]
@@ -839,7 +815,6 @@ def build_P_from_B(K, B):
     if matrix_rank(P) < 8:
         return None
     return P
-
 
 def build_R(M, W):
     c = [min(M[i][j] for i in range(8)) for j in range(8)]
@@ -854,7 +829,6 @@ def build_R(M, W):
             return R
     raise ValueError("failed to build rank-8 R")
 
-
 def build_S(W):
     for _ in range(500):
         S = [
@@ -864,7 +838,6 @@ def build_S(W):
         if S != W and matrix_rank(S) >= 8:
             return S
     raise ValueError("failed to build rank-8 S")
-
 
 def build_matrices(msg: str):
     M = text_to_matrix(msg.encode())
@@ -887,7 +860,6 @@ def build_matrices(msg: str):
 
     raise ValueError("failed to build valid matrices")
 
-
 def recv_until(sock: socket.socket, token: bytes) -> bytes:
     data = b""
     while token not in data:
@@ -897,10 +869,8 @@ def recv_until(sock: socket.socket, token: bytes) -> bytes:
         data += chunk
     return data
 
-
 def sendline(sock: socket.socket, line: str):
     sock.sendall(line.encode() + b"\n")
-
 
 def main():
     host = HOST
@@ -936,14 +906,13 @@ def main():
         finally:
             sock.close()
 
-
 if __name__ == "__main__":
     main()
 ```
 
 ## thief
 
-```cobol
+```python
 import requests
 import torch
 import numpy as np

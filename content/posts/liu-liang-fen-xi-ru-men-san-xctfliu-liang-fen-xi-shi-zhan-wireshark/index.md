@@ -15,6 +15,7 @@ tags:
   - "CTF"
 featuredImage: "images/cover.png"
 ---
+
 ## 前言
 
 看完前两章节后，你应该对流量分析有所了解了，那么这一篇，我们就通过一些实战来看看吧！
@@ -33,7 +34,7 @@ featuredImage: "images/cover.png"
 
 分析一下 文件名 ：
 
-```cobol
+```text
 ？id=1 and ascii(substr((select flag from t),1,1))=33–+
 ```
 
@@ -43,8 +44,7 @@ featuredImage: "images/cover.png"
 
 把704bytes长度的注入请求对应的ASCII码复制出来，进行ASCII码匹配，最后得到
 
-
-```cobol
+```text
 flag{w1reshARK_ez_1sntit}
 ```
 
@@ -84,7 +84,7 @@ flag{w1reshARK_ez_1sntit}
 
 ![流量分析入门（三）：xctf流量分析实战Wireshark 配图 13](images/image-13.png)
 
-```cobol
+```text
 PNG图片固定以 89 50 4E 47 0D 0A 1A 0A （4个字节）开头49 45 4E 44--IEND结尾
 ```
 
@@ -100,7 +100,7 @@ PNG图片固定以 89 50 4E 47 0D 0A 1A 0A （4个字节）开头49 45 4E 44--IE
 
 ![流量分析入门（三）：xctf流量分析实战Wireshark 配图 16](images/image-16.png)
 
-```cobol
+```text
 00 00 00 0D 说明IHDR头块长为13
 49 48 44 52 IHDR标识
 00 00 06 40 图像的宽，1600像素
@@ -125,7 +125,7 @@ PNG图片固定以 89 50 4E 47 0D 0A 1A 0A （4个字节）开头49 45 4E 44--IE
 
 ![流量分析入门（三）：xctf流量分析实战Wireshark 配图 21](images/image-21.png)
 
-```cobol
+```text
 DDCTF{QEWokcpHeUo2WOfBIN7pogIWsF04iRjt}
 ```
 

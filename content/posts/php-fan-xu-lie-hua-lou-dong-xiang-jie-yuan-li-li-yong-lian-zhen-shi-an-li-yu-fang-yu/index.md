@@ -16,6 +16,7 @@ tags:
   - "CTF"
 featuredImage: "images/cover.png"
 ---
+
 ### 1\. 什么是 反序列化 （Unserialize）？
 
 在 PHP 中，**序列化（serialize）** 是将 PHP 对象/ 数组 转换成字符串，便于：
@@ -199,15 +200,13 @@ disable_functions = exec,system,passthru,shell_exec,popen,proc_open
 
 ### 10\. 漏洞审计 Checklist
 
-```text
-[ ] 是否反序列化用户输入？
-[ ] 是否存在 __wakeup？
-[ ] 是否存在 __destruct？
-[ ] 是否存在 __toString？
-[ ] 是否存在文件包含/写入？
-[ ] 属性是否可控？
-[ ] 是否使用危险函数？
-```
+- [ ] 是否反序列化用户输入？
+- [ ] 是否存在 __wakeup？
+- [ ] 是否存在 __destruct？
+- [ ] 是否存在 __toString？
+- [ ] 是否存在文件包含/写入？
+- [ ] 属性是否可控？
+- [ ] 是否使用危险函数？
 
 ---
 

@@ -16,11 +16,12 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ## 前言
 
 看了上一篇，你会发现周末的RCTF还是很好玩儿的，所以这篇博客我们带来了第二个流量分析的题目，这道题还是结合了比较多的东西的，适合拿来练习并且吃透。
 
-```cobol
+```text
 附件链接: https://pan.baidu.com/s/1fZUH90VjtX-d57xTqc4VFw?pwd=LRTC 提取码: LRTC
 ```
 
@@ -48,7 +49,7 @@ featuredImage: "images/cover.png"
 
 使用之前得到的 密钥 和iv可以成功解密，
 
-```cobol
+```python
 import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
@@ -93,7 +94,7 @@ print(plaintext.decode('utf-8'))
 
 得到答案
 
-```cobol
+```text
 Intel64 Family 6 Model 191 Stepping 2, GenuineIntel
 ```
 
@@ -113,7 +114,6 @@ Intel64 Family 6 Model 191 Stepping 2, GenuineIntel
 
 ![流量分析进阶（二）：RCTF2025-Asgard Fallen Down 配图 14](images/image-14.png)
 
-
 看到chunk自然联想到图片被分块传输了，都cv到厨子里
 result里面的再进行base解码是一个 jpg图片
 
@@ -123,13 +123,13 @@ result里面的再进行base解码是一个 jpg图片
 
 所以得到使用的工具是：
 
-```undefined
+```text
 TscanPlus
 ```
 
 最后给到flag
 
-```cobol
+```text
 RCTF{Wh1l3_Th0r_Struck_L1ghtn1ng_L0k1_St0l3_Th3_Thr0n3}
 ```
 

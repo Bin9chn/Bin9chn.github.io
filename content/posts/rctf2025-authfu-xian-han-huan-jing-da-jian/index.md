@@ -16,6 +16,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ## 一、环境搭建
 
 在自己的虚拟机或者本地 安装docker 或者docker-desktop；然后来到有docker-compose.yaml文件的目录下；大家记得改config的配置改成自己的主机号；也就是把所有的auth-flag.rctf.rois.team字样替换成你的ip；测了一下，用exp跑的话可以不用改这里，但是用手工的话还是要改；
@@ -30,7 +31,7 @@ featuredImage: "images/cover.png"
 
 ## 二、开始做题
 
-```less
+```python
 @app.route('/admin')
 def admin():
     if 'email' not in session:
@@ -62,7 +63,7 @@ def admin():
 
 可以看到这里我的action其实是有问题的，本地复现的时候没有改那个config的文件所以指向的还是比赛时的环境，这一串base64解码后就可以得到SAML的一个响应，给大家粘贴出来看看；
 
-```cobol
+```text
 <?xml version="1.0" encoding="UTF-8"?>
 <samlp:Response
     xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
@@ -221,7 +222,7 @@ def admin():
 
 sp \- flag/saml2/parser.py 里面有这样一串代码
 
-```cobol
+```python
 def get_nameid(self):
     if self.document is None:
         return None

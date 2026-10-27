@@ -15,6 +15,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ### 前言
 
 > 前面配置的时候找了很多文章来看，都有着各种奇奇怪怪的问题，本文将记录我配置成功的一次案例供大家参考。2025年11月24日记 这是我第一次实现大模型的微调训练，电脑的配置是显卡NVIDIA GeForce RTX 5060 Ti GPU，训练的是Deep Seek-r1 的 7B 模型如果大家有更好的显卡，可以尝试一下14B。在此非常感谢CSDN的大佬，在他们的基础上，我的博客进一步完善一些细节，文末会附上大佬的原文链接。那么废话不多说，直接开始！（默认大家有一定的基础）
@@ -61,7 +62,7 @@ featuredImage: "images/cover.png"
 
 创建新的虚拟环境
 
-```cobol
+```bash
 conda create -n llama python=3.10
 ```
 
@@ -69,7 +70,7 @@ conda create -n llama python=3.10
 
 激活虚拟环境
 
-```undefined
+```bash
 conda activate llama
 ```
 
@@ -77,7 +78,7 @@ conda activate llama
 
 安装支持 sm\_120 的 PyTorch（5060ti的CUDA是12.8/12.9，选择支持你们自己电脑的CUDA的版本）
 
-```cobol
+```bash
 # 先安装PyTorch CUDA版本（官方源），再安装其他依赖（清华源）
 pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu128
 pip install torchvision==0.23.0 torchaudio==2.8.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
@@ -102,7 +103,7 @@ pip install torchvision==0.23.0 torchaudio==2.8.0 -i https://pypi.tuna.tsinghua.
 >
 > 打开命令行（确保已激活`llama`环境），切换到 whl 包的下载目录，执行本地安装命令：
 >
-> ```cobol
+> ```text
 > # 示例：假设包下载到了Downloads文件夹，替换为你的实际路径
 > cd C:\Users\Administrator\Downloads
 > # 执行安装（包名根据实际下载的文件名调整）
@@ -111,7 +112,7 @@ pip install torchvision==0.23.0 torchaudio==2.8.0 -i https://pypi.tuna.tsinghua.
 
 验证脚本
 
-```scss
+```python
 import torch
 print("PyTorch版本：", torch.__version__)
 print("CUDA是否可用：", torch.cuda.is_available())
@@ -126,7 +127,7 @@ if torch.cuda.is_available():
 
 接下来就是:克隆GitHub项目
 
-```cobol
+```bash
 #git拉取
 pip install -e ".[torch,metrics]" -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
@@ -140,7 +141,7 @@ pip install -e ".[torch,metrics]" -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 验证（出现版本号就成功了）
 
-```undefined
+```text
 llamafactory-cli version
 ```
 
@@ -162,7 +163,7 @@ echo $env:HF_ENDPOINT="https://hf-mirror.com"
 
 安装huggingface\_hub（如果第一个下载爆红，可以试试第二个镜像源）
 
-```cobol
+```bash
 pip install -U huggingface_hub
 
 #或者
@@ -174,7 +175,7 @@ pip install -U huggingface_hub -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/
 
 下载训练模型
 
-```cobol
+```text
 huggingface-cli download --resume-download deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
 ```
 
@@ -201,7 +202,7 @@ huggingface-cli download --resume-download deepseek-ai/DeepSeek-R1-Distill-Qwen-
 
 #### 1.5制作训练集（json格式）
 
-```cobol
+```json
  {
         "messages": [
             {
@@ -226,7 +227,7 @@ huggingface-cli download --resume-download deepseek-ai/DeepSeek-R1-Distill-Qwen-
 
 #### 1.6启动 LLama \-Factory 的可视化微调界面（http://localhost:7860/）
 
-```undefined
+```text
 llamafactory-cli webui
 ```
 

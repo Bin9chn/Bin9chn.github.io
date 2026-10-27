@@ -15,6 +15,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ### Java 反序列化是什么
 
 #### 序列化与反序列化基础概念
@@ -161,9 +162,7 @@ ChainedTransformer chain = new ChainedTransformer(transformers);
 
 2.  **利用链构造过程**：
 
-
 -    首先，攻击者构造一个`Transformer`数组，其中包含一系列恶意的`Transformer`。例如，通过`ConstantTransformer`获取`Runtime`对象，再通过`InvokerTransformer`调用`Runtime.getRuntime().exec`方法来执行系统命令。
-
 
 ```java
 Transformer[] transformers = new Transformer[] {
@@ -176,13 +175,11 @@ Transformer[] transformers = new Transformer[] {
 
 -   然后，将这个`Transformer`数组传递给`ChainedTransformer`，创建一个`ChainedTransformer`对象，它会按顺序执行数组中的每个`Transformer`的`transform`方法。
 
-
 ```java
 ChainedTransformer chain = new ChainedTransformer(transformers);
 ```
 
 -   接着，创建一个普通的`HashMap`，并使用`TransformedMap.decorate`方法将其装饰成`TransformedMap`，同时将`ChainedTransformer`设置为值的转换函数。
-
 
 ```typescript
 Map innerMap = new HashMap();
@@ -190,7 +187,6 @@ Map outerMap = TransformedMap.decorate(innerMap, null, chain);
 ```
 
 -   最后，攻击者需要找到一个在反序列化时会触发`TransformedMap.put`操作的类，例如`sun.reflect.annotation.AnnotationInvocationHandler`。通过将`outerMap`作为参数传递给`AnnotationInvocationHandler`的构造函数，并将其序列化，就完成了整个利用链的构造。
-
 
 ```java
 InvocationHandler handler = new AnnotationInvocationHandler(TargetAnnotation.class, outerMap);
@@ -221,7 +217,6 @@ oos.close();
 
     4.  最后，将`PriorityQueue`对象序列化，当目标程序对其进行反序列化时，`PriorityQueue`的反序列化过程会触发排序操作，从而执行恶意代码。
 
-
 这些常见的利用链展示了攻击者如何利用 Java 反序列化机制和一些类库的特性来实现恶意代码执行。了解这些利用链的原理和构造方式，有助于我们更好地检测和防范 Java 反序列化漏洞。
 
 ### 实际攻击案例分析
@@ -240,7 +235,7 @@ Apache Commons Collections 是一个广泛使用的 Java 类库，它提供了�
 
 **构造恶意数据**：攻击者首先需要构造恶意的序列化数据。他们会利用前面提到的常见利用链，如 Apache Commons Collections 1 利用链。攻击者创建一个恶意的`Transformer`链，通过`ConstantTransformer`获取`Runtime`对象，再利用`InvokerTransformer`调用`Runtime.getRuntime().exec`方法来执行系统命令。例如，攻击者想要在目标服务器上执行`calc.exe`（打开计算器，在实际攻击中可能是更恶意的命令），他们会构造如下的`Transformer`数组：
 
-```dart
+```text
 Transformer[] transformers = new Transformer[] {
     new ConstantTransformer(Runtime.class),
     new InvokerTransformer("getMethod", new Class[]{String.class, Class[].class}, new Object[]{"getRuntime", null}),
@@ -279,13 +274,11 @@ Java 反序列化攻击的危害不容小觑，企业和开发者必须高度重
 
 -   **OWASP Dependency-Check**：主要用于检查项目的依赖项，识别出已知存在安全漏洞的库。在 Java 反序列化漏洞检测中，它可以帮助我们发现项目中使用的类库是否存在已知的反序列化漏洞。例如，如果项目依赖的 Apache Commons Collections 库存在反序列化漏洞，OWASP Dependency-Check 会检测到并列出相关的漏洞信息，包括漏洞的编号（如 CVE 编号）、漏洞描述以及建议的修复版本。通过使用 OWASP Dependency-Check，我们可以及时更新存在漏洞的依赖库，降低反序列化漏洞的风险。可以将 OWASP Dependency-Check 集成到构建工具中，如 Maven、Gradle，在项目构建过程中自动检查依赖项的安全性。
 
-
 **动态分析工具**：动态分析工具则侧重于在程序运行时捕捉异常行为，通过实际执行程序来检测反序列化漏洞。
 
 -   **OWASP ZAP**：是一款功能强大的 Web 应用渗透测试工具，它可以对 Web 应用进行全面的安全测试，包括检测 Java 反序列化漏洞。OWASP ZAP 通过拦截和分析 Web 应用的请求和响应，寻找可能存在的反序列化漏洞。它可以模拟攻击者发送恶意的序列化数据，观察应用的响应，判断是否存在反序列化漏洞。例如，OWASP ZAP 可以自动检测 HTTP 请求中是否包含序列化数据，并尝试利用已知的反序列化漏洞进行攻击。如果应用对恶意请求的响应出现异常，如返回错误信息或执行了非预期的操作，就可能意味着存在反序列化漏洞。OWASP ZAP 提供了直观的界面，方便用户配置测试参数和查看测试结果。
 
 -   **Burp Suite**：也是一款广泛使用的 Web 安全测试工具，它提供了丰富的功能来检测和利用各种 Web 漏洞，包括 Java 反序列化漏洞。Burp Suite 的 Java Deserialization Scanner 插件可以专门用于检测 Java 反序列化漏洞。安装该插件后，需要设置 ysoserial（一款 Java 反序列化漏洞 payload 生成器）的路径。使用时，通过抓包工具捕获 Web 应用的请求，然后将请求发送到 Java Deserialization Scanner 插件进行检测。插件会利用 ysoserial 生成的 payload 对请求进行测试，判断是否存在反序列化漏洞。例如，可以选择使用 DNS、Sleep 等方式来检测漏洞，DNS 方式通过与 Burp Suite 的 Collaborator 功能结合，利用 DNS 请求来验证漏洞是否存在；Sleep 方式则通过让服务器执行`sleep`操作来判断是否成功触发漏洞。如果检测到漏洞，插件还可以进行简单的利用，如执行自定义的命令。
-
 
 这些工具在检测 Java 反序列化漏洞时各有优势，静态代码分析工具可以在开发阶段提前发现潜在的问题，动态分析工具则可以在应用部署后进行实时检测和漏洞验证。在实际的安全检测中，建议结合使用多种工具，以提高检测的准确性和全面性。
 

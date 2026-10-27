@@ -16,11 +16,12 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 #### ![【NSS每日一题】[SWPU 2020]happy 配图 1](images/image-01.png)
 
 #### 题目附件：
 
-```cobol
+```text
 ('c=', '0x7a7e031f14f6b6c3292d11a41161d2491ce8bcdc67ef1baa9eL')
 ('e=', '0x872a335')
 #q + q*p^3 =1285367317452089980789441829580397855321901891350429414413655782431779727560841427444135440068248152908241981758331600586
@@ -64,11 +65,9 @@ featuredImage: "images/cover.png"
 
 #### 解题：
 
-
 根据附件可知需要求出p,q，一看就是需要求公约数的，用到的原理
 
-
-```cobol
+```text
 hint1 = q + qp^3 = (1+p^3)q = q(1+p)(p^2-p+1)
 hint2 = qp + qp^2 = q(1+p)p
 gcd(hint1,hint2) = q(1+p)
@@ -76,11 +75,9 @@ p = hint2 / q(1+p)
 q = gift // (p+1)
 ```
 
-
  得到p,q后根据欧拉定理，解题代码如下：
 
-
-```cobol
+```python
 from Crypto.Util.number import *
 from gmpy2 import *
 
@@ -108,6 +105,6 @@ print(long_to_bytes(flag))
 ####
 Flag
 
-```cobol
+```text
 flag{happy_rsa_1}
 ```

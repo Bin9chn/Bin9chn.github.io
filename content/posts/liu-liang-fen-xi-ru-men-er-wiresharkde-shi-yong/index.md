@@ -16,6 +16,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ## 前言
 
 我们先通过其他up主总结的图片先简单看一下wireshark的使用
@@ -33,7 +34,7 @@ featuredImage: "images/cover.png"
 
 这是流量包的文件格式
 
-```undefined
+```text
 .pcapng
 ```
 
@@ -47,7 +48,7 @@ featuredImage: "images/cover.png"
 
 ##### 协议 筛选：
 
-```undefined
+```text
 tcp：显示所有TCP协议的数据包
 udp：显示所有UDP协议的数据包
 http：显示所有HTTP协议的数据包
@@ -61,7 +62,7 @@ icmp：显示所有ICMP协议的数据包
 
 ##### IP地址筛选：
 
-```cobol
+```text
 ip.addr == 192.168.0.1：显示与指定IP地址相关的所有数据包
 src host 192.168.0.1：显示源IP地址为指定地址的数据包
 dst host 192.168.0.1：显示目标IP地址为指定地址的数据包
@@ -69,7 +70,7 @@ dst host 192.168.0.1：显示目标IP地址为指定地址的数据包
 
 这里我们筛选10.100.200.130ip相关的数据包
 
-```cobol
+```text
 ip.addr == 10.100.200.130
 ```
 
@@ -79,7 +80,7 @@ ip.addr == 10.100.200.130
 
 ##### 端口筛选：
 
-```cobol
+```text
 tcp.port ==  80：显示使用指定TCP端口的数据包
 udp.port == 53：显示使用指定UDP端口的数据包
 port 80：显示源或目标端口为指定端口的数据包
@@ -91,7 +92,7 @@ port 80：显示源或目标端口为指定端口的数据包
 
 ##### 逻辑运算符：
 
-```cobol
+```text
 and：使用AND逻辑运算符连接多个条件，例如 tcp and ip.addr == 192.168.0.1
 or：使用OR逻辑运算符连接多个条件，例如 tcp or udp
 not：使用NOT逻辑运算符排除满足条件的数据包，例如 not tcp
@@ -103,7 +104,7 @@ not：使用NOT逻辑运算符排除满足条件的数据包，例如 not tcp
 
 ##### 比较运算符：
 
-```cobol
+```text
 ==：等于，例如 http.request.method == "POST"
 !=：不等于，例如 ip.addr != 192.168.0.1
 <、>：小于、大于，例如 tcp.len > 100
@@ -115,7 +116,7 @@ not：使用NOT逻辑运算符排除满足条件的数据包，例如 not tcp
 
 ##### 复杂筛选：
 
-```cobol
+```text
 使用括号 () 来组合多个条件，例如 (tcp and port 80) or (udp and port 53)
 使用复合条件进行筛选，例如 (tcp.flags.syn == 1 or tcp.flags.ack == 1) and ip.addr == 192.168.0.1
 ```

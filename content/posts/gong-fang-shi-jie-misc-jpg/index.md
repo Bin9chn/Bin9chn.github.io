@@ -14,9 +14,10 @@ tags:
   - "CTF"
 featuredImage: "images/cover.png"
 ---
+
 ![攻防世界-Misc-jpg 配图 2](images/image-02.png)
 
-```cobol
+```python
 import base64
 
 f = open("ZmxhZy5jb2Rl", "rb")
@@ -35,7 +36,7 @@ f.close()
 
 ![攻防世界-Misc-jpg 配图 5](images/image-05.png)
 
-```cobol
+```python
 s = 'Q[VP\nXEMhBhpRChc_R'
 flag = ''
 for i in s:
@@ -46,7 +47,7 @@ print(flag)
 
  ![攻防世界-Misc-jpg 配图 6](images/image-06.png)
 
-```cobol
+```python
 s = [0x51, 0x5B, 0x56, 0x50, 0x0A, 0x58, 0x45, 0x4D, 0x68, 0x42,
   0x68, 0x70, 0x52, 0x43, 0x68, 0x63, 0x5F, 0x52, 0x19, 0x74,
   0x07, 0x73, 0x04, 0x68, 0x71, 0x06, 0x77, 0x0E, 0x37]

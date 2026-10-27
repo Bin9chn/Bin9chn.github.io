@@ -15,6 +15,7 @@ tags:
   - "CTF"
 featuredImage: "images/cover.png"
 ---
+
 ### 引言：当密码验证失效时
 
 2021年某大型电商平台因SQL注入漏洞导致千万用户数据泄露，攻击者仅用一行`' or 1=1 --`的密码字段就突破了系统防线。这个被称为"万能密码"的经典攻击方式，至今仍在OWASP十大Web安全威胁榜单中占据重要位置。本文将深入解析万能密码的运行机制，通过代码实例揭示其危险性，并提供企业级防御方案。
@@ -25,13 +26,13 @@ featuredImage: "images/cover.png"
 
 在典型的登录验证场景中，开发者常使用字符串拼接方式构造SQL语句：
 
-```perl
+```text
 sql = "SELECT * FROM users WHERE username='%s' AND password='%s'" % (username, password)
 ```
 
 当攻击者输入`admin'--`作为用户名时，实际执行的SQL变为：
 
-```cobol
+```sql
 SELECT * FROM users WHERE username='admin'-- ' AND password='任意值'
 ```
 
@@ -47,21 +48,21 @@ SELECT * FROM users WHERE username='admin'-- ' AND password='任意值'
 
 假设存在登录接口：
 
-```cobol
+```http
 POST /login HTTP/1.1
 username=test&password=123
 ```
 
 构造攻击请求：
 
-```cobol
+```http
 POST /login HTTP/1.1
 username=' or 1=1 -- &password=any_value
 ```
 
 生成的SQL语句：
 
-```cobol
+```sql
 SELECT * FROM users WHERE username='' or 1=1 -- ' AND password='any_value'
 ```
 
@@ -69,7 +70,7 @@ SELECT * FROM users WHERE username='' or 1=1 -- ' AND password='any_value'
 
 当系统返回详细错误信息时，攻击者可构造：
 
-```swift
+```text
 ' UNION SELECT 1,@@version,3,4 --
 ```
 
@@ -81,7 +82,7 @@ SELECT * FROM users WHERE username='' or 1=1 -- ' AND password='any_value'
 
 **Java示例（PreparedStatement）：**
 
-```cobol
+```text
 String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 PreparedStatement stmt = connection.prepareStatement(sql);
 stmt.setString(1, username);
@@ -91,7 +92,7 @@ ResultSet rs = stmt.executeQuery();
 
 **Python示例（SQLAlchemy）：**
 
-```cobol
+```python
 from sqlalchemy import text
 stmt = text("SELECT * FROM users WHERE username=:user AND password=:pass")
 result = db.engine.execute(stmt, user=username, pass=password)
@@ -101,7 +102,7 @@ result = db.engine.execute(stmt, user=username, pass=password)
 
 1.  **输入验证层**：
 
-    ```cobol
+    ```javascript
     // 正则过滤特殊字符
     function sanitize(input) {
         return input.replace(/['";\\]/g, '');
@@ -116,10 +117,9 @@ result = db.engine.execute(stmt, user=username, pass=password)
     GRANT SELECT ON app_db.users TO 'webuser'@'%';
     ```
 
-
 **WAF规则示例（ModSecurity）**：
 
-```scss
+```text
 SecRule ARGS "@detectSQLi" \
 "id:1001,\
 phase:2,\
@@ -142,7 +142,7 @@ UPDATE profile SET bio = 'harmless' WHERE user_id = 1; DROP TABLE logs --
 
 使用 Python 脚本实施时间盲注：
 
-```cobol
+```python
 import requests
 import time
 
@@ -169,7 +169,6 @@ for char in charset:
 4.  是否定期进行SQL注入漏洞扫描？
 
 5.  是否启用Web应用防火墙（WAF）？
-
 
 ### 结语：安全是持续的过程
 

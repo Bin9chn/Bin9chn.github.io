@@ -18,6 +18,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 #### **查看附件，是python2的环境**
 
 ```python
@@ -64,6 +65,6 @@ __import__('os').system('sh')
 
 #### Flag
 
-```cobol
+```text
 NSSCTF{18d36691-3418-431c-bea7-f26915634f2f}
 ```

@@ -17,6 +17,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 ## ![玄机：实战Live勒索病毒溯源排查 配图 1](images/image-01.png)
 
 ##  **前言**
@@ -27,9 +28,7 @@ featuredImage: "images/cover.png"
 
 发现加密文件特征以.LIVE结尾，结合信息收集：
 
-```cobol
 LIVE2.0勒索病毒是LIVE家族的第二代恶意软件，该恶意软件会加密受害者的文件，并且将受害者的ID、文件名称和文件名称的长度写入到加密文件的末尾，最后会将文件名重命名成带.LIVE的文件 ，尤其是针对较重要的文本类文件会采用全部数据加密的方式。此外，它还会提供给受害者一封“FILE RECOVERY_ID_+受害者ID.txt”的勒索信。
-```
 
 flag{LIVE}
 
@@ -151,7 +150,7 @@ flag{E:\\ruoyi\\ruoyi-admin.jar}
 
 学习内容：
 
-```cobol
+```text
 勒索病毒分析处置：
 1、判断勒索病毒：
 	1. 更改文件扩展名(部分勒索家族会将文件重命名如加密或编码)

@@ -18,6 +18,7 @@ tags:
   - "网络安全"
 featuredImage: "images/cover.png"
 ---
+
 > 本文是上一篇Redis未授权访问导致远程代码执行的补充版，重点补充完整操作流程、每一步的作用、脚本执行逻辑、如何连接Redis、如何判断失败原因，以及如何最终读取`/root/flag.txt`。
 
 ---
@@ -71,11 +72,7 @@ Redis未授权访问
 
 其中最关键的是：
 
-```text
-Redis本身不能直接执行系统命令，但可以通过持久化功能写文件。
-如果Redis进程权限足够高，就可以把文件写到/root/.ssh/authorized_keys。
-一旦authorized_keys中存在我们的公钥，就可以用对应私钥登录root。
-```
+Redis本身不能直接执行系统命令，但可以通过持久化功能写文件。如果Redis进程权限足够高，就可以把文件写到/root/.ssh/authorized_keys。一旦authorized_keys中存在我们的公钥，就可以用对应私钥登录root。
 
 ---
 
@@ -319,9 +316,7 @@ CONFIG SET dir /root/.ssh/
 
 这一步的作用是告诉Redis：
 
-```text
 之后保存RDB文件时，把文件保存到/root/.ssh/目录。
-```
 
 如果返回：
 
@@ -359,9 +354,7 @@ CONFIG SET dbfilename authorized_keys
 
 这一步的作用是告诉Redis：
 
-```text
 保存出来的文件名叫authorized_keys。
-```
 
 结合上一步，Redis最终保存路径就变成：
 
@@ -430,7 +423,6 @@ ssh -i ./redis_id_ed25519 root@ip "cat /root/flag.txt"
 
 下面的脚本会自动完成：
 
-```text
 1. 检查目标是否为本地或私有网段
 2. 连接Redis
 3. 发送PING确认未授权
@@ -440,7 +432,6 @@ ssh -i ./redis_id_ed25519 root@ip "cat /root/flag.txt"
 7. 修改RDB文件名为authorized_keys
 8. 触发SAVE保存
 9. 使用私钥SSH登录并读取/root/flag.txt
-```
 
 脚本仅允许本地或私有网段地址，避免误操作公网目标。
 
@@ -844,13 +835,11 @@ Redis连接失败
 
 可能原因：
 
-```text
 1. Redis没有启动
 2. IP或端口错误
 3. Docker端口没有映射
 4. 防火墙拦截
 5. 靶场环境未启动
-```
 
 排查：
 
@@ -891,12 +880,10 @@ Permission denied
 
 这时SSH写入路线失败，可以考虑：
 
-```text
 1. 尝试其他可写目录
 2. 尝试cron写入
 3. 尝试Web目录写入
 4. 尝试Redis主从复制模块利用
-```
 
 ---
 
@@ -904,12 +891,10 @@ Permission denied
 
 可能原因：
 
-```text
 1. SAVE命令被禁用
 2. 持久化目录不可写
 3. 当前Redis配置不允许保存
 4. 磁盘权限不足
-```
 
 ---
 
@@ -917,14 +902,12 @@ Permission denied
 
 可能原因：
 
-```text
 1. 目标没有开放22端口
 2. 目标没有运行sshd
 3. root用户禁止SSH登录
 4. authorized_keys格式被RDB脏数据影响
 5. /root/.ssh/目录权限不符合SSH要求
 6. 私钥权限过宽，没有chmod 600
-```
 
 本地可以先执行：
 
@@ -954,7 +937,6 @@ SSH解析`authorized_keys`时，只要能识别其中合法的一行公钥，就
 
 ```text
 
-
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIxxxxxxxxxxxx user@host
 ```
 
@@ -966,7 +948,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIxxxxxxxxxxxx user@host
 
 本题完整思路如下：
 
-```text
+```redis
 拿到Redis地址
     ↓
 redis-cli连接6379端口
@@ -1002,22 +984,18 @@ cat /root/flag.txt
 
 这条利用链成立需要满足几个条件：
 
-```text
 1. Redis未授权访问成立
 2. CONFIG SET命令可用
 3. Redis进程有权限写入/root/.ssh/
 4. SAVE命令可用
 5. 目标机器运行SSH服务
 6. root允许通过密钥登录
-```
 
 如果其中任意一个条件不满足，SSH写入路线都可能失败。此时需要根据实际环境转向其他利用方式，例如cron写入、Web目录写入或Redis主从复制模块RCE。
 
 一句话总结：
 
-```text
 Redis未授权不是直接getshell，而是利用Redis持久化写文件能力，把SSH公钥写进root的authorized_keys，再用私钥登录读取flag。
-```
 
 ---
 
@@ -1025,7 +1003,6 @@ Redis未授权不是直接getshell，而是利用Redis持久化写文件能力�
 
 实际生产环境中应避免Redis暴露在公网，并进行以下加固：
 
-```text
 1. Redis只监听127.0.0.1或内网地址
 2. 开启protected-mode
 3. 配置强密码或ACL认证
@@ -1034,7 +1011,6 @@ Redis未授权不是直接getshell，而是利用Redis持久化写文件能力�
 6. 禁用或重命名CONFIG、SAVE、SLAVEOF、REPLICAOF、MODULE等危险命令
 7. 定期检查/root/.ssh/authorized_keys是否被异常修改
 8. 检查Redis数据目录是否存在异常RDB文件
-```
 
 Redis配置示例：
 

@@ -28,7 +28,7 @@ sections:
     title: Snapshot
     items:
       - label: Posts
-        value: "35"
+        value: "36"
         accent: cyan
       - label: Projects
         value: "5"

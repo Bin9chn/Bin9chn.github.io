@@ -1,11 +1,11 @@
 profile:
   name: "Bin9chn"
-  title: "网络安全研究者 / 凌日团队创始人"
+  title: "个人博客 / 什么都写一点"
   avatar: "images/avatar.png"
-  description: 关注协议安全、漏洞研究、流量分析、应急响应与本地优先安全工具。
+  description: 技术、项目，以及一些没归类的日常。
   status:
     label: Focus
-    value: Security Research
+    value: Writing & Building
     preference_label: Team
     preference: LapR1skT Founder
   links:
@@ -25,7 +25,7 @@ profile:
 sections:
   - id: profile-stats
     type: stats
-    title: Research Snapshot
+    title: Snapshot
     items:
       - label: Posts
         value: "35"
@@ -36,22 +36,22 @@ sections:
       - label: "Team"
         value: "LapR1skT"
         accent: purple
-  - id: research-focus
+  - id: topics
     type: tags
-    title: Research Focus
+    title: Topics
     items:
-      - Protocol Security
-      - Web Security
+      - Protocol
+      - Web
       - CTF
-      - Traffic Analysis
-      - Incident Response
-      - Security Tooling
+      - Tooling
+      - Notes
+      - Daily
   - id: friend-links
     type: links
     title: Links
     items:
       - label: 友链
-        description: 安全研究、技术博客与相关项目站点
+        description: 常逛的一些站点
         url: /friends/
         icon: library
       - label: 申请友链

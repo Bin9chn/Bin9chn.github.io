@@ -15,8 +15,8 @@ allow = ['^(dart-)?sass$', '^go$', '^git$', '^node$', '^postcss$', '^tailwindcss
 pagerSize = 10
 
 [params]
-description = "Bin9chn 的网络安全研究与工程项目笔记，关注协议安全、CTF、流量分析、漏洞研究和安全工具。"
-keywords = "网络安全,协议安全,CTF,漏洞研究,HTTP/2,Bin9chn"
+description = "Bin9chn 的个人博客：技术笔记、项目记录，还有一些没归类的日常。"
+keywords = "Bin9chn,个人博客,技术笔记,项目,随笔"
 
 [markup]
 [markup.highlight]

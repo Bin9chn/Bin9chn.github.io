@@ -1,8 +1,8 @@
 {{ define "main" }}
-  {{ $category := "Research Note" }}
+  {{ $category := "Note" }}
   {{ with index .Params.categories 0 }}{{ $category = . }}{{ end }}
   {{ $path := slice
-    (dict "tag" "a" "label" "bin9chn@research" "href" (relURL "/") "class" "nerdy-muted transition-colors hover:text-slate-950 hover:underline dark:hover:text-white")
+    (dict "tag" "a" "label" "bin9chn@blog" "href" (relURL "/") "class" "nerdy-muted transition-colors hover:text-slate-950 hover:underline dark:hover:text-white")
     (dict "label" ":")
     (dict "tag" "a" "label" "~/posts" "href" (relURL "posts/") "class" "text-accent-cyan transition-colors hover:underline")
     (dict "label" "/")

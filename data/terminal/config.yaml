@@ -1,7 +1,7 @@
 user: bin9chn
-host: research
-directory: "~/profile"
-window_title: "bin9chn@research:~/profile"
+host: blog
+directory: "~"
+window_title: "bin9chn@blog:~"
 auto_command: about
 builtins:
   - name: clear

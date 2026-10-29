@@ -1,6 +1,6 @@
 # Bin9chn
 
-基于 Hugo 与 `Nerdy` 主题的个人研究博客，内容聚焦网络安全、CTF、流量分析、漏洞研究和安全工程。
+基于 Hugo 与 `Nerdy` 主题的个人博客，技术、项目与日常都写。
 
 站点：https://bin9chn.github.io/
 

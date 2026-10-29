@@ -5,7 +5,7 @@ quick: true
 weight: 40
 items:
   - name: LapCry
-    type: Security Tooling
+    type: Desktop App
     tech:
       - .NET 8
       - WebView2
@@ -13,7 +13,7 @@ items:
     description: 本地优先的桌面加解密与数据处理工作台。
     url: https://github.com/Bin9chn/LapCry_public
   - name: HTTP/2 Bomb
-    type: Protocol Research
+    type: Research
     tech:
       - HTTP/2
       - HPACK
@@ -21,7 +21,7 @@ items:
     description: HPACK 压缩放大与流控停滞组合风险研究。
     url: https://github.com/Bin9chn/http2-bomb
   - name: LRT CryptoCTF Tools
-    type: CTF Tooling
+    type: CTF Tool
     tech:
       - Python
       - Cryptography

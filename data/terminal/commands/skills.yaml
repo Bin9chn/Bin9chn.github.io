@@ -1,33 +1,32 @@
 name: skills
 label: Skills
-description: 研究领域与技术栈
+description: 常用工具与技术栈
 quick: true
 weight: 20
 categories:
-  - key: security
-    items:
-      - Protocol Security
-      - Web Security
-      - Vulnerability Research
-      - Traffic Analysis
-      - Incident Response
-  - key: ctf
-    items:
-      - Web
-      - Crypto
-      - Traffic
-      - Misc
-  - key: development
+  - key: languages
     items:
       - Python
       - JavaScript
       - Java
       - .NET
+      - Go
+  - key: web
+    items:
       - Hugo
+      - Tailwind
+      - Alpine.js
+      - HTML/CSS
+  - key: security
+    items:
+      - Protocol
+      - Web
+      - Crypto
+      - Traffic
   - key: tooling
     items:
-      - Wireshark
       - Docker
       - Git
       - Linux
+      - Wireshark
       - Windows

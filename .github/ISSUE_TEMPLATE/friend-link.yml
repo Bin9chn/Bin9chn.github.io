@@ -10,7 +10,7 @@ body:
     id: name
     attributes:
       label: 站点名称
-      placeholder: 例如：Example Security Blog
+      placeholder: 例如：Example Blog
     validations:
       required: true
   - type: input
@@ -37,11 +37,11 @@ body:
     id: tags
     attributes:
       label: 标签
-      placeholder: 安全研究, CTF, 开发
+      placeholder: 技术笔记, 项目, 随笔
   - type: checkboxes
     id: confirmation
     attributes:
       label: 确认
       options:
-        - label: 站点可长期访问，且内容与网络安全或技术开发相关。
+        - label: 站点可长期访问，且内容以原创为主。
           required: true

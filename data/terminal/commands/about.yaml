@@ -1,16 +1,16 @@
 name: about
 label: About
-description: 安全研究方向与个人简介
+description: 个人简介
 quick: true
 weight: 10
 greeting: "Hi, there."
 person_name: "Bin9chn"
-role: Security Researcher
-summary: 网络与信息安全研究者，凌日网络与信息安全团队创始人。
+role: Developer / Blogger
+summary: 个人博客的主人。写代码、做工具，也记录技术之外的事。
 details:
-  - 关注协议安全、漏洞分析、流量取证、应急响应、CTF 与安全工具开发。
+  - 这里不限定题材：技术笔记、项目记录、折腾过程和日常都会写一点。
   - 维护 LapCry、HTTP/2 Bomb 和 LRT CryptoCTF Tools 等公开项目。
-  - 持续整理漏洞研究、赛题复现和工程实践，偏好可复现、可验证的技术路径。
+  - 凌日网络与信息安全团队创始人，偶尔折腾协议、CTF 和流量分析。
 quote:
   text: Make the unknown observable, then make it reproducible.
   author: Bin9chn

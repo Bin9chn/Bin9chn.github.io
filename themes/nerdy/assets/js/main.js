@@ -20,10 +20,6 @@ function writeStoredTheme(theme) {
   }
 }
 
-function prefersDarkTheme() {
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
-}
-
 function prefersReducedMotion() {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 }
@@ -36,10 +32,8 @@ function applyTheme(dark) {
 Alpine.data('themeToggle', () => ({
   dark: false,
   init() {
-    const stored = readStoredTheme();
-    this.dark = stored
-      ? stored === 'dark'
-      : prefersDarkTheme();
+    // Match theme-scheme.js: light on the first visit unless the visitor chose dark.
+    this.dark = readStoredTheme() === 'dark';
     this.apply();
   },
   toggle() {

@@ -8,8 +8,9 @@
     // Ignore storage errors so theme boot never blocks rendering.
   }
 
-  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
-  const dark = storedTheme ? storedTheme === 'dark' : prefersDark;
+  // A first visit always starts on the light theme, whatever the OS preference is.
+  // Once the visitor flips the toggle, that choice is stored and wins from then on.
+  const dark = storedTheme === 'dark';
 
   root.classList.toggle('dark', dark);
   root.style.colorScheme = dark ? 'dark' : 'light';

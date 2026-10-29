@@ -32,6 +32,16 @@
         "Web安全",
         "题解"
       ]
+    },
+    {
+      "name": "VMV的博客",
+      "url": "https://tsvmv.github.io/",
+      "description": "一位初中生的个人博客。",
+      "avatar": "/images/friends/vmv.jpg",
+      "tags": [
+        "WEB",
+        "CTF"
+      ]
     }
   ]
 }

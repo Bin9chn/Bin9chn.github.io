@@ -50,6 +50,15 @@
             <span>{{ . }} min read</span>
           </div>
         {{ end }}
+        {{/* Page views (GoatCounter). Stays hidden when no counter is configured
+             or when the visitor blocks the script, so no empty slot is left behind. */}}
+        {{ with $readingTime }}
+          <span class="hidden text-slate-400 dark:text-slate-600 md:block">|</span>
+          <div class="flex items-center gap-2" data-views="page" hidden>
+            {{ partial "components/icon.html" (dict "name" "eye" "class" "h-4 w-4 text-slate-600 dark:text-slate-500") }}
+            <span><span data-views-value>0</span> 次阅读</span>
+          </div>
+        {{ end }}
         {{ with $tags }}
           <span class="hidden text-slate-400 dark:text-slate-600 md:block">|</span>
           <div class="flex flex-wrap gap-2">

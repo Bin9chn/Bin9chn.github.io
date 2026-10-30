@@ -27,3 +27,8 @@
 {{ end }}
 {{ partial "site/assets/css.html" . }}
 {{ partial "site/assets/js.html" . }}
+{{/* Page-view counter. GoatCounter records the hit and also exposes getCount(),
+     which main.js uses to print the numbers. No site key means no request at all. */}}
+{{ with site.Params.views.goatcounter }}
+  <script data-goatcounter="https://{{ . }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+{{ end }}

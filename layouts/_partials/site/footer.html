@@ -1,6 +1,10 @@
 <footer class="border-t border-border">
   <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
     <span>&copy; {{ now.Year }} {{ site.Title }}. 保留所有权利。</span>
-    <span class="font-mono text-xs">Built with Hugo + Nerdy + Tailwind CSS</span>
+    <span class="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs">
+      {{/* Site-wide page views. Hidden unless a counter is configured and reachable. */}}
+      <span data-views="site" hidden>访问 <span data-views-value>0</span></span>
+      <span>Built with Hugo + Nerdy + Tailwind CSS</span>
+    </span>
   </div>
 </footer>

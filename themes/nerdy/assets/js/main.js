@@ -418,10 +418,62 @@ function initCodeBlockCopy() {
   });
 }
 
+/**
+ * Page-view counters. count.js (loaded in <head>) records the visit; the numbers are
+ * read back from GoatCounter's public /counter/<path>.json endpoint. When no site key
+ * is configured nothing is fetched and every [data-views] wrapper stays hidden, so a
+ * blocked or misconfigured third party never leaves a "0 次阅读" placeholder behind.
+ */
+function initViewCounters() {
+  const site = document.body?.dataset.viewsSite?.trim();
+  const wrappers = Array.from(document.querySelectorAll('[data-views]'));
+  if (!site || !wrappers.length) return;
+
+  const reveal = (name, raw) => {
+    const wrapper = wrappers.find((el) => el.dataset.views === name);
+    if (!wrapper) return;
+
+    const count = Number(raw);
+    if (!Number.isFinite(count) || count <= 0) return;
+
+    const slot = wrapper.querySelector('[data-views-value]');
+    if (slot) slot.textContent = count.toLocaleString('en-US');
+    wrapper.hidden = false;
+  };
+
+  wrappers.forEach((wrapper) => {
+    const name = wrapper.dataset.views;
+    const path = name === 'site' ? 'TOTAL' : location.pathname;
+    const url = `https://${site}.goatcounter.com/counter/${encodeURIComponent(path)}.json`;
+
+    const load = (retry) => {
+      window
+        .fetch(url, { credentials: 'omit' })
+        .then((response) => (response.ok ? response.json() : null))
+        .then((data) => {
+          // The API returns thousands separators ("1 097 455"), so strip everything else.
+          const count = Number(String(data?.count ?? '').replace(/[^\d]/g, ''));
+          if (Number.isFinite(count) && count > 0) {
+            reveal(name, count);
+          } else if (retry) {
+            // On a first visit the record request and this read can race; ask once more.
+            window.setTimeout(() => load(false), 1500);
+          }
+        })
+        .catch(() => {
+          // Offline, blocked or CORS failure: keep the counter hidden.
+        });
+    };
+
+    load(true);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initPostToc();
   initPageShare();
   initCodeBlockCopy();
+  initViewCounters();
 });
 
 Alpine.start();

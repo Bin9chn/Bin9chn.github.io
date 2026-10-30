@@ -18,6 +18,12 @@ pagerSize = 10
 description = "Bin9chn 的个人博客：技术笔记、项目记录，还有一些没归类的日常。"
 keywords = "Bin9chn,个人博客,技术笔记,项目,随笔"
 
+# Page-view counters. GoatCounter is free for personal sites and needs no cookie;
+# sign up at https://www.goatcounter.com/signup and put the subdomain here.
+# Leave `goatcounter` empty to hide every counter (nothing is requested, nothing shows).
+[params.views]
+goatcounter = "bin9chn"
+
 [markup]
 [markup.highlight]
 noClasses = false

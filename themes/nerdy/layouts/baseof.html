@@ -3,7 +3,7 @@
   <head>
     {{ partial "site/head.html" . }}
   </head>
-  <body class="min-h-screen bg-background text-foreground">
+  <body class="min-h-screen bg-background text-foreground" data-views-site="{{ site.Params.views.goatcounter }}">
     <a class="nerdy-skip-link" href="#main-content">Skip to main content</a>    {{/* The header carries the only top-level navigation, so every page renders it.
          Home uses a slimmer variant to keep the terminal above the fold. */}}
     {{ partial "site/header.html" (dict "compact" .IsHome "page" .) }}

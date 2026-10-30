@@ -27,8 +27,10 @@
 {{ end }}
 {{ partial "site/assets/css.html" . }}
 {{ partial "site/assets/js.html" . }}
-{{/* Page-view counter. GoatCounter records the hit and also exposes getCount(),
-     which main.js uses to print the numbers. No site key means no request at all. */}}
+{{/* Page-view counter. count.js is self-hosted on purpose: the official CDN
+     (gc.zgo.at) is unreachable from mainland China, so loading it from there meant
+     no hit was ever recorded. The copied file is upstream's public/count.js; only
+     the endpoint in data-goatcounter talks to the network. No site key, no request. */}}
 {{ with site.Params.views.goatcounter }}
-  <script data-goatcounter="https://{{ . }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script data-goatcounter="https://{{ . }}.goatcounter.com/count" async src="{{ "js/goatcounter-count.js" | relURL }}"></script>
 {{ end }}

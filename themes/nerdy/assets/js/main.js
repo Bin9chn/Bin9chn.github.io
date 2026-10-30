@@ -429,15 +429,12 @@ function initViewCounters() {
   const wrappers = Array.from(document.querySelectorAll('[data-views]'));
   if (!site || !wrappers.length) return;
 
-  const reveal = (name, raw) => {
+  const reveal = (name, value) => {
     const wrapper = wrappers.find((el) => el.dataset.views === name);
     if (!wrapper) return;
 
-    const count = Number(raw);
-    if (!Number.isFinite(count) || count <= 0) return;
-
     const slot = wrapper.querySelector('[data-views-value]');
-    if (slot) slot.textContent = count.toLocaleString('en-US');
+    if (slot) slot.textContent = value.toLocaleString('en-US');
     wrapper.hidden = false;
   };
 
@@ -446,29 +443,40 @@ function initViewCounters() {
     const path = name === 'site' ? 'TOTAL' : location.pathname;
     const url = `https://${site}.goatcounter.com/counter/${encodeURIComponent(path)}.json`;
 
-    const load = (retry) => {
+    const load = (attempt) => {
       window
         .fetch(url, { credentials: 'omit' })
-        .then((response) => (response.ok ? response.json() : null))
+        .then((response) => response.json().catch(() => null))
         .then((data) => {
+          // A known path answers 200; a path with no hits yet answers 404 with the
+          // same body. Both are real answers, so a brand-new post shows "0 次阅读"
+          // instead of dropping the slot and shifting the meta row around.
+          if (!data || !('count' in data)) {
+            if (attempt < 2) window.setTimeout(() => load(attempt + 1), 1200);
+            return;
+          }
+
           // The API returns thousands separators ("1 097 455"), so strip everything else.
-          const count = Number(String(data?.count ?? '').replace(/[^\d]/g, ''));
-          if (Number.isFinite(count) && count > 0) {
-            reveal(name, count);
-          } else if (retry) {
-            // On a first visit the record request and this read can race; ask once more.
-            window.setTimeout(() => load(false), 1500);
+          const count = Number(String(data.count).replace(/[^\d]/g, ''));
+          if (!Number.isFinite(count)) return;
+
+          reveal(name, count);
+
+          // On a first visit the beacon and this read race: a zero right after load
+          // is worth one more look, and the slot updates in place if it grew.
+          if (count === 0 && attempt < 2) {
+            window.setTimeout(() => load(attempt + 1), 1500);
           }
         })
         .catch(() => {
-          // Offline, blocked or CORS failure: keep the counter hidden.
+          // Offline, blocked or CORS failure: stay hidden rather than claim a zero
+          // we never actually read.
         });
     };
 
-    load(true);
+    load(0);
   });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   initPostToc();
   initPageShare();

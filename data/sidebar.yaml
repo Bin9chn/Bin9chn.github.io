@@ -1,7 +1,7 @@
 profile:
-  name: "Bin9chn"
-  title: "个人博客 / 什么都写一点"
-  avatar: "images/avatar.png"
+  name: Bin9chn
+  title: Hello~
+  avatar: images/avatar.png
   description: 技术、项目，以及一些没归类的日常。
   status:
     label: Focus

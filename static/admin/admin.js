@@ -216,8 +216,10 @@
 
   // --------------------------------------------------------------- repository
 
-  async function refreshTree() {
-    var data = await api('/repos/' + OWNER + '/' + REPO + '/git/trees/' + state.branch + '?recursive=1');
+  async function refreshTree(sha) {
+    // Accepting an explicit tree sha avoids the cached branch lookup right after a
+    // commit: the new sha is content-addressed and can never be stale.
+    var data = await api('/repos/' + OWNER + '/' + REPO + '/git/trees/' + (sha || state.branch) + '?recursive=1');
     state.tree = (data && data.tree) || [];
     return state.tree;
   }
@@ -237,11 +239,19 @@
       .map(function (node) { return node.path; });
   }
 
+  // Content-addressed cache: after a commit only the blobs whose sha changed are
+  // fetched again. Without it every save re-read all ~39 posts (2-5s of latency
+  // before the list refreshes).
+  var fileCache = Object.create(null);
+
   async function readFile(path) {
     var node = findBlob(path);
     if (!node) return null;
+    if (fileCache[node.sha] !== undefined) return fileCache[node.sha];
     var blob = await api('/repos/' + OWNER + '/' + REPO + '/git/blobs/' + node.sha);
-    return b64decodeUtf8(blob.content);
+    var text = b64decodeUtf8(blob.content);
+    fileCache[node.sha] = text;
+    return text;
   }
 
   async function pool(items, limit, worker) {
@@ -342,9 +352,9 @@
   async function commit(changes, message) {
     if (!changes.length) return null;
     setStatus('正在提交…');
-    var ref = await api('/repos/' + OWNER + '/' + REPO + '/git/ref/heads/' + state.branch);
+    var ref = await api('/repos/' + OWNER + '/' + REPO + '/git/ref/heads/' + state.branch + '?t=' + Date.now());
     var parentSha = ref.object.sha;
-    var parent = await api('/repos/' + OWNER + '/' + REPO + '/git/commits/' + parentSha);
+    var parent = await api('/repos/' + OWNER + '/' + REPO + '/git/commits/' + parentSha + '?t=' + Date.now());
 
     var treeItems = await pool(changes, 4, async function (change) {
       if (change.content === null) {
@@ -376,9 +386,28 @@
 
     setStatus('已提交 ' + newCommit.sha.slice(0, 7) + '，等待 Pages 构建…');
     watchBuild(newCommit.sha);
-    await refreshTree();
+    // GitHub's ref endpoint can serve a cached value for a few seconds right after
+    // the PATCH. Without this wait the next tree read returns the previous commit,
+    // so a freshly saved post is missing from the list until a manual refresh.
+    await waitForRef(newCommit.sha);
+    await refreshTree(newCommit.tree.sha);
     await Promise.all([loadPosts(), loadCategories()]);
     return newCommit;
+  }
+
+  async function waitForRef(sha, timeout) {
+    var limit = timeout || 8000;
+    var started = Date.now();
+    while (Date.now() - started < limit) {
+      try {
+        var ref = await api('/repos/' + OWNER + '/' + REPO + '/git/ref/heads/' + state.branch + '?t=' + Date.now());
+        if (ref && ref.object && ref.object.sha === sha) return true;
+      } catch (err) {
+        /* transient; keep polling */
+      }
+      await new Promise(function (resolve) { window.setTimeout(resolve, 700); });
+    }
+    return false;
   }
 
   /** Poll the Pages build so the editor can say "live" instead of guessing. */

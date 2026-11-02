@@ -19,7 +19,9 @@
           (dict "label" $cat)
         )) }}
 
-        {{ partial "components/page-heading.html" (dict "title" $cat "description" (.Params.description | default $entry.description) "eyebrow" (printf "~/categories/%s" .Params.slug) "accent" (or $entry.accent "cyan")) }}
+        {{/* data/categories.yaml is the source the admin edits, so it wins over the
+             copy baked into the page front matter. */}}
+        {{ partial "components/page-heading.html" (dict "title" $cat "description" (or $entry.description .Params.description) "eyebrow" (printf "~/categories/%s" .Params.slug) "accent" (or $entry.accent "cyan")) }}
 
         <div class="mb-6 flex flex-wrap items-center gap-3 font-mono text-[11px] nerdy-muted-soft">
           <span class="nerdy-chip nerdy-chip-cyan">{{ len $posts }} posts</span>

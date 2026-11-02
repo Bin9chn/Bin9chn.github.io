@@ -4,7 +4,7 @@ date = 2026-10-29T20:20:00+08:00
 draft = false
 summary = "青少年 CTF 应急响应前两题：SSH 连上去之后，一题查系统发行版，一题从 /etc/passwd 里翻出那个不该存在的账号。"
 tags = ["CTF", "应急响应", "Linux"]
-categories = ["CTF"]
+categories = ["WP"]
 slug = "qing-shao-nian-ctf-ying-ji-xiang-ying-1-2"
 +++
 

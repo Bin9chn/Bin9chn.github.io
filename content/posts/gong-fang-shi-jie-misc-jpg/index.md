@@ -7,7 +7,7 @@ slug: "gong-fang-shi-jie-misc-jpg"
 originalId: 138756337
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/138756337"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "服务器"
   - "网络安全"

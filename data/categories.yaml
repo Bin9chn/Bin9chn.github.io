@@ -1,0 +1,25 @@
+- slug: study
+  label: 学习笔记
+  icon: collection
+  accent: cyan
+  description: 协议、漏洞、流量分析这些，边学边记，写下来才算真的懂。
+- slug: wp
+  label: WP
+  icon: article
+  accent: emerald
+  description: 比赛和靶场的 writeup，思路、卡点和最后的通关方式。
+- slug: project
+  label: 项目博客
+  icon: repository
+  accent: purple
+  description: 自己写的工具和项目，从设计取舍到落地踩坑。
+- slug: daily
+  label: 日常分享
+  icon: star
+  accent: amber
+  description: 团队、想法，还有一些和技术无关的记录。
+- slug: other
+  label: 其他
+  icon: folder
+  accent: cyan
+  description: 暂时没归进以上几类的内容。

@@ -7,7 +7,7 @@ slug: "rctf2025-chaos2"
 originalId: 155244777
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155244777"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "ctf"
   - "开发语言"

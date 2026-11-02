@@ -7,7 +7,7 @@ slug: "php-fan-xu-lie-hua-lou-dong-xiang-jie-yuan-li-li-yong-lian-zhen-shi-an-li
 originalId: 154995581
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/154995581"
 categories:
-  - "漏洞分析"
+  - "学习笔记"
 tags:
   - "android"
   - "php"

@@ -7,7 +7,8 @@ slug: "wang-luo-an-quan-mian-shi-zhi-nan-sqlzhu-ru-zhuan-ti-han-ti-mu"
 originalId: 147612170
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/147612170"
 categories:
-  - "漏洞分析"
+  - "学习笔记"
+
 tags:
   - "web安全"
   - "面试"

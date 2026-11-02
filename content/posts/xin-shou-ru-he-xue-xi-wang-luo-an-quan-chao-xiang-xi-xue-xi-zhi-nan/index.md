@@ -7,7 +7,8 @@ slug: "xin-shou-ru-he-xue-xi-wang-luo-an-quan-chao-xiang-xi-xue-xi-zhi-nan"
 originalId: 147535673
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/147535673"
 categories:
-  - "安全学习"
+  - "学习笔记"
+
 tags:
   - "学习"
   - "web安全"

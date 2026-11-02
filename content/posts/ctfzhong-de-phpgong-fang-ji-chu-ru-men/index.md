@@ -7,7 +7,8 @@ slug: "ctfzhong-de-phpgong-fang-ji-chu-ru-men"
 originalId: 155160456
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155160456"
 categories:
-  - "漏洞分析"
+  - "学习笔记"
+
 tags:
   - "php"
   - "开发语言"

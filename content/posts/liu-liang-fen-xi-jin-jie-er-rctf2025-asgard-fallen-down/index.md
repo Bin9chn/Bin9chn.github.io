@@ -7,7 +7,7 @@ slug: "liu-liang-fen-xi-jin-jie-er-rctf2025-asgard-fallen-down"
 originalId: 155036292
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155036292"
 categories:
-  - "CTF"
+  - "学习笔记"
 tags:
   - "安全"
   - "wireshark"

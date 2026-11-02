@@ -7,7 +7,7 @@ slug: "nssctfmei-ri-yi-ti-hnctf-2022-week1-python2-input-jail"
 originalId: 158811383
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/158811383"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "ctf"
   - "python"

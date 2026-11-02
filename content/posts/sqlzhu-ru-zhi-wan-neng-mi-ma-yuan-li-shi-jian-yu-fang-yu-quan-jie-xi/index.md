@@ -7,7 +7,7 @@ slug: "sqlzhu-ru-zhi-wan-neng-mi-ma-yuan-li-shi-jian-yu-fang-yu-quan-jie-xi"
 originalId: 147604058
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/147604058"
 categories:
-  - "漏洞分析"
+  - "学习笔记"
 tags:
   - "sql"
   - "数据库"

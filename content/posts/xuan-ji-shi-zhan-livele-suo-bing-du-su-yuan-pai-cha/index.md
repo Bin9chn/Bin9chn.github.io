@@ -7,7 +7,7 @@ slug: "xuan-ji-shi-zhan-livele-suo-bing-du-su-yuan-pai-cha"
 originalId: 153264543
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/153264543"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "安全"
   - "web安全"

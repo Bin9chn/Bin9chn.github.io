@@ -7,7 +7,8 @@ slug: "windows-evtx-wen-jian-wan-zheng-fen-xi-liu-cheng-zhi-nan"
 originalId: 147611903
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/147611903"
 categories:
-  - "应急响应"
+  - "学习笔记"
+
 tags:
   - "windows"
   - "网络安全"

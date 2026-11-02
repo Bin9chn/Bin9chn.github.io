@@ -7,7 +7,8 @@ slug: "ling-ri-wang-luo-yu-xin-xi-an-quan-tuan-dui-lapse-risk-team-lapr1skt-lap"
 originalId: 142632746
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/142632746"
 categories:
-  - "团队"
+  - "日常分享"
+
 tags:
   - "网络安全"
   - "CTF"

@@ -7,7 +7,7 @@ slug: "javafan-xu-lie-hua-yin-cang-zai-dai-ma-shen-chu-de-an-quan-hei-dong"
 originalId: 155065748
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155065748"
 categories:
-  - "漏洞分析"
+  - "学习笔记"
 tags:
   - "java"
   - "开发语言"

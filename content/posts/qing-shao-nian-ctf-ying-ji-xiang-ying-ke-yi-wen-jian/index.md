@@ -4,7 +4,7 @@ date = 2026-10-29T21:10:00+08:00
 draft = false
 summary = "一个只导出了 HelloWorld 的 DLL，用 IDA 顺着跳板摸到 ChaCha20，再从异或之后多加的那 1 逆回去，拿到 flag。"
 tags = ["CTF", "应急响应", "逆向", "ChaCha20"]
-categories = ["CTF"]
+categories = ["WP"]
 slug = "qing-shao-nian-ctf-ying-ji-xiang-ying-ke-yi-wen-jian"
 +++
 

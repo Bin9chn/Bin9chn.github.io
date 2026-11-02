@@ -1,0 +1,50 @@
+{{ define "main" }}
+  {{ $cat := .Params.category }}
+  {{ $posts := slice }}
+  {{ range where site.RegularPages "Section" "posts" }}
+    {{ if in .Params.categories $cat }}{{ $posts = $posts | append . }}{{ end }}
+  {{ end }}
+  {{ $posts = sort $posts "Date" "desc" }}
+  {{ $entry := index (where hugo.Data.categories "label" $cat) 0 }}
+
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-5xl">
+        <a class="mb-6 inline-flex items-center gap-1.5 font-mono text-xs nerdy-muted transition-colors hover:text-accent-cyan" href="{{ "categories/" | relURL }}">← 全部分类</a>
+
+        {{ partial "components/page-heading.html" (dict "title" $cat "description" (.Params.description | default $entry.description) "eyebrow" (printf "~/categories/%s" .Params.slug) "accent" (or $entry.accent "cyan")) }}
+
+        <div class="mb-6 flex flex-wrap items-center gap-3 font-mono text-[11px] nerdy-muted-soft">
+          <span class="nerdy-chip nerdy-chip-cyan">{{ len $posts }} posts</span>
+          <span>按时间倒序</span>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          {{ range $posts }}
+            <a class="group nerdy-card nerdy-card-hover nerdy-card-accent-cyan flex flex-col gap-2 p-4 sm:p-5" href="{{ .RelPermalink }}">
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] nerdy-muted-soft">
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+                <span aria-hidden="true">·</span>
+                <span>{{ .ReadingTime }} min read</span>
+              </div>
+              <h2 class="text-base font-bold leading-snug text-slate-950 transition-colors group-hover:text-accent-cyan dark:text-white sm:text-lg">{{ .Title }}</h2>
+              {{ with .Summary }}<p class="text-sm leading-6 nerdy-muted">{{ . | plainify | truncate 160 }}</p>{{ end }}
+              {{ with .Params.tags }}
+                <div class="mt-1 flex flex-wrap gap-1.5">
+                  {{ range first 4 . }}<span class="nerdy-chip nerdy-chip-cyan">#{{ . }}</span>{{ end }}
+                </div>
+              {{ end }}
+            </a>
+          {{ else }}
+            <div class="nerdy-card-dashed p-8 text-center">
+              <p class="font-mono text-sm nerdy-muted">这个分类还没有文章，先去别的分类看看？</p>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

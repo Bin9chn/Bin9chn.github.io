@@ -7,7 +7,8 @@ slug: "wang-luo-an-quan-hong-dui-xue-xi-lu-xian-chao-xiang-xi-ban"
 originalId: 147534358
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/147534358"
 categories:
-  - "安全学习"
+  - "学习笔记"
+
 tags:
   - "web安全"
   - "学习"

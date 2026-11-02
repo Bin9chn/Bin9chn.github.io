@@ -137,6 +137,37 @@ body {
   }
 }
 
+/* Search page: the same chips double as filters, so they need a pressed state. */
+.nerdy-search-filter {
+  cursor: pointer;
+  border-color: color-mix(in oklab, var(--accent-cyan) 22%, transparent);
+  color: color-mix(in oklab, var(--accent-cyan) 85%, transparent);
+  background: transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.nerdy-search-filter:hover,
+.nerdy-search-filter[aria-pressed="true"] {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.nerdy-search-filter[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--accent-cyan) 16%, transparent);
+}
+
+/* JS toggles [hidden] on flex cards; the UA rule loses to Tailwind's display. */
+[hidden] {
+  display: none !important;
+}
+
+.nerdy-search-item mark {
+  border-radius: 0.2rem;
+  padding: 0 0.12em;
+  background: color-mix(in oklab, var(--accent-amber) 38%, transparent);
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -7,7 +7,8 @@ slug: "chong-qing-shi-da-xue-sheng-xin-xi-an-quan-jing-sai-bu-fen-writeup"
 originalId: 155945357
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155945357"
 categories:
-  - "CTF"
+  - "WP"
+
 tags:
   - "ctf"
   - "重庆市大学生信息安全竞赛"

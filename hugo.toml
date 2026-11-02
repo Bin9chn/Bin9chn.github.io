@@ -8,6 +8,12 @@ enableEmoji = false
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
+# Taxonomy kinds are off, but their default names still reserve content paths.
+# Renaming them frees /categories/ for the hand-written category pages.
+[taxonomies]
+tag = "tags"
+category = "cats"
+
 [security.exec]
 allow = ['^(dart-)?sass$', '^go$', '^git$', '^node$', '^postcss$', '^tailwindcss$']
 
@@ -90,16 +96,26 @@ weight = 1
 url = "posts/"
 
 [[menu.main]]
-name = "项目"
+name = "分类"
 weight = 2
+url = "categories/"
+
+[[menu.main]]
+name = "项目"
+weight = 3
 url = "projects/"
 
 [[menu.main]]
 name = "友链"
-weight = 3
+weight = 4
 url = "friends/"
 
 [[menu.main]]
 name = "关于"
-weight = 4
+weight = 5
 url = "about/"
+
+[[menu.main]]
+name = "搜索"
+weight = 6
+url = "search/"

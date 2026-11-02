@@ -7,7 +7,7 @@ slug: "liu-liang-fen-xi-jin-jie-yi-rctf2025-shadows-of-asgard"
 originalId: 155034962
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155034962"
 categories:
-  - "CTF"
+  - "学习笔记"
 tags:
   - "python"
   - "开发语言"

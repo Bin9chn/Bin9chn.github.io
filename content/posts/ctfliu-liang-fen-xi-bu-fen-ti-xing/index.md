@@ -7,7 +7,7 @@ slug: "ctfliu-liang-fen-xi-bu-fen-ti-xing"
 originalId: 155160119
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155160119"
 categories:
-  - "CTF"
+  - "学习笔记"
 tags:
   - "网络"
   - "安全"

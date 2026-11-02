@@ -7,7 +7,8 @@ slug: "rctf2025-photographer-han-huan-jing-da-jian"
 originalId: 155160865
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155160865"
 categories:
-  - "CTF"
+  - "WP"
+
 tags:
   - "ctf"
   - "upload"

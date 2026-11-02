@@ -7,7 +7,8 @@ slug: "nssctfmei-ri-yi-lian-swpuctf2021-include-web"
 originalId: 155243968
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155243968"
 categories:
-  - "CTF"
+  - "WP"
+
 tags:
   - "前端"
   - "android"

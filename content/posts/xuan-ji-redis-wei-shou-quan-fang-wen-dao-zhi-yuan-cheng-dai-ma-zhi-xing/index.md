@@ -7,7 +7,7 @@ slug: "xuan-ji-redis-wei-shou-quan-fang-wen-dao-zhi-yuan-cheng-dai-ma-zhi-xing"
 originalId: 161343310
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/161343310"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "ctf"
   - "redis"

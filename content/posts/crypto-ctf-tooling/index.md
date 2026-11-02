@@ -4,7 +4,7 @@ date = 2025-10-13T22:00:00+08:00
 draft = false
 summary = "从算法分类、动态参数到单文件交付，看一个 CTF 工具如何减少高频变换中的上下文切换。"
 tags = ["Cryptography", "CTF", "Tooling"]
-categories = ["工程笔记"]
+categories = ["项目博客"]
 featuredImage = "images/cover.png"
 +++
 

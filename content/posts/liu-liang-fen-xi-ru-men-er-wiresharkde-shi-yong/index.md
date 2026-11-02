@@ -7,7 +7,7 @@ slug: "liu-liang-fen-xi-ru-men-er-wiresharkde-shi-yong"
 originalId: 154991755
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/154991755"
 categories:
-  - "流量分析"
+  - "学习笔记"
 tags:
   - "wireshark"
   - "测试工具"

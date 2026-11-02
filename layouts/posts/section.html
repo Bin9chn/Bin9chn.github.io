@@ -13,6 +13,13 @@
     <div class="nerdy-container pb-16 pt-10 text-slate-800 dark:text-slate-300" x-data="{ currentPage: 1 }">
       {{ partial "posts/components/heading.html" (dict "path" $path "title" "文章" "accent" "Index" "description" (printf "共 %d 篇，技术、项目和生活都有。" (len $posts))) }}
 
+      <div class="mb-6 flex flex-wrap items-center gap-1.5">
+        <a class="nerdy-chip nerdy-chip-cyan" href="{{ "categories/" | relURL }}">分类总览</a>
+        {{ range hugo.Data.categories }}
+          <a class="nerdy-chip border-slate-300/80 text-slate-600 transition-colors hover:border-accent-cyan hover:text-accent-cyan dark:border-slate-700 dark:text-slate-400" href="{{ printf "categories/%s/" .slug | relURL }}">{{ .label }}</a>
+        {{ end }}
+      </div>
+
       <main class="min-w-0">
         {{ partial "posts/index/table.html" (dict "pages" $posts "tablePath" "~/posts/") }}
       </main>

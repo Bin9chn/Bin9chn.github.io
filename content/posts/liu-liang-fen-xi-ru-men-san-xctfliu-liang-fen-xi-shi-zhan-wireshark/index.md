@@ -7,7 +7,7 @@ slug: "liu-liang-fen-xi-ru-men-san-xctfliu-liang-fen-xi-shi-zhan-wireshark"
 originalId: 155019380
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155019380"
 categories:
-  - "CTF"
+  - "学习笔记"
 tags:
   - "web安全"
   - "网络安全"

@@ -7,7 +7,7 @@ slug: "suctf2026-bu-fen-ai-cry-writeup"
 originalId: 159130849
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/159130849"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "深度学习"
   - "人工智能"

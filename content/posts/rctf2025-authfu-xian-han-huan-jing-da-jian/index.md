@@ -7,7 +7,7 @@ slug: "rctf2025-authfu-xian-han-huan-jing-da-jian"
 originalId: 155134637
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155134637"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "后端"
   - "saml"

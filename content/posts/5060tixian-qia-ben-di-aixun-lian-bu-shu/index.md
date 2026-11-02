@@ -7,7 +7,7 @@ slug: "5060tixian-qia-ben-di-aixun-lian-bu-shu"
 originalId: 155194102
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155194102"
 categories:
-  - "AI"
+  - "项目博客"
 tags:
   - "人工智能"
   - "深度学习"

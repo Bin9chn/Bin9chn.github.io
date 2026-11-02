@@ -7,7 +7,7 @@ slug: "nssmei-ri-yi-ti-swpu-2020-happy"
 originalId: 158811644
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/158811644"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "python"
   - "RSA"

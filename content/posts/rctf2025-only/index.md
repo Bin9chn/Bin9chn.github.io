@@ -7,7 +7,7 @@ slug: "rctf2025-only"
 originalId: 155202679
 sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155202679"
 categories:
-  - "CTF"
+  - "WP"
 tags:
   - "ctf"
   - "CTF"

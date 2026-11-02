@@ -421,7 +421,8 @@
       if (draft.coverPath) fm.featuredImage = draft.coverPath;
       if (sourceEl.value.trim()) fm.sourceUrl = sourceEl.value.trim();
 
-      var markdown = A.dumpFrontMatter(fm) + bodyEl.value.replace(/^\n+/, '') + '\n';
+      // Keep the file's original header style: posts written as TOML (+++) stay TOML.
+      var markdown = A.dumpFrontMatter(fm, post ? post.format : 'yaml') + bodyEl.value.replace(/^\n+/, '') + '\n';
       var changes = [{ path: 'content/posts/' + slug + '/index.md', content: markdown }];
 
       // Renaming the slug moves the whole bundle: drop the old files in the same commit.

@@ -272,16 +272,88 @@
 
   // ------------------------------------------------------------------- models
 
-  function splitFrontMatter(raw) {
-    var text = String(raw || '').replace(/^\uFEFF/, '');
-    var match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-    if (!match) return { fm: {}, body: text, format: 'yaml' };
-    var fm = {};
-    try { fm = jsyaml.load(match[1]) || {}; } catch (err) { fm = { __parseError: err.message }; }
-    return { fm: fm, body: text.slice(match[0].length), format: 'yaml' };
+  // ---------------------------------------------------------------- front matter
+
+  function parseTomlScalar(raw) {
+    var value = String(raw).trim();
+    if (value.charAt(0) === '[') {
+      var end = value.lastIndexOf(']');
+      var inner = end > 0 ? value.slice(1, end) : value.slice(1);
+      return inner.split(',').map(stripTomlString).filter(function (item) { return item !== ''; });
+    }
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return stripTomlString(value);
   }
 
-  function dumpFrontMatter(fm) {
+  function stripTomlString(raw) {
+    var value = String(raw).trim();
+    if (value.length > 1 && value.charAt(0) === '"' && value.charAt(value.length - 1) === '"') {
+      return value.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    }
+    if (value.length > 1 && value.charAt(0) === "'" && value.charAt(value.length - 1) === "'") {
+      return value.slice(1, -1);
+    }
+    return value;
+  }
+
+  /** Enough TOML for a Hugo header: scalars, booleans and one-line arrays. */
+  function parseTomlBlock(block) {
+    var fm = {};
+    block.split(/\r?\n/).forEach(function (line) {
+      var trimmed = line.trim();
+      if (!trimmed || trimmed.charAt(0) === '#') return;
+      var match = trimmed.match(/^([A-Za-z_][\w-]*)\s*=\s*(.+)$/);
+      if (!match) return;
+      fm[match[1]] = parseTomlScalar(match[2]);
+    });
+    return fm;
+  }
+
+  function tomlValue(value) {
+    if (typeof value === 'boolean') return value ? 'true' : 'false';
+    if (typeof value === 'number') return String(value);
+    if (Array.isArray(value)) {
+      return '[' + value.map(function (item) { return '"' + String(item).replace(/"/g, '\\"') + '"'; }).join(', ') + ']';
+    }
+    var text = String(value);
+    // Unquoted dates are the Hugo convention; quoting them still parses but reads oddly.
+    if (/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}([+-]\d{2}:\d{2}|Z)?)?$/.test(text)) return text;
+    return '"' + text.replace(/"/g, '\\"') + '"';
+  }
+
+  function dumpTomlFrontMatter(fm) {
+    var order = ['title', 'date', 'draft', 'categories', 'tags', 'summary', 'slug', 'featuredImage', 'sourceUrl'];
+    var lines = ['+++'];
+    order.forEach(function (key) {
+      if (fm[key] !== undefined && fm[key] !== null && fm[key] !== '') lines.push(key + ' = ' + tomlValue(fm[key]));
+    });
+    Object.keys(fm).forEach(function (key) {
+      if (order.indexOf(key) === -1 && fm[key] !== undefined && fm[key] !== null) lines.push(key + ' = ' + tomlValue(fm[key]));
+    });
+    lines.push('+++', '');
+    return lines.join('\n');
+  }
+
+  function splitFrontMatter(raw) {
+    var text = String(raw || '').replace(/^\uFEFF/, '');
+    var yaml = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+    if (yaml) {
+      var fm = {};
+      try { fm = jsyaml.load(yaml[1]) || {}; } catch (err) { fm = { __parseError: err.message }; }
+      return { fm: fm, body: text.slice(yaml[0].length), format: 'yaml' };
+    }
+    // Posts written earlier use TOML (+++). Without this branch the editor saw an
+    // empty header and would wipe title/categories/tags on the first save.
+    var toml = text.match(/^\+\+\+\r?\n([\s\S]*?)\r?\n\+\+\+\r?\n?/);
+    if (toml) {
+      return { fm: parseTomlBlock(toml[1]), body: text.slice(toml[0].length), format: 'toml' };
+    }
+    return { fm: {}, body: text, format: 'yaml' };
+  }
+
+  function dumpFrontMatter(fm, format) {
+    if (format === 'toml') return dumpTomlFrontMatter(fm);
     var ordered = {};
     ['title', 'date', 'draft', 'categories', 'tags', 'summary', 'slug', 'featuredImage', 'sourceUrl'].forEach(function (key) {
       if (fm[key] !== undefined && fm[key] !== null && fm[key] !== '') ordered[key] = fm[key];
@@ -314,6 +386,7 @@
       body: parts.body,
       raw: raw,
       fm: fm,
+      format: parts.format,
     };
   }
 

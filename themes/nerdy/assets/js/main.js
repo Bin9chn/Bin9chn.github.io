@@ -445,7 +445,7 @@ function initViewCounters() {
     const path = name === 'site' ? 'TOTAL' : location.pathname;
     const url = `https://${site}.goatcounter.com/counter/${encodeURIComponent(path)}.json`;
     const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 3000);
+    const timer = window.setTimeout(() => controller.abort(), 5000);
 
     window
       .fetch(url, { credentials: 'omit', signal: controller.signal })
@@ -467,8 +467,10 @@ function initViewCounters() {
         if (count === 0 && attempt === 0) window.setTimeout(() => read(name, 1), 2500);
       })
       .catch(() => {
-        // Offline, blocked, timed out or CORS failure: stay hidden rather than
-        // claim a zero we never actually read.
+        // Offline, blocked, timed out or CORS failure. One more try before giving
+        // up: on a cold/slow connection the first request often loses the race,
+        // and giving up meant the counter silently never appeared.
+        if (attempt === 0) window.setTimeout(() => read(name, 1), 4000);
       })
       .finally(() => window.clearTimeout(timer));
   };

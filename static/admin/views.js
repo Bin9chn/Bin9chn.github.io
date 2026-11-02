@@ -105,7 +105,7 @@
         '<a class="btn btn--primary" href="#/posts/new">+ 新建文章</a>' +
       '</div>' +
       '<div class="table-wrap">' +
-        '<table><thead><tr><th>标题</th><th>日期</th><th>分类</th><th>标签</th><th>状态</th><th></th></tr></thead>' +
+        '<table class="posts-table"><thead><tr><th>标题</th><th>日期</th><th>分类</th><th>标签</th><th>状态</th><th></th></tr></thead>' +
         '<tbody id="post-rows"></tbody></table>' +
       '</div>';
 

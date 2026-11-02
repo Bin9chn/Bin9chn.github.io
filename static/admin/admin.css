@@ -434,6 +434,14 @@ td.num { font-family: var(--mono); font-size: 12px; color: var(--muted); white-s
 .toast--ok { background: var(--ok); color: #fff; }
 
 /* ---------- responsive ---------- */
+/* Below ~1100px the six-column post table stops fitting; drop the tag column so
+   the status and action buttons stay reachable without horizontal scrolling. */
+@media (max-width: 1100px) {
+  .posts-table { min-width: 0; }
+  .posts-table th:nth-child(4), .posts-table td:nth-child(4) { display: none; }
+  .posts-table td:first-child { min-width: 180px; }
+}
+
 @media (max-width: 900px) {
   .shell { grid-template-columns: minmax(0, 1fr); }
   .sidebar {
@@ -458,4 +466,9 @@ td.num { font-family: var(--mono); font-size: 12px; color: var(--muted); white-s
   .topbar { padding: 10px 14px; }
   .topbar__sub { display: none; }
   .editor-body, .preview { min-height: 380px; }
+  /* Phones: keep title, category, status and actions; dates move into the title cell. */
+  .posts-table th:nth-child(2), .posts-table td:nth-child(2) { display: none; }
+  .posts-table td:first-child { min-width: 140px; }
+  .posts-table th, .posts-table td { padding: 8px 6px; font-size: 12px; }
+  .posts-table .btn--sm { padding: 3px 6px; }
 }

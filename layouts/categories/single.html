@@ -35,7 +35,7 @@
                 <span>{{ .ReadingTime }} min read</span>
               </div>
               <h2 class="text-base font-bold leading-snug text-slate-950 transition-colors group-hover:text-accent-cyan dark:text-white sm:text-lg">{{ .Title }}</h2>
-              {{ with .Summary }}<p class="text-sm leading-6 nerdy-muted">{{ . | plainify | truncate 160 }}</p>{{ end }}
+              {{ with (.Params.summary | default .Summary) }}<p class="text-sm leading-6 nerdy-muted">{{ . | plainify | truncate 160 }}</p>{{ end }}
               {{ with .Params.tags }}
                 <div class="mt-1 flex flex-wrap gap-1.5">
                   {{ range first 4 . }}<span class="nerdy-chip nerdy-chip-cyan">#{{ . }}</span>{{ end }}

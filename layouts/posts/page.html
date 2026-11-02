@@ -47,7 +47,7 @@
         {{ partial "nav/breadcrumb.html" (dict "items" $crumbs) }}
 
         <div class="grid grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-          {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags "margin" "mb-0") }}
+          {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags "description" .Params.summary "margin" "mb-0") }}
 
           {{ with $cover }}
             <figure class="overflow-hidden rounded-xl border border-slate-300/80 bg-white/95 p-1.5 shadow-lg shadow-slate-300/25 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">

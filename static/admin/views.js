@@ -579,7 +579,7 @@
   // -------------------------------------------------------------------- site
 
   function readTomlValue(raw, key) {
-    var re = new RegExp('^\\s*' + key + '\\s*=\\s*(.+?)\\s*$', 'm');
+    var re = new RegExp('^[ \\t]*' + key + '[ \\t]*=[ \\t]*([^\\n]*?)[ \\t]*$', 'm');
     var match = raw.match(re);
     if (!match) return null;
     var value = match[1];
@@ -589,7 +589,9 @@
   }
 
   function writeTomlValue(raw, key, value) {
-    var re = new RegExp('^(\\s*' + key + '\\s*=\\s*)(.+?)(\\s*)$', 'm');
+    // [ \t] instead of \s: \s also matches newlines, which would swallow the blank
+    // line after the assignment and shift every following line up by one.
+    var re = new RegExp('^([ \\t]*' + key + '[ \\t]*=[ \\t]*)([^\\n]*?)([ \\t]*)$', 'm');
     return raw.replace(re, function (all, prefix) { return prefix + value; });
   }
 

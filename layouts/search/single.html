@@ -59,7 +59,8 @@
             {{ $body := .Plain | plainify | htmlUnescape | replaceRE `\s+` " " }}
             {{/* 300 chars is enough for keyword matching and keeps this page small:
                  38 posts x 900 chars made the HTML ~190 KB on its own. */}}
-            {{ $hay := printf "%s %s %s %s %s" .Title (.Summary | plainify | htmlUnescape) (delimit (.Params.tags | default slice) " ") (delimit (.Params.categories | default slice) " ") ($body | truncate 300 "") }}
+            {{ $lead := .Params.summary | default .Summary }}
+            {{ $hay := printf "%s %s %s %s %s" .Title ($lead | plainify | htmlUnescape) (delimit (.Params.tags | default slice) " ") (delimit (.Params.categories | default slice) " ") ($body | truncate 300 "") }}
             {{ $hay = $hay | replaceRE `\s+` " " | lower }}
             {{ $cat := index (.Params.categories | default (slice "其他")) 0 }}
             <a
@@ -75,7 +76,7 @@
                 <span class="nerdy-chip nerdy-chip-cyan">{{ $cat }}</span>
               </div>
               <h2 class="nerdy-search-title text-base font-bold leading-snug text-slate-950 transition-colors group-hover:text-accent-cyan dark:text-white sm:text-lg">{{ .Title }}</h2>
-              <p class="nerdy-search-summary text-sm leading-6 nerdy-muted">{{ .Summary | plainify | truncate 150 }}</p>
+              <p class="nerdy-search-summary text-sm leading-6 nerdy-muted">{{ .Params.summary | default .Summary | plainify | truncate 150 }}</p>
               {{ with .Params.tags }}
                 <div class="mt-1 flex flex-wrap gap-1.5">
                   {{ range first 4 . }}<span class="nerdy-chip nerdy-chip-cyan">#{{ . }}</span>{{ end }}

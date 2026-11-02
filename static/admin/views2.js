@@ -94,6 +94,11 @@
         '<textarea class="textarea textarea--mono" id="topics" rows="6">' + esc(topics.join('\n')) + '</textarea>' +
       '</div>' +
 
+      '<div class="card">' +
+        '<div class="card__title">Categories 分类卡</div>' +
+        '<div class="card__desc">首页侧边栏那张分类列表由分类配置自动生成（名称、顺序、文章数都跟着走），改分类请去「分类」页，这里不用填。</div>' +
+      '</div>' +
+
       '<div class="row"><button class="btn btn--primary" id="save-sidebar" type="button">保存侧边栏</button></div>' +
       '<datalist id="accent-list"><option value="cyan"><option value="emerald"><option value="purple"><option value="amber"><option value="rose"></datalist>';
 

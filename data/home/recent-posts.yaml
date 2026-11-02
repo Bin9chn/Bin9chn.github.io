@@ -2,5 +2,5 @@ id: recent-posts
 type: recent-posts
 icon: article
 title: Recent Posts
-limit: 6
+limit: 4
 section: posts

@@ -2,13 +2,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ site.Title }}</title>
-<meta name="description" content="{{ .Description | default site.Params.description }}">
+{{/* One description for the meta tag, the share card and the structured data.
+       `description` in front matter wins, then the hand-written `summary`, then
+       Hugo's auto summary. Without this every post inherited the site-wide
+       description, so search results all looked identical. */}}
+{{- $desc := .Description -}}
+{{- if not $desc }}{{ with .Params.summary }}{{ $desc = . }}{{ end }}{{ end -}}
+{{- if not $desc }}{{ if .IsPage }}{{ $desc = .Summary | plainify | htmlUnescape | chomp }}{{ end }}{{ end -}}
+{{- $desc = $desc | default site.Params.description | plainify | htmlUnescape | chomp | truncate 150 "" -}}
+{{- $title := cond .IsHome site.Title .Title -}}
+
+{{/* Share image: the post cover when it has one, otherwise a site-wide card. */}}
+{{- $ogImage := "" -}}
+{{- with .Params.featuredImage -}}
+  {{- with $.Resources.GetMatch . -}}
+    {{- $img := . -}}
+    {{- if gt $img.Width 1600 }}{{ $img = $img.Resize "1600x webp q85" }}{{ end -}}
+    {{- $ogImage = $img.Permalink -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $ogImage }}{{ $ogImage = "images/og-default.png" | absURL }}{{ end -}}
+
+<meta name="description" content="{{ $desc }}">
 <meta name="keywords" content="{{ .Keywords | default site.Params.keywords }}">
-<meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
-<meta property="og:description" content="{{ .Description | default site.Params.description }}">
+<meta name="author" content="{{ site.Params.author | default "Bin9chn" }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="{{ $ogImage }}">
+<meta property="og:image:alt" content="{{ $title }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $ogImage }}">
+{{- if .IsPage }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{- end }}
+{{- end }}
 <link rel="canonical" href="{{ .Permalink }}">
+{{- if .IsPage }}
+{{- $ld := dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "headline" .Title
+  "description" $desc
+  "image" (slice $ogImage)
+  "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+  "inLanguage" "zh-CN"
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "author" (dict "@type" "Person" "name" (site.Params.author | default "Bin9chn") "url" site.BaseURL)
+  "publisher" (dict "@type" "Organization" "name" site.Title "logo" (dict "@type" "ImageObject" "url" ("images/apple-touch-icon.png" | absURL)))
+-}}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{- else }}
+{{- $ld := dict
+  "@context" "https://schema.org"
+  "@type" "WebSite"
+  "name" site.Title
+  "description" $desc
+  "url" site.BaseURL
+  "inLanguage" "zh-CN"
+-}}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{- end }}
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">

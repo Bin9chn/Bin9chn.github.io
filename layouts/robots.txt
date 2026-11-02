@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+
+# The admin console is a private tool, not content. Keeping it out of the index
+# also keeps its GitHub-token login screen from showing up in search results.
+
+Sitemap: {{ "sitemap.xml" | absURL }}

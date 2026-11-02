@@ -1,0 +1,41 @@
+{{/* Related posts, scored by shared tags (3 points each) and shared category
+     (2 points). With ~40 posts there is almost always at least one neighbour, and
+     the block quietly disappears when there is nothing to show. */}}
+{{- $current := . -}}
+{{- $tags := .Params.tags | default slice -}}
+{{- $cats := .Params.categories | default slice -}}
+{{- $scored := slice -}}
+{{- range where site.RegularPages "Section" "posts" -}}
+  {{- if ne .RelPermalink $current.RelPermalink -}}
+    {{- $score := mul (len (intersect (.Params.tags | default slice) $tags)) 3 -}}
+    {{- if intersect (.Params.categories | default slice) $cats -}}
+      {{- $score = add $score 2 -}}
+    {{- end -}}
+    {{- if gt $score 0 -}}
+      {{- $scored = $scored | append (dict "page" . "score" $score) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with first 3 (sort $scored "score" "desc") -}}
+  <section class="mt-14 border-t border-slate-200 pt-8 dark:border-slate-700" aria-label="相关文章">
+    <div class="mb-4 flex items-baseline justify-between gap-4">
+      <h2 class="font-mono text-xs font-bold uppercase tracking-widest nerdy-muted-soft">相关文章</h2>
+      <a class="font-mono text-xs nerdy-link" href="{{ "posts/" | relURL }}">全部文章 →</a>
+    </div>
+    <div class="grid gap-3 sm:grid-cols-3">
+      {{- range . }}
+        {{- $post := .page -}}
+        {{- $category := "其他" -}}
+        {{- with index ($post.Params.categories | default slice) 0 }}{{ $category = . }}{{ end -}}
+        <a class="group nerdy-card nerdy-card-hover flex flex-col gap-2 p-4" href="{{ $post.RelPermalink }}">
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] nerdy-muted-soft">
+            <span class="nerdy-chip nerdy-chip-cyan">{{ $category }}</span>
+            <time datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "2006-01-02" }}</time>
+          </div>
+          <div class="text-sm font-bold leading-snug text-slate-950 transition-colors group-hover:text-accent-cyan dark:text-white">{{ $post.Title }}</div>
+        </a>
+      {{- end }}
+    </div>
+  </section>
+{{- end -}}

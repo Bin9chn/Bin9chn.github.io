@@ -101,7 +101,17 @@
 
     container.innerHTML =
       '<div class="row row--between" style="margin-bottom:14px">' +
-        '<input class="input" id="post-filter" placeholder="按标题、分类、标签筛选…" style="max-width:320px">' +
+        '<div class="row">' +
+          '<input class="input" id="post-filter" placeholder="按标题、分类、标签筛选…" style="max-width:280px">' +
+          '<select class="select" id="post-cat" style="max-width:150px">' +
+            '<option value="">全部分类</option>' +
+            state.cats.map(function (cat) { return '<option value="' + esc(cat.label) + '">' + esc(cat.label) + '</option>'; }).join('') +
+          '</select>' +
+          '<select class="select" id="post-order" style="max-width:130px">' +
+            '<option value="date">按时间</option>' +
+            '<option value="title">按标题</option>' +
+          '</select>' +
+        '</div>' +
         '<a class="btn btn--primary" href="#/posts/new">+ 新建文章</a>' +
       '</div>' +
       '<div class="table-wrap">' +
@@ -109,12 +119,24 @@
         '<tbody id="post-rows"></tbody></table>' +
       '</div>';
 
-    function renderRows(keyword) {
-      var q = String(keyword || '').toLowerCase();
+    function currentFilter() {
+      return {
+        q: String((container.querySelector('#post-filter') || {}).value || '').toLowerCase(),
+        cat: (container.querySelector('#post-cat') || {}).value || '',
+        order: (container.querySelector('#post-order') || {}).value || 'date',
+      };
+    }
+
+    function renderRows() {
+      var f = currentFilter();
       var posts = state.posts.filter(function (post) {
-        if (!q) return true;
-        return (post.title + ' ' + post.categories.join(' ') + ' ' + post.tags.join(' ')).toLowerCase().indexOf(q) !== -1;
+        if (f.cat && post.categories.indexOf(f.cat) === -1) return false;
+        if (!f.q) return true;
+        return (post.title + ' ' + post.categories.join(' ') + ' ' + post.tags.join(' ')).toLowerCase().indexOf(f.q) !== -1;
       });
+      if (f.order === 'title') {
+        posts = posts.slice().sort(function (a, b) { return a.title.localeCompare(b.title, 'zh-Hans-CN'); });
+      }
       var body = container.querySelector('#post-rows');
       if (!posts.length) {
         body.innerHTML = '<tr><td colspan="6"><div class="empty">没有匹配的文章</div></td></tr>';
@@ -129,7 +151,11 @@
           '<td class="small muted">' + (post.tags.length ? esc(post.tags.slice(0, 3).join(' · ')) : '—') + '</td>' +
           '<td>' + (post.draft ? '<span class="chip chip--warn">草稿</span>' : '<span class="chip chip--ok">已发布</span>') + '</td>' +
           '<td class="nowrap">' +
-            '<a class="btn btn--sm btn--ghost" href="' + esc(A.postUrl(post)) + '" target="_blank" rel="noopener">查看</a> ' +
+            (post.draft
+              // Hugo skips drafts at build time, so the public URL really is a 404.
+              // Offering it would look like a broken site, so point at the editor.
+              ? '<a class="btn btn--sm btn--ghost" href="#/posts/edit/' + esc(post.slug) + '">继续编辑</a> '
+              : '<a class="btn btn--sm btn--ghost" href="' + esc(A.postUrl(post)) + '" target="_blank" rel="noopener">查看</a> ') +
             '<button class="btn btn--sm btn--danger" data-del="' + esc(post.slug) + '" type="button">删除</button>' +
           '</td>' +
         '</tr>';
@@ -137,9 +163,9 @@
     }
 
     renderRows('');
-    container.querySelector('#post-filter').addEventListener('input', function (event) {
-      renderRows(event.target.value);
-    });
+    container.querySelector('#post-filter').addEventListener('input', renderRows);
+    container.querySelector('#post-cat').addEventListener('change', renderRows);
+    container.querySelector('#post-order').addEventListener('change', renderRows);
     container.querySelector('#post-rows').addEventListener('click', async function (event) {
       var slug = event.target.getAttribute && event.target.getAttribute('data-del');
       if (!slug) return;
@@ -193,7 +219,7 @@
         '</div>' +
         '<div class="row">' +
           '<a class="btn btn--ghost" href="#/posts">返回列表</a>' +
-          (isNew ? '' : '<a class="btn btn--ghost" href="' + esc(A.postUrl(post)) + '" target="_blank" rel="noopener">查看线上</a>') +
+          (isNew || post.draft ? '' : '<a class="btn btn--ghost" href="' + esc(A.postUrl(post)) + '" target="_blank" rel="noopener">查看线上</a>') +
           '<button class="btn btn--primary" id="save-post" type="button">保存并发布</button>' +
         '</div>' +
       '</div>' +
@@ -403,7 +429,15 @@
       var button = this;
       var slug = A.slugify(slugEl.value || titleEl.value);
       if (!titleEl.value.trim()) { A.toast('标题不能为空', 'err'); titleEl.focus(); return; }
-      if (!slug) { A.toast('Slug 只能是英文、数字和连字符', 'err'); slugEl.focus(); return; }
+      if (!slug) {
+        // A pure-Chinese title slugifies to an empty string. Instead of blocking the
+        // save, fill in a date handle so the next click goes through, and say so.
+        slug = 'post-' + (dateEl.value || '').replace(/[^0-9]/g, '').slice(0, 12);
+        slugEl.value = slug;
+        A.toast('中文标题无法生成英文 slug，已填入 ' + slug + '，可改成更短的英文再保存', 'err');
+        slugEl.focus();
+        return;
+      }
       if (!catEl.value) { A.toast('先去分类页建一个分类', 'err'); return; }
 
       var clash = state.posts.filter(function (item) { return item.slug === slug && (!post || item.slug !== post.slug); });
@@ -528,12 +562,50 @@
 
       container.querySelector('#save-cats').addEventListener('click', async function () {
         var slugs = {};
+        var labels = {};
         for (var i = 0; i < list.length; i += 1) {
           var cat = list[i];
           if (!/^[a-z0-9-]+$/.test(cat.slug)) { A.toast('Slug 只能用小写字母、数字和连字符：' + cat.slug, 'err'); return; }
           if (!cat.label) { A.toast('分类名称不能为空', 'err'); return; }
           if (slugs[cat.slug]) { A.toast('Slug 重复：' + cat.slug, 'err'); return; }
+          if (labels[cat.label]) { A.toast('分类名称重复：' + cat.label, 'err'); return; }
           slugs[cat.slug] = true;
+          labels[cat.label] = true;
+        }
+
+        /* A post stores the category by its display label, so renaming a label here
+           used to leave every post pointing at a category that no longer exists —
+           the category page emptied out and the post's category link 404'd.
+           Match by slug (stable across reorders) and rewrite the posts too. */
+        var before = {};
+        (state.cats || []).forEach(function (cat) { before[cat.slug] = cat; });
+        var labelMap = {};
+        var renamed = 0;
+        list.forEach(function (cat) {
+          var old = before[cat.slug];
+          if (old && old.label !== cat.label) {
+            labelMap[old.label] = cat.label;
+            renamed += 1;
+          }
+        });
+
+        var cascade = [];
+        if (renamed) {
+          state.posts.forEach(function (post) {
+            var cats = Array.isArray(post.categories) ? post.categories : [post.categories];
+            var touched = cats.some(function (label) { return labelMap[label] !== undefined; });
+            if (!touched) return;
+            var fm = Object.assign({}, post.fm);
+            fm.categories = cats.map(function (label) { return labelMap[label] || label; });
+            cascade.push({ path: post.path, content: A.dumpFrontMatter(fm, post.format) + post.body });
+          });
+          var used = cascade.length;
+          var ok = await A.confirm({
+            title: '同步 ' + used + ' 篇文章的分类？',
+            desc: '分类改名后，这些文章的 front matter 里也要跟着改，否则它们会落到一个不存在的分类下。正文一个字都不会动。',
+            ok: '一起提交',
+          });
+          if (!ok) return;
         }
 
         var button = this;
@@ -561,8 +633,10 @@
             if (!slugs[slug]) changes.push({ path: path, content: null });
           });
 
-          await A.commit(changes, 'admin: 更新分类配置');
-          A.toast('分类已保存', 'ok');
+          cascade.forEach(function (change) { changes.push(change); });
+
+          await A.commit(changes, renamed ? 'admin: 更新分类配置并同步文章分类' : 'admin: 更新分类配置');
+          A.toast(renamed ? '分类已保存，同步了 ' + cascade.length + ' 篇文章' : '分类已保存', 'ok');
           await A.reload();
           A.views.categories(container);
         } catch (err) {

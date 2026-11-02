@@ -87,6 +87,8 @@
               </div>
             </footer>
 
+            {{ partial "posts/components/related.html" . }}
+
             {{/* Previous / next inside the same category, falling back to the whole
                  site when the category has only this one post. */}}
             {{ $series := slice }}

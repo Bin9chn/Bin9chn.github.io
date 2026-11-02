@@ -19,7 +19,7 @@
     <a class="group nerdy-nav-card" href="{{ .RelPermalink }}">
       <div class="mb-2 flex items-center gap-2 font-mono text-xs text-accent-cyan">
         <span class="transition-transform group-hover:-translate-x-1">&lt;-</span>
-        <span>Previous Post</span>
+        <span>上一篇</span>
       </div>
       <div class="font-bold leading-snug text-slate-950 dark:text-slate-100">{{ .Title }}</div>
     </a>
@@ -30,7 +30,7 @@
   {{ with $nextPost }}
     <a class="group nerdy-nav-card text-right" href="{{ .RelPermalink }}">
       <div class="mb-2 flex items-center justify-end gap-2 font-mono text-xs text-accent-cyan">
-        <span>Next Post</span>
+        <span>下一篇</span>
         <span class="transition-transform group-hover:translate-x-1">-&gt;</span>
       </div>
       <div class="font-bold leading-snug text-slate-950 dark:text-slate-100">{{ .Title }}</div>

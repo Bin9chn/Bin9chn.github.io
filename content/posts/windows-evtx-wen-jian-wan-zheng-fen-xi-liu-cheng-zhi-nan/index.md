@@ -10,9 +10,9 @@ categories:
   - "学习笔记"
 
 tags:
-  - "windows"
-  - "网络安全"
-  - "CTF"
+  - "应急响应"
+  - "取证"
+  - "Windows"
 featuredImage: "images/cover.png"
 ---
 ## 背景介绍

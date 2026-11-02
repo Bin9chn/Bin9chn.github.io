@@ -9,13 +9,10 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/161343657"
 categories:
   - "WP"
 tags:
-  - "redis"
-  - "数据库"
-  - "缓存"
-  - "ctf"
-  - "web安全"
   - "CTF"
-  - "网络安全"
+  - "Web安全"
+  - "渗透测试"
+  - "Redis"
 featuredImage: "images/cover.png"
 ---
 

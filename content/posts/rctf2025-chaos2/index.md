@@ -9,15 +9,10 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155244777"
 categories:
   - "WP"
 tags:
-  - "ctf"
-  - "开发语言"
-  - "python"
-  - "逆向"
-  - "reverse"
-  - "rctf"
-  - "chaos"
   - "CTF"
-  - "网络安全"
+  - "逆向"
+  - "密码学"
+  - "RCTF"
 featuredImage: "images/cover.png"
 ---
 

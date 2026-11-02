@@ -9,10 +9,10 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155034962"
 categories:
   - "学习笔记"
 tags:
-  - "python"
-  - "开发语言"
   - "CTF"
-  - "网络安全"
+  - "流量分析"
+  - "隐写"
+  - "RCTF"
 featuredImage: "images/cover.png"
 ---
 

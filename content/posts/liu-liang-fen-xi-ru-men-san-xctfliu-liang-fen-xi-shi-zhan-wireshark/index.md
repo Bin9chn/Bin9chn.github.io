@@ -9,10 +9,10 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155019380"
 categories:
   - "学习笔记"
 tags:
-  - "web安全"
-  - "网络安全"
-  - "sql"
   - "CTF"
+  - "流量分析"
+  - "SQL"
+  - "Wireshark"
 featuredImage: "images/cover.png"
 ---
 

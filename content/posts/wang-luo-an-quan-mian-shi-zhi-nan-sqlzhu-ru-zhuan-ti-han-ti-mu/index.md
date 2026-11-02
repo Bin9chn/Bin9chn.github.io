@@ -10,11 +10,10 @@ categories:
   - "学习笔记"
 
 tags:
-  - "web安全"
-  - "面试"
-  - "sql"
-  - "CTF"
   - "网络安全"
+  - "Web安全"
+  - "SQL"
+  - "面试"
 featuredImage: "images/cover.png"
 ---
 ## 网络安全面试指南：SQL注入专题（含题目）

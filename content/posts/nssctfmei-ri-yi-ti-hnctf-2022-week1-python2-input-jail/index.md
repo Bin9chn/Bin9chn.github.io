@@ -9,13 +9,9 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/158811383"
 categories:
   - "WP"
 tags:
-  - "ctf"
-  - "python"
-  - "misc"
-  - "nssctf"
-  - "hnctf2022"
   - "CTF"
-  - "网络安全"
+  - "Python"
+  - "NSSCTF"
 featuredImage: "images/cover.png"
 ---
 

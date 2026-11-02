@@ -9,11 +9,8 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/154991755"
 categories:
   - "学习笔记"
 tags:
-  - "wireshark"
-  - "测试工具"
-  - "网络"
-  - "CTF"
-  - "网络安全"
+  - "流量分析"
+  - "Wireshark"
 featuredImage: "images/cover.png"
 ---
 

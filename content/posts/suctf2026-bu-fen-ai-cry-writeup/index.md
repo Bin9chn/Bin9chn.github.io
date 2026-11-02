@@ -9,12 +9,11 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/159130849"
 categories:
   - "WP"
 tags:
-  - "深度学习"
-  - "人工智能"
   - "CTF"
+  - "逆向"
+  - "密码学"
+  - "AI"
   - "SUCTF"
-  - "WriteUp"
-  - "网络安全"
 featuredImage: "images/cover.png"
 ---
 

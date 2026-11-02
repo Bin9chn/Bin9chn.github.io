@@ -9,12 +9,9 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/161343310"
 categories:
   - "WP"
 tags:
-  - "ctf"
-  - "redis"
-  - "玄机"
-  - "渗透测试"
   - "CTF"
-  - "网络安全"
+  - "渗透测试"
+  - "Redis"
 featuredImage: "images/cover.png"
 ---
 

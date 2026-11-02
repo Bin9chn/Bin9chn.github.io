@@ -10,10 +10,9 @@ categories:
   - "学习笔记"
 
 tags:
-  - "php"
-  - "开发语言"
   - "CTF"
-  - "网络安全"
+  - "Web安全"
+  - "PHP"
 featuredImage: "images/cover.png"
 ---
 > **前言**

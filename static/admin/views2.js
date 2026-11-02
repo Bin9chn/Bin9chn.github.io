@@ -36,7 +36,6 @@
     var statsSection = data.sections.filter(function (section) { return section.type === 'stats'; })[0];
     var tagsSection = data.sections.filter(function (section) { return section.type === 'tags'; })[0];
     var stats = statsSection ? clone(statsSection.items) || [] : [];
-    var topics = tagsSection ? (clone(tagsSection.items) || []) : [];
 
     function linkRows() {
       return links.map(function (link, index) {
@@ -90,8 +89,8 @@
       '</div>' +
 
       '<div class="card">' +
-        '<div class="card__title">Topics 标签</div><div class="card__desc">首页标签，点进去会跳到搜索页按标签筛。一行一个。</div>' +
-        '<textarea class="textarea textarea--mono" id="topics" rows="6">' + esc(topics.join('\n')) + '</textarea>' +
+        '<div class="card__title">Topics 标签</div>' +
+        '<div class="card__desc">首页的标签云由文章 tags 自动统计，取使用最多的 6 个，点进去会跳到搜索页按标签筛。要改标签请去对应文章的编辑页改 tags，这里不用填。</div>' +
       '</div>' +
 
       '<div class="card">' +
@@ -168,7 +167,9 @@
           statsSection.items = stats.filter(function (item) { return item.label; });
         }
         if (tagsSection) {
-          tagsSection.items = linesToArray(container.querySelector('#topics').value);
+          // Topics are counted from post tags at build time; keeping a stale
+          // hand-written list here only produced chips that led nowhere.
+          delete tagsSection.items;
         }
 
         var yaml = jsyaml.dump(data, { lineWidth: 130, noRefs: true });

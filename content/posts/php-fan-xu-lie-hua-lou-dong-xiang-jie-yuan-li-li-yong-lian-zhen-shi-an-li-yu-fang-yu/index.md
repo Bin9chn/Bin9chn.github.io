@@ -9,11 +9,8 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/154995581"
 categories:
   - "学习笔记"
 tags:
-  - "android"
-  - "php"
-  - "网络安全"
-  - "web安全"
-  - "CTF"
+  - "Web安全"
+  - "PHP"
 featuredImage: "images/cover.png"
 ---
 

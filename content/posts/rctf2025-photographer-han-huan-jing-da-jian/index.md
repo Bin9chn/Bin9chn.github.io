@@ -10,10 +10,9 @@ categories:
   - "WP"
 
 tags:
-  - "ctf"
-  - "upload"
   - "CTF"
-  - "网络安全"
+  - "Web安全"
+  - "RCTF"
 featuredImage: "images/cover.png"
 ---
 ## 一、环境搭建

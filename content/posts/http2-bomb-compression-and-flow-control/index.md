@@ -3,7 +3,7 @@ title = "HTTP/2 Bomb：压缩放大与流控停滞为什么会叠加"
 date = 2026-06-05T21:00:00+08:00
 draft = false
 summary = "从 HPACK 动态表与 HTTP/2 流控出发，理解“一个字节放大成一次分配”之后再被长期占用的资源路径。"
-tags = ["Protocol Security", "HTTP/2", "HPACK"]
+tags = ["协议安全", "HTTP/2"]
 categories = ["学习笔记"]
 featuredImage = "images/cover.png"
 +++

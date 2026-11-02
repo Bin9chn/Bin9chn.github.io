@@ -9,10 +9,9 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155194102"
 categories:
   - "项目博客"
 tags:
-  - "人工智能"
-  - "深度学习"
-  - "CTF"
-  - "网络安全"
+  - "AI"
+  - "Python"
+  - "工具链"
 featuredImage: "images/cover.png"
 ---
 

@@ -10,11 +10,10 @@ categories:
   - "WP"
 
 tags:
-  - "前端"
-  - "android"
-  - "android studio"
   - "CTF"
-  - "网络安全"
+  - "Web安全"
+  - "PHP"
+  - "NSSCTF"
 featuredImage: "images/cover.png"
 ---
 这道题是出自SWPUCTF2021的新生赛。

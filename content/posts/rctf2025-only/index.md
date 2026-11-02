@@ -9,9 +9,9 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155202679"
 categories:
   - "WP"
 tags:
-  - "ctf"
   - "CTF"
-  - "网络安全"
+  - "逆向"
+  - "RCTF"
 featuredImage: "images/cover.png"
 ---
 

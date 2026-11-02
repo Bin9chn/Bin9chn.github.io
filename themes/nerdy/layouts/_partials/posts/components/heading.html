@@ -63,7 +63,8 @@
           <span class="hidden text-slate-400 dark:text-slate-600 md:block">|</span>
           <div class="flex flex-wrap gap-2">
             {{ range . }}
-              <span class="nerdy-chip nerdy-chip-cyan">#{{ . }}</span>
+              <a class="nerdy-chip nerdy-chip-cyan transition-colors hover:border-accent-cyan hover:text-accent-cyan"
+                 href="{{ printf "%ssearch/?tag=%s" site.Home.RelPermalink (urlquery .) }}">#{{ . }}</a>
             {{ end }}
           </div>
         {{ end }}

@@ -9,10 +9,8 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/147604058"
 categories:
   - "学习笔记"
 tags:
-  - "sql"
-  - "数据库"
-  - "网络安全"
-  - "CTF"
+  - "Web安全"
+  - "SQL"
 featuredImage: "images/cover.png"
 ---
 

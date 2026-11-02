@@ -9,12 +9,9 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/153264543"
 categories:
   - "WP"
 tags:
-  - "安全"
-  - "web安全"
-  - "应急响应"
-  - "玄机"
   - "CTF"
-  - "网络安全"
+  - "应急响应"
+  - "取证"
 featuredImage: "images/cover.png"
 ---
 

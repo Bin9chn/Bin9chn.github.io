@@ -9,10 +9,8 @@ sourceUrl: "https://blog.csdn.net/BEICHENst/article/details/155065748"
 categories:
   - "学习笔记"
 tags:
-  - "java"
-  - "开发语言"
-  - "CTF"
-  - "网络安全"
+  - "Web安全"
+  - "Java"
 featuredImage: "images/cover.png"
 ---
 

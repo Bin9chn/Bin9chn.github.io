@@ -44,13 +44,6 @@ sections:
   - id: topics
     type: tags
     title: Topics
-    items:
-      - Protocol
-      - Web
-      - CTF
-      - Tooling
-      - Notes
-      - Daily
   - id: categories
     type: categories
     title: Categories

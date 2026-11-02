@@ -3,7 +3,7 @@ title = "LapCry：把 507 个数据处理操作留在一台离线机器里"
 date = 2026-10-13T12:00:00+08:00
 draft = false
 summary = "从操作配方、脚本隔离到 WebView 边界，拆解一个本地优先安全工具如何把复杂度收进可复现的工作流。"
-tags = ["Tooling", "Offline", "Desktop"]
+tags = ["工具链"]
 categories = ["项目博客"]
 featuredImage = "images/cover.png"
 +++

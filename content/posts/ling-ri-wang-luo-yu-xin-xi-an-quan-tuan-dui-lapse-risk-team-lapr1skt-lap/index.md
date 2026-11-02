@@ -10,8 +10,7 @@ categories:
   - "日常分享"
 
 tags:
-  - "网络安全"
-  - "CTF"
+  - "团队"
 featuredImage: "images/cover.png"
 ---
 ![凌日网络与信息安全团队（Lapse Risk Team/LapR1skT/LAP） 配图 1](images/image-01.png)

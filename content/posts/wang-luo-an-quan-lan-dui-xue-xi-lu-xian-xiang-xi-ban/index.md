@@ -10,11 +10,9 @@ categories:
   - "学习笔记"
 
 tags:
-  - "web安全"
-  - "学习"
-  - "安全"
-  - "CTF"
   - "网络安全"
+  - "应急响应"
+  - "学习路线"
 featuredImage: "images/cover.png"
 ---
 ### 1\. 基础知识打牢阶段

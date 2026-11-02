@@ -21,6 +21,9 @@ profile:
     - icon: website
       label: lrtctf.top
       url: http://www.lrtctf.top:50082/
+    - icon: code
+      label: 管理后台
+      url: /admin/
 
 sections:
   - id: profile-stats

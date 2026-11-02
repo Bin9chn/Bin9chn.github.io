@@ -47,6 +47,12 @@
 
 * { box-sizing: border-box; }
 
+/* `hidden` is only a UA-level `display:none`; any class that sets display (the
+   login grid, the shell grid) would override it and leave both screens stacked.
+   The login form appearing to "do nothing" after a successful token check is
+   exactly this. */
+[hidden] { display: none !important; }
+
 html, body { height: 100%; }
 
 body {
@@ -273,9 +279,13 @@ p { margin: 0; }
 .card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 13px; }
 th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
 th { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--panel-2); white-space: nowrap; }
+/* Cells stay on one line and the wrapper scrolls, otherwise the chips get squeezed
+   and "已发布" wraps into a vertical column on narrower screens. */
+td { white-space: nowrap; }
+td:first-child { white-space: normal; min-width: 240px; }
 tbody tr:last-child td { border-bottom: 0; }
 tbody tr:hover { background: var(--panel-2); }
 td.num { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
@@ -291,6 +301,7 @@ td.num { font-family: var(--mono); font-size: 12px; color: var(--muted); white-s
   font-family: var(--mono);
   font-size: 11px;
   color: var(--muted);
+  white-space: nowrap;
 }
 .chip--accent { border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); background: var(--accent-soft); color: var(--accent); }
 .chip--warn { border-color: color-mix(in srgb, var(--warn) 40%, var(--border)); color: var(--warn); }

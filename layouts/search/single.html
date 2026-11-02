@@ -67,6 +67,7 @@
               class="nerdy-search-item group nerdy-card nerdy-card-hover nerdy-card-accent-cyan flex flex-col gap-2 p-4 sm:p-5"
               href="{{ .RelPermalink }}"
               data-cat="{{ $cat }}"
+              data-tags="{{ delimit (.Params.tags | default slice) "|" | lower }}"
               data-text="{{ $hay }}"
               data-snippet="{{ $body | truncate 400 "" }}">
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] nerdy-muted-soft">
@@ -99,5 +100,5 @@
     </div>
   </div>
 
-  <script src="{{ "js/search.js" | relURL }}" defer></script>
+  <script src="{{ "js/search.js" | relURL }}?v=20261102" defer></script>
 {{ end }}

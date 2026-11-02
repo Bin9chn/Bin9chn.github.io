@@ -1,11 +1,67 @@
 <section class="nerdy-sidebar-card">
   <h2 class="mb-2 font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft sm:mb-3 sm:text-xs">{{ .title }}</h2>
-  {{/* Phones scroll the chips on one line; tablets and up wrap them.
-       Topic pages are not generated (taxonomies are off), so each chip filters
-       the search page by tag instead of pointing at a dead URL. */}}
+  {{/* Topic chips must point at tags that actually exist: the hand-written list in
+       data/sidebar.yaml drifts from what the posts use (it once contained Protocol /
+       Web / Tooling, none of which any post carried), and a chip leading to an empty
+       search reads as a broken site.
+
+       Counting is case-insensitive because the archive mixes "CTF" and "ctf" —
+       as two separate keys they looked like 18 posts each and the chip disagreed
+       with the search result it opened. The first spelling seen is the label. */}}
+  {{- $posts := where site.RegularPages "Section" "posts" -}}
+  {{- $counts := dict -}}
+  {{- $labels := dict -}}
+  {{- range $posts -}}
+    {{- $seen := slice -}}
+    {{- range (.Params.tags | default slice) -}}
+      {{- $key := lower . -}}
+      {{/* Some posts list both "CTF" and "ctf"; counting each occurrence made the
+           chip claim 44 posts on a 38-post blog. One post counts once per tag. */}}
+      {{- if not (in $seen $key) -}}
+        {{- $seen = $seen | append $key -}}
+        {{- $counts = merge $counts (dict $key (add (index $counts $key | default 0) 1)) -}}
+        {{- if not (index $labels $key) -}}
+          {{- $labels = merge $labels (dict $key .) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $chosen := slice -}}
+  {{- range .items -}}
+    {{- $key := lower . -}}
+    {{- if and (index $counts $key) (not (in $chosen $key)) -}}
+      {{- $chosen = $chosen | append $key -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if lt (len $chosen) 6 -}}
+    {{- $pairs := slice -}}
+    {{- range $key, $count := $counts -}}
+      {{- $pairs = $pairs | append (dict "key" $key "count" $count) -}}
+    {{- end -}}
+    {{- range sort $pairs "count" "desc" -}}
+      {{- if and (lt (len $chosen) 6) (not (in $chosen .key)) -}}
+        {{- $chosen = $chosen | append .key -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{/* Sort what survived by usage so the row reads as "what this blog is actually
+       about" instead of the order someone typed into sidebar.yaml months ago. */}}
+  {{- $final := slice -}}
+  {{- range $chosen -}}
+    {{- $final = $final | append (dict "key" . "count" (index $counts . | default 0)) -}}
+  {{- end -}}
+  {{- $final = first 8 (sort $final "count" "desc") -}}
+
+  {{/* Phones scroll the chips on one line; tablets and up wrap them. */}}
   <div class="nerdy-scroll-fade-x hide-scrollbar -mx-1 flex flex-nowrap items-center gap-1.5 overflow-x-auto px-1 sm:mx-0 sm:flex-wrap sm:px-0">
-    {{ range .items }}
-      <a class="nerdy-chip nerdy-chip-cyan shrink-0 transition-colors hover:border-accent-cyan hover:text-accent-cyan" href="{{ printf "search/?tag=%s" (urlquery .) }}">#{{ . }}</a>
+    {{ range $final }}
+      {{ $label := index $labels .key | default .key }}
+      <a class="nerdy-chip nerdy-chip-cyan shrink-0 transition-colors hover:border-accent-cyan hover:text-accent-cyan"
+         href="{{ printf "search/?tag=%s" (urlquery $label) }}"
+         title="{{ printf "%s · %d 篇" $label .count }}">#{{ $label }}</a>
     {{ end }}
   </div>
 </section>

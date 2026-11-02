@@ -21,6 +21,7 @@
       el: el,
       cat: el.dataset.cat || '',
       text: el.dataset.text || '',
+      tags: (el.dataset.tags || '').toLowerCase().split('|').filter(Boolean),
       titleEl: el.querySelector('.nerdy-search-title'),
       summaryEl: el.querySelector('.nerdy-search-summary'),
       snippet: el.dataset.snippet || '',
@@ -31,6 +32,10 @@
 
   var total = items.length;
   var activeCat = '';
+  /* Kept apart from the free-text query on purpose: folding "#CTF" into the query
+     matched every post that merely mentions CTF in its body, so the chip promised
+     18 posts and delivered 36. A tag filter has to look at tags only. */
+  var activeTag = '';
   var composing = false;
   var timer = null;
 
@@ -84,13 +89,14 @@
 
     items.forEach(function (item) {
       var okCat = !activeCat || item.cat === activeCat;
+      var okTag = !activeTag || item.tags.indexOf(activeTag) !== -1;
       var okText =
         !terms.length ||
         terms.every(function (term) {
           return item.text.indexOf(term) !== -1;
         });
 
-      var visible = okCat && okText;
+      var visible = okCat && okTag && okText;
       item.el.hidden = !visible;
 
       if (visible) {
@@ -108,13 +114,16 @@
       }
     });
 
-    var active = terms.length > 0 || activeCat !== '';
-    countEl.textContent = active ? '找到 ' + shown + ' 篇' : '共 ' + total + ' 篇';
+    var active = terms.length > 0 || activeCat !== '' || activeTag !== '';
+    countEl.textContent = activeTag
+      ? '标签 #' + activeTag + ' · ' + shown + ' 篇'
+      : active ? '找到 ' + shown + ' 篇' : '共 ' + total + ' 篇';
     emptyEl.hidden = shown !== 0;
     clear.hidden = !active;
 
     var params = new URLSearchParams();
     if (input.value.trim()) params.set('q', input.value.trim());
+    if (activeTag) params.set('tag', activeTag);
     if (activeCat) {
       var chip = filters.filter(function (el) { return el.dataset.cat === activeCat; })[0];
       if (chip && chip.dataset.slug) params.set('cat', chip.dataset.slug);
@@ -139,19 +148,18 @@
 
   function reset() {
     input.value = '';
+    activeTag = '';
     setCat('');
     input.focus();
   }
 
   // Restore state from ?q=, ?cat= and ?tag= so results can be linked to.
-  // Topic chips on the home page link here with ?tag=Protocol; the tag is folded
-  // into the query because every post carries its tags in the search haystack.
   var params = new URLSearchParams(location.search);
   var initialQuery = params.get('q') || '';
   var initialTag = params.get('tag') || '';
   var initialCat = params.get('cat') || '';
   if (initialQuery) input.value = initialQuery;
-  else if (initialTag) input.value = initialTag;
+  if (initialTag) activeTag = initialTag.toLowerCase();
   if (initialCat) {
     var chip = filters.filter(function (el) { return el.dataset.slug === initialCat; })[0];
     if (chip) {

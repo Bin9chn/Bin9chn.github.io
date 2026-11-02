@@ -2,6 +2,7 @@
 title = "2026 安网杯：外泄流量取证"
 date = 2026-11-02T10:10:00+08:00
 draft = false
+featuredImage = "images/cover.png"
 summary = "整个流量包里只有一个 POST，对着 /upload.php 发的。顺着 multipart 把那张 PNG 导出来，再用 stegsolve 抽红通道 bit 0，flag 就写在文件头里。"
 tags = ["CTF", "流量分析", "取证", "隐写"]
 categories = ["CTF"]

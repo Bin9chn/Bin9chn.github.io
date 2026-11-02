@@ -10,7 +10,6 @@ categories:
   - "学习笔记"
 
 tags:
-  - "网络安全"
   - "Web安全"
   - "SQL"
   - "面试"

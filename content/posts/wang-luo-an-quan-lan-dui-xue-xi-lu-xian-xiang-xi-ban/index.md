@@ -10,7 +10,6 @@ categories:
   - "学习笔记"
 
 tags:
-  - "网络安全"
   - "应急响应"
   - "学习路线"
 featuredImage: "images/cover.png"

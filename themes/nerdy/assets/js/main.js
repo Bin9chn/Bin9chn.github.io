@@ -438,44 +438,44 @@ function initViewCounters() {
     wrapper.hidden = false;
   };
 
-  wrappers.forEach((wrapper) => {
-    const name = wrapper.dataset.views;
+  // Counters are pure decoration: read them only after the page is idle, and give
+  // each request a hard timeout. A slow or blocked goatcounter.com must never hold
+  // a connection open or delay interaction.
+  const read = (name, attempt) => {
     const path = name === 'site' ? 'TOTAL' : location.pathname;
     const url = `https://${site}.goatcounter.com/counter/${encodeURIComponent(path)}.json`;
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 3000);
 
-    const load = (attempt) => {
-      window
-        .fetch(url, { credentials: 'omit' })
-        .then((response) => response.json().catch(() => null))
-        .then((data) => {
-          // A known path answers 200; a path with no hits yet answers 404 with the
-          // same body. Both are real answers, so a brand-new post shows "0 次阅读"
-          // instead of dropping the slot and shifting the meta row around.
-          if (!data || !('count' in data)) {
-            if (attempt < 2) window.setTimeout(() => load(attempt + 1), 1200);
-            return;
-          }
+    window
+      .fetch(url, { credentials: 'omit', signal: controller.signal })
+      .then((response) => response.json().catch(() => null))
+      .then((data) => {
+        // A known path answers 200; a path with no hits yet answers 404 with the
+        // same body. Both are real answers, so a brand-new post shows "0 次阅读"
+        // instead of dropping the slot and shifting the meta row around.
+        if (!data || !('count' in data)) return;
 
-          // The API returns thousands separators ("1 097 455"), so strip everything else.
-          const count = Number(String(data.count).replace(/[^\d]/g, ''));
-          if (!Number.isFinite(count)) return;
+        // The API returns thousands separators ("1 097 455"), so strip everything else.
+        const count = Number(String(data.count).replace(/[^\d]/g, ''));
+        if (!Number.isFinite(count)) return;
 
-          reveal(name, count);
+        reveal(name, count);
 
-          // On a first visit the beacon and this read race: a zero right after load
-          // is worth one more look, and the slot updates in place if it grew.
-          if (count === 0 && attempt < 2) {
-            window.setTimeout(() => load(attempt + 1), 1500);
-          }
-        })
-        .catch(() => {
-          // Offline, blocked or CORS failure: stay hidden rather than claim a zero
-          // we never actually read.
-        });
-    };
+        // A brand-new post can read zero before the beacon lands; one quiet retry
+        // is enough to correct it.
+        if (count === 0 && attempt === 0) window.setTimeout(() => read(name, 1), 2500);
+      })
+      .catch(() => {
+        // Offline, blocked, timed out or CORS failure: stay hidden rather than
+        // claim a zero we never actually read.
+      })
+      .finally(() => window.clearTimeout(timer));
+  };
 
-    load(0);
-  });
+  const run = () => wrappers.forEach((wrapper) => read(wrapper.dataset.views, 0));
+  if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 2500 });
+  else window.setTimeout(run, 1200);
 }
 document.addEventListener('DOMContentLoaded', () => {
   initPostToc();

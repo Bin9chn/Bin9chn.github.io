@@ -5,6 +5,10 @@
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-5xl">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" "项目")
+        )) }}
         {{ partial "components/page-heading.html" (dict "title" "项目" "description" "自己写的小东西，从桌面工具到协议实验。" "eyebrow" "~/projects" "accent" "Projects") }}
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">

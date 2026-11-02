@@ -29,9 +29,11 @@ sections:
     items:
       - label: Posts
         value: "38"
+        url: /posts/
         accent: cyan
       - label: Projects
         value: "5"
+        url: /projects/
         accent: emerald
       - label: "Team"
         value: "LapR1skT"

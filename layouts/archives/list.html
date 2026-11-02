@@ -1,0 +1,51 @@
+{{ define "main" }}
+  {{ $posts := sort (where site.RegularPages "Section" "posts") "Date" "desc" }}
+  {{ $groups := $posts.GroupByDate "2006" }}
+
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-4xl">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" "归档")
+        )) }}
+        {{ partial "components/page-heading.html" (dict "title" "归档" "description" (printf "共 %d 篇，按年份倒序排列。" (len $posts)) "eyebrow" "~/archives" "accent" "Archive") }}
+
+        {{ range $groups }}
+          <section class="mb-10">
+            <div class="mb-3 flex items-center gap-3">
+              <h2 class="font-mono text-lg font-bold text-slate-950 dark:text-white">{{ .Key }}</h2>
+              <span class="nerdy-chip nerdy-chip-cyan">{{ len .Pages }} 篇</span>
+              <span class="h-px flex-1 bg-slate-300/70 dark:bg-slate-700/60" aria-hidden="true"></span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              {{ range .Pages }}
+                {{ $cat := index (.Params.categories | default (slice "其他")) 0 }}
+                <a class="group flex items-baseline gap-3 rounded-lg border border-transparent px-3 py-2 transition-colors hover:border-slate-300/70 hover:bg-white/70 dark:hover:border-slate-700/70 dark:hover:bg-slate-900/40 sm:gap-4" href="{{ .RelPermalink }}">
+                  <time class="w-14 shrink-0 font-mono text-[11px] nerdy-muted-soft" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "01-02" }}</time>
+                  <span class="min-w-0 flex-1 text-sm font-semibold leading-6 text-slate-800 transition-colors group-hover:text-accent-cyan dark:text-slate-200">{{ .Title }}</span>
+                  <span class="hidden shrink-0 font-mono text-[11px] nerdy-muted-soft sm:inline">{{ $cat }}</span>
+                  <span class="shrink-0 font-mono text-[11px] text-accent-cyan opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">→</span>
+                </a>
+              {{ end }}
+            </div>
+          </section>
+        {{ else }}
+          <div class="nerdy-card-dashed p-10 text-center">
+            <p class="font-mono text-sm nerdy-muted">还没有文章。</p>
+          </div>
+        {{ end }}
+
+        <div class="mt-10 flex flex-wrap gap-4 border-t border-slate-300/70 pt-6 font-mono text-xs dark:border-slate-700">
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "posts/" | relURL }}">文章列表 →</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "categories/" | relURL }}">按分类浏览</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "/" | relURL }}">← 返回首页</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

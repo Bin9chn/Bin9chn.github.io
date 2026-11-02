@@ -9,6 +9,10 @@
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-4xl">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" .Title)
+        )) }}
         {{ partial "components/page-heading.html" (dict "title" .Title "description" .Description "eyebrow" $eyebrow "accent" "cyan") }}
 
         <article class="nerdy-card p-5 sm:p-8">

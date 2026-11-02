@@ -13,9 +13,13 @@
 
         {{/* Phones show the log list first and push the terminal demo to the end. */}}
         <div class="flex flex-col gap-4 lg:col-span-7 lg:gap-6">
-          <div class="order-3 lg:order-1">
-            {{ partial "terminal.html" . }}
-          </div>
+          {{/* Terminal is opt-in via params.enableTerminal (hugo.toml). Everything it
+               needs is still here, so it can be switched back on at any time. */}}
+          {{ if site.Params.enableTerminal }}
+            <div class="order-3 lg:order-1">
+              {{ partial "terminal.html" . }}
+            </div>
+          {{ end }}
 
           {{ if gt (len $sectionItems) 0 }}
             {{ range $sectionItems }}

@@ -25,8 +25,9 @@
     {{ end }}
 
     {{ if or $hasPosts $hasFallbackPosts }}
+      {{ $allCount := len (where site.RegularPages "Section" $section) }}
       <a class="group flex items-center justify-center nerdy-card-dashed p-5" href="{{ relURL (printf "%s/" $section) }}">
-        <span class="font-mono text-sm nerdy-muted transition-colors group-hover:text-accent-cyan">{{ .view_all_label | default "View All Logs ->" }}</span>
+        <span class="font-mono text-sm nerdy-muted transition-colors group-hover:text-accent-cyan">{{ .view_all_label | default (printf "浏览全部 %d 篇 →" $allCount) }}</span>
       </a>
     {{ end }}
   </div>

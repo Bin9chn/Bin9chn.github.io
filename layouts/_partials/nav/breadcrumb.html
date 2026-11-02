@@ -1,0 +1,19 @@
+{{- /* Breadcrumb trail.
+       items: slice of dicts { label, url }. The last item is rendered as the
+       current page (no link) when it has no url, so callers only pass urls for
+       the ancestors. */ -}}
+{{- $items := .items | default slice -}}
+{{- if $items }}
+  <nav class="mb-5 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 font-mono text-[11px] leading-5 sm:text-xs" aria-label="面包屑导航">
+    {{- range $index, $item := $items }}
+      {{- if gt $index 0 }}
+        <span class="shrink-0 text-slate-400 dark:text-slate-600" aria-hidden="true">/</span>
+      {{- end }}
+      {{- if $item.url }}
+        <a class="shrink-0 nerdy-muted transition-colors hover:text-accent-cyan hover:underline" href="{{ $item.url }}">{{ $item.label }}</a>
+      {{- else }}
+        <span class="min-w-0 truncate font-semibold text-slate-700 dark:text-slate-200" aria-current="page">{{ $item.label }}</span>
+      {{- end }}
+    {{- end }}
+  </nav>
+{{- end }}

@@ -1,6 +1,16 @@
 {{ define "main" }}
-  {{ $category := "Note" }}
-  {{ with index .Params.categories 0 }}{{ $category = . }}{{ end }}
+  {{ $category := "其他" }}
+  {{ with .Params.categories }}{{ with index . 0 }}{{ $category = . }}{{ end }}{{ end }}
+  {{/* Map the display label back to its category slug so every post can point at
+       the category page it belongs to, both in the trail and in the footer. */}}
+  {{ $categorySlug := "" }}
+  {{ $categoryAccent := "cyan" }}
+  {{ range hugo.Data.categories }}
+    {{ if eq .label $category }}
+      {{ $categorySlug = .slug }}
+      {{ $categoryAccent = .accent | default "cyan" }}
+    {{ end }}
+  {{ end }}
   {{ $path := slice
     (dict "tag" "a" "label" "bin9chn@blog" "href" (relURL "/") "class" "nerdy-muted transition-colors hover:text-slate-950 hover:underline dark:hover:text-white")
     (dict "label" ":")
@@ -27,6 +37,15 @@
 
     <div class="nerdy-container pb-16 pt-6">
       <div class="mx-auto max-w-6xl">
+        {{ $crumbs := slice (dict "label" "首页" "url" (relURL "/")) }}
+        {{ if $categorySlug }}
+          {{ $crumbs = $crumbs | append (dict "label" $category "url" (printf "categories/%s/" $categorySlug | relURL)) }}
+        {{ else }}
+          {{ $crumbs = $crumbs | append (dict "label" "文章" "url" (relURL "posts/")) }}
+        {{ end }}
+        {{ $crumbs = $crumbs | append (dict "label" .Title) }}
+        {{ partial "nav/breadcrumb.html" (dict "items" $crumbs) }}
+
         <div class="grid grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
           {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags "margin" "mb-0") }}
 
@@ -58,11 +77,31 @@
                   {{ range .Params.tags }}<span class="nerdy-chip nerdy-chip-cyan">#{{ . }}</span>{{ end }}
                 {{ end }}
               </div>
-              <div class="flex flex-wrap gap-4 font-mono text-xs">
-                <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "posts/" | relLangURL }}">← 返回文章列表</a>
+              <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                {{ with $categorySlug }}
+                  <a class="nerdy-chip nerdy-chip-cyan inline-flex min-h-8 items-center gap-1" href="{{ printf "categories/%s/" . | relURL }}">← 返回「{{ $category }}」</a>
+                {{ end }}
+                <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "posts/" | relLangURL }}">← 全部文章</a>
                 {{ with .Params.sourceUrl }}<a class="nerdy-link inline-flex min-h-8 items-center" href="{{ . }}" target="_blank" rel="noopener">查看原站 ↗</a>{{ end }}
+                <button class="nerdy-link inline-flex min-h-8 items-center" type="button" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">回到顶部 ↑</button>
               </div>
             </footer>
+
+            {{/* Previous / next inside the same category, falling back to the whole
+                 site when the category has only this one post. */}}
+            {{ $series := slice }}
+            {{ range where site.RegularPages "Section" "posts" }}
+              {{ $candidate := . }}
+              {{ with .Params.categories }}
+                {{ if in . $category }}{{ $series = $series | append $candidate }}{{ end }}
+              {{ end }}
+            {{ end }}
+            {{ if lt (len $series) 2 }}
+              {{ $series = sort (where site.RegularPages "Section" "posts") "Date" "desc" }}
+            {{ else }}
+              {{ $series = sort $series "Date" "desc" }}
+            {{ end }}
+            {{ partial "posts/components/navigation.html" (dict "page" . "pages" $series) }}
           </div>
 
           {{ partial "posts/components/toc.html" . }}

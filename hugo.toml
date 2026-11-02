@@ -24,6 +24,10 @@ pagerSize = 10
 description = "Bin9chn 的个人博客：技术笔记、项目记录，还有一些没归类的日常。"
 keywords = "Bin9chn,个人博客,技术笔记,项目,随笔"
 
+# Home-page terminal demo. Templates and data/terminal/* are kept, so flipping
+# this back to true restores the terminal without touching any code.
+enableTerminal = false
+
 # Page-view counters. GoatCounter is free for personal sites and needs no cookie;
 # sign up at https://www.goatcounter.com/signup and put the subdomain here.
 # Leave `goatcounter` empty to hide every counter (nothing is requested, nothing shows).
@@ -93,29 +97,29 @@ disableWatch = true
 [[menu.main]]
 name = "文章"
 weight = 1
-url = "posts/"
+url = "/posts/"
 
 [[menu.main]]
 name = "分类"
 weight = 2
-url = "categories/"
+url = "/categories/"
+
+[[menu.main]]
+name = "归档"
+weight = 3
+url = "/archives/"
 
 [[menu.main]]
 name = "项目"
-weight = 3
-url = "projects/"
+weight = 4
+url = "/projects/"
 
 [[menu.main]]
 name = "友链"
-weight = 4
-url = "friends/"
+weight = 5
+url = "/friends/"
 
 [[menu.main]]
 name = "关于"
-weight = 5
-url = "about/"
-
-[[menu.main]]
-name = "搜索"
 weight = 6
-url = "search/"
+url = "/about/"

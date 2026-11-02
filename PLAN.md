@@ -1,0 +1,195 @@
+# 博客改造规划（2026-11-02）
+
+> 目标：把现在「只能靠手输文章 ID 访问、点进去出不来」的静态站，改成**任何页面都能一级级点回来**的站点，并加一个**登录后能直接改文章、改分类、改全站设置**的管理后台，最后把「给文章就能发」的流程固化成 Skill。
+>
+> 本文是执行清单，不是最终文档。全部做完后归档到 `docs/`，不再留在根目录。
+
+---
+
+## 0. 现状盘点（已核对代码）
+
+| 项目 | 现状 | 问题 |
+| --- | --- | --- |
+| 文章页 `layouts/posts/page.html` | 只有文末一行「← 返回文章列表」 | 没有面包屑、没有回所属分类、上一篇/下一篇组件 `posts/components/navigation.html` 写了但**从未被调用** |
+| 分类页 `layouts/categories/single.html` | 有「← 全部分类」 | 没有首页层级，列表项能点但没有回到文章/搜索的横向入口 |
+| 搜索页 `layouts/search/single.html` | 无任何返回入口 | 从导航进来后只能靠浏览器后退 |
+| 项目/友链/关于 | 项目单页有「← 返回项目列表」 | 友链、友链申请、关于页无返回；无面包屑 |
+| 404 | **不存在** | 访问错 URL 是 GitHub Pages 默认页，没有任何回站入口 |
+| 首页侧边栏 Topics | `tags.html` 渲染成 `<span>` | 标签点不动；`disableKinds=[taxonomy,term]` 下也没有标签页 |
+| 首页侧边栏 Stats「Posts 38」 | 纯文本 | 点不动，且数字要手工维护 |
+| 首页 Recent Posts | 只显示 6 篇 | 没有「查看全部」 |
+| 首页伪终端 | `themes/nerdy/layouts/home.html` 硬编码 `{{ partial "terminal.html" . }}` | 用户要求**暂时下线**，且以后能一键加回 |
+| 导航菜单 | `hugo.toml` 里 `url = "posts/"` 无前导斜杠 | 在子路径页面经 `relLangURL` 处理虽正常，但不够稳，统一为 `/posts/` |
+| 管理后台 | 无 | 所有改动只能改文件 + 跑 API 推送脚本 |
+| 文章计数 | `data/sidebar.yaml` 里 `Posts: "38"` 手写 | 加文章必须手动 +1，已经错过一次 |
+
+---
+
+## 1. 阶段一：全站导航与可达性（先做，立刻可验收）
+
+### 1.1 统一面包屑组件
+新建 `layouts/_partials/nav/breadcrumb.html`，参数 `items`（数组，每项 `label` / `url`，最后一项不带链接 + `aria-current="page"`）。
+- 文章页：`首页 / 学习笔记 / 文章标题`（分类从 `Params.categories[0]` 映射到 `data/categories.yaml` 的 slug）
+- 文章列表：`首页 / 文章`
+- 分类总览：`首页 / 分类`；分类单页：`首页 / 分类 / 学习笔记`
+- 搜索：`首页 / 搜索`
+- 项目：`首页 / 项目`；项目单页：`首页 / 项目 / 项目名`
+- 友链：`首页 / 友链`；申请：`首页 / 友链 / 申请`
+- 关于：`首页 / 关于`
+- 统一样式：等宽小字、`/` 分隔、最后一级高亮，复用现有 `nerdy-muted` / `text-accent-cyan`。
+
+### 1.2 文章页补全
+- 面包屑替换掉现在 heading 里那段不可点的 `~/posts/分类` 文本。
+- 文末操作区：`← 返回 学习笔记`（主）+ `← 全部文章`（次）+ `回到顶部`。
+- 调用现成的 `posts/components/navigation.html`，接上按日期排序的同分类文章（没有同分类则用全站文章）。
+- 移动端底部加「返回」浮动按钮（仅当滚动超过一屏出现，`history.back()`，没有历史时回 `/posts/`）。
+
+### 1.3 列表 / 搜索 / 项目 / 友链 / 关于
+- 所有页面顶部统一面包屑。
+- 搜索页加「← 返回首页」和「浏览全部文章」。
+- 分类单页底部加「看看其他分类」横排 chips（当前分类高亮）。
+- 友链、友链申请、关于页补返回入口。
+
+### 1.4 404 页面
+新建 `layouts/404.html`：`404 / 这条路径不存在` + 搜索框（复用 `search.js` 的最小版）+ 五个分类入口 + 「回到首页」。
+GitHub Pages 会自动使用 `public/404.html`。
+
+### 1.5 首页入口补全（解决「只能点 ID 访问」）
+- Recent Posts 区块底部加「浏览全部 N 篇 →」按钮，指向 `/posts/`。
+- 侧边栏 Stats 的 `Posts` 变成链接，指向 `/posts/`。
+- 侧边栏 Topics 由 `<span>` 改为 `<a>`，指向 `/search/?tag=Protocol`；搜索页读取 `?tag=` 自动填入并过滤（标签页仍不开启 taxonomy，避免和分类路径打架）。
+- 新增 `/archives/` 归档页（按年份分组的全部文章），导航「文章」下作为次级入口，首页和 404 都能到。
+- 所有卡片保持整块可点，并补 `aria-label`。
+
+### 1.6 菜单与稳定性
+- `hugo.toml` 菜单 URL 统一加前导斜杠；新增「归档」。
+- `posts/index/table.html` 的前端分页保留，但补 URL hash（`#page-2`），刷新不丢位置。
+
+**验收**：首页 → 分类 → 文章 → 返回分类 → 返回首页，全程 ≤3 次点击且有面包屑；任意错误 URL 有 404 引导页；`hugo` 构建 0 error。
+
+---
+
+## 2. 阶段二：下线首页伪终端（保留可恢复开关）
+
+- `hugo.toml` 增加 `[params] enableTerminal = false`。
+- `themes/nerdy/layouts/home.html`：把终端块包进 `{{ if site.Params.enableTerminal }}`，并把移动端排序类名同步调整，避免空 div 占位。
+- **模板、`data/terminal/*`、`assets/js` 里的终端脚本全部保留不删**。
+- 以后恢复：只把 `enableTerminal` 改成 `true`，不需要动代码。
+- 顺带把首页首屏的 `order-*` 重新排一遍，终端下线后 Recent Posts 直接顶到第一屏。
+
+---
+
+## 3. 阶段三：管理后台 `/admin/`（核心）
+
+### 3.1 技术路线
+Hugo 是纯静态站，没有服务端。采用**纯前端后台 + GitHub API**：
+
+```
+浏览器 /admin/  ──PAT──▶  api.github.com  ──commit──▶  仓库 main
+                                                    └─▶ GitHub Actions / Pages 自动构建
+```
+
+- 后台本身就是 `static/admin/` 下的静态文件，随站点一起发布，**任何设备打开 `https://bin9chn.github.io/admin/` 都能用**。
+- 登录 = 粘贴 GitHub Token（`Contents: Read and write` 权限），校验通过后存 `localStorage`，下次自动进入；有「退出登录」清除。
+- **身份校验是强制的**：登录时先调 `/user`，只有 `login === "Bin9chn"` 才放行，别的账号 token 直接拒绝；再检查仓库 `permissions.push`。所以「必须是站长的 GitHub」这一点由 GitHub 本身保证。
+- 为什么不是 OAuth 按钮：`github.com`（授权页、Device Flow）在这台机器的网络下连不上，`api.github.com` 却正常。纯静态站做 OAuth 回跳还需要一个后端换 token，等于多养一个服务。Token 方案的写权限同样来自 GitHub，且零后端。
+- 不引入第三方 CMS（Sveltia/Decap 要 OAuth 代理，国内更麻烦），全部自己写，方便塞进本站所有自定义项。
+- 依赖本地化：`js-yaml`、`marked` 下载到 `static/admin/vendor/`，不走 CDN。
+- API 走 `https://api.github.com`；后台设置里可填「API 代理前缀」（给连不上 GitHub 时用，例如自建反代），默认留空。
+
+### 3.2 功能矩阵（「系统里能自定义的都要能改」）
+
+| 模块 | 能做什么 | 对应文件 |
+| --- | --- | --- |
+| 文章 | 列表（按日期/分类/关键词筛选）、新建、编辑、删除、草稿/发布、Markdown 实时预览、字数/阅读时长 | `content/posts/<slug>/index.md` |
+| 文章元信息 | 标题、slug、日期、分类（单选，来自后台分类表）、标签（可增删）、摘要、封面、`sourceUrl`、`draft` | front matter |
+| 图片 | 上传封面 / 正文插图，自动命名 `01-xxx.png`，插入 Markdown，删除未被引用的图 | `content/posts/<slug>/images/` |
+| 分类 | 新增/改名/改 slug/图标/配色/描述/排序；同步 `content/categories/<slug>.md` 与 `data/categories.yaml`；删除前检查是否还有文章在用 | `data/categories.yaml`、`content/categories/` |
+| 站点 | 标题、描述、关键词、baseURL、每页文章数、菜单增删改与排序、默认明暗、是否显示浏览量 | `hugo.toml`（结构化表单 + 模板化写回，保留注释） |
+| 侧边栏 | 昵称、副标题、头像、简介、状态行、社交链接（增删排序）、Snapshot 卡片、Topics 标签；**Posts 数自动统计** | `data/sidebar.yaml` |
+| 首页 | 区块顺序、Recent Posts 显示条数、精选项目列表、伪终端开关 | `data/home/*.yaml`、`hugo.toml` |
+| 友链 | 增删改（名称/地址/头像/描述/标签），导入导出 JSON | `data/home/../friends.json` |
+| 项目 | 增删改项目页（名称、代码、状态、技术栈、仓库、开始时间、正文） | `content/projects/` |
+| 关于页 | 正文编辑 | `content/about.md` |
+| 终端（预留） | 开关 + 各命令文案编辑 | `data/terminal/` |
+
+### 3.3 保存与发布
+- 用 GitHub **Git Data API**：`blobs → tree → commit → update ref`，一次提交可同时包含「文章 + 图片 + sidebar 计数」，不会出现半套改动。
+- Commit message 自动生成：`post: 新增《标题》` / `post: 更新《标题》` / `admin: 更新分类与侧边栏`。
+- 保存前校验：front matter 必填项、slug 冲突、分类是否存在、图片大小（>2MB 警告）。
+- 保存后轮询 GitHub Pages 构建状态（`/repos/{owner}/{repo}/pages/builds/latest`），显示「已提交 / 构建中 / 已上线」。
+- **本地草稿**：编辑中每 5 秒存 `localStorage`，刷新不丢；发布成功才清空。
+
+### 3.4 安全与体验
+- `/admin/` 页面 `noindex,nofollow`，不进 sitemap。
+- PAT 只存在当前浏览器 `localStorage`，退出即清除；页面上明确提示「Token 等同仓库写权限，不要在公用电脑保存」。
+- 登录失败 / 权限不足 / API 超时 / 限流都有明确中文提示和重试按钮。
+- 移动端可用（后台主要在家用电脑，但至少能改错别字）。
+- 深色/浅色跟随站点主题。
+
+### 3.5 可选兜底（先不做，留接口）
+本机 Node 脚本 `npm run admin`：不依赖 GitHub API，直接读写本地仓库 + `hugo server` 预览 + `git commit/push`。当线上 API 连不上时使用。规划里预留，做完主线再决定。
+
+**验收**：在后台从零新建一篇带封面图的文章 → 选分类 → 保存 → 等待构建 → 线上能打开，且侧边栏 Posts 数自动 +1。
+
+---
+
+## 4. 阶段四：把流程固化成 Skill
+
+目录：`~/.workbuddy/skills/blog-publish/`（用户级，跨项目可用）
+
+```
+blog-publish/
+├── SKILL.md              # 主流程：收文 → 建 bundle → 校验 → 推送
+├── references/
+│   ├── front-matter.md   # 字段规范与示例
+│   ├── categories.md     # 五个分类的判定规则与边界案例
+│   └── pitfalls.md       # 已踩过的坑（日期写成未来、page bundle 未识别、Tailwind JIT）
+└── scripts/
+    ├── new-post.mjs      # 生成目录骨架 + front matter
+    └── push-api.mjs      # Git Data API 推送（现有脚本整理）
+```
+
+Skill 必须写死的规则：
+1. **正文一个字都不改**，只动 front matter、标题层级、空行、代码块语言、图片 alt 与位置。
+2. 图片按 `01-xxx.png` 顺序命名，放 `images/`，封面用 `images/cover.*` 并写 `featuredImage`。
+3. 分类按 `categories.md` 的规则给出**一个**主分类；拿不准就在回复里问，不擅自归类。
+4. 日期用服务器当前时间，禁止未来时间。
+5. 新增文章后自动把 `data/sidebar.yaml` 的 Posts +1（后台接管后改由后台自动算）。
+6. 发布前必须 `hugo --gc --minify` 构建通过；失败不推送。
+7. 发现原文事实错误：保留原文，只在回复里指出。
+8. 推送失败自动降级到 `push-api.mjs`，并给出失败原因。
+
+**验收**：下次用户只发一段 md + 一句「发到博客」，Skill 能独立完成建目录、配图、分类、构建、推送、回执。
+
+---
+
+## 5. 执行顺序与产出
+
+| 顺序 | 内容 | 产出 |
+| --- | --- | --- |
+| 1 | 阶段二（终端下线） | 改 2 个文件，5 分钟 |
+| 2 | 阶段一（导航） | 面包屑组件、404、归档页、首页入口、各模板改造 |
+| 3 | 阶段三（后台） | `static/admin/` 一套 + `hugo.toml` 菜单加后台入口（可选隐藏） |
+| 4 | 全站回归 | 本地 `hugo server` 逐页点一遍，截图核对 |
+| 5 | 阶段四（Skill） | `blog-publish` 技能包 |
+| 6 | 推送上线 | 一次 commit 推完，确认 Pages 构建成功 |
+
+---
+
+## 6. 待确认（不阻塞，先按默认走）
+
+1. **后台登录方式**：已定为 GitHub Token + 强制校验 `Bin9chn`。若以后想要「账号 + 密码」或 OAuth 按钮，需要一台服务器或至少一个 OAuth 代理。
+2. **后台入口是否公开**：已放在 `/admin/`，靠 Token 保护，不在导航里露出、页面 `noindex`。
+3. **「主页只能点 ID 访问」的具体现象**：按「缺少入口 + 缺少返回」处理了；如果指的是首页直接打不开，需要截图或报错信息。
+4. **安网杯文章里 `172.20.0.6` 与截图 `172.20.0.2 → 172.20.0.5` 不一致**：保留原文，等你确认再改。
+
+---
+
+## 7. 风险
+
+- **GitHub API 连通性**：国内直连 `api.github.com` 可能超时；后台内置代理前缀配置，实在不行走 §3.5 本地方案。
+- **PAT 泄露**：只存本机浏览器；建议单独建一个只对这一个仓库有 `Contents` 写权限的 fine-grained token。
+- **Tailwind JIT**：后台页面若复用站点 CSS，新增 utility class 需要重新构建；后台样式单独写一份普通 CSS，避免依赖 JIT。
+- **Markdown 编辑器误伤 front matter**：保存前做 YAML 解析校验，解析失败直接拒绝提交。
+- **图片体积**：GitHub Contents API 单文件建议 <1MB，上传时自动压缩（浏览器 canvas 转 webp）。

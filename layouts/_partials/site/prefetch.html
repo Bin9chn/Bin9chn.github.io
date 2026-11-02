@@ -1,0 +1,59 @@
+{{/* Link prefetching.
+     GitHub Pages is served from a CDN far from mainland China, so a cold click can
+     take a second or two before the next page starts painting. Warming the HTML on
+     hover makes navigation feel instant without rendering anything in advance (a
+     prerender would re-run the analytics beacon and inflate page views).
+
+     Chrome/Edge use Speculation Rules; other browsers fall back to a tiny hover
+     handler that appends <link rel=prefetch>. Both skip admin, feeds and assets. */}}
+{{ if not hugo.IsDevelopment }}
+  <script type="speculationrules">
+    {
+      "prefetch": [
+        {
+          "where": {
+            "and": [
+              { "href_matches": "/*" },
+              { "not": { "href_matches": "/admin/*" } },
+              { "not": { "href_matches": "/*.xml" } },
+              { "not": { "href_matches": "/*.json" } }
+            ]
+          },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+  </script>
+  <script>
+    (function () {
+      if (HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) return;
+
+      var seen = Object.create(null);
+      var skip = /\.(?:xml|json|png|jpe?g|webp|gif|svg|ico|pdf|zip|txt)$/i;
+
+      function warm(anchor) {
+        if (!anchor || !anchor.href) return;
+        var url = anchor.href;
+        if (url.indexOf(location.origin) !== 0) return;
+        if (skip.test(url) || url.indexOf('/admin/') !== -1) return;
+        if (seen[url]) return;
+        seen[url] = 1;
+        var link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'document';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+
+      function onIntent(event) {
+        var target = event.target;
+        var anchor = target && target.closest ? target.closest('a[href]') : null;
+        if (anchor) warm(anchor);
+      }
+
+      document.addEventListener('mouseover', onIntent, { passive: true });
+      document.addEventListener('touchstart', onIntent, { passive: true });
+      document.addEventListener('focusin', onIntent);
+    })();
+  </script>
+{{ end }}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="color-scheme" content="light dark">
+  <title>管理后台 · Bin9chn</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- 登录 -->
+  <section class="login" id="login-view">
+    <div class="login__card">
+      <div class="login__brand"><span class="login__logo">~/</span> Bin9chn <span class="login__slash">/</span> 管理后台</div>
+
+      <h1 class="login__title">用 GitHub 账号验证</h1>
+      <p class="login__desc">
+        后台直接读写 <code>Bin9chn/Bin9chn.github.io</code> 仓库。只有该仓库所有者
+        <strong>Bin9chn</strong> 的 GitHub 凭证才能通过验证，其他账号会被拒绝。
+      </p>
+
+      <form id="login-form" autocomplete="off">
+        <label class="field">
+          <span class="field__label">GitHub Token</span>
+          <input class="input input--mono" id="token-input" type="password" spellcheck="false" autocomplete="off" placeholder="github_pat_... 或 ghp_...">
+        </label>
+
+        <label class="check">
+          <input id="remember-input" type="checkbox" checked>
+          <span>在这台设备上记住（存本地浏览器，退出即清除）</span>
+        </label>
+
+        <button class="btn btn--primary btn--block" id="login-submit" type="submit">验证并进入</button>
+        <p class="form-error" id="login-error" hidden></p>
+      </form>
+
+      <details class="login__help">
+        <summary>怎么拿到 Token？</summary>
+        <ol>
+          <li>打开 GitHub → Settings → Developer settings → Personal access tokens → <em>Fine-grained tokens</em>。</li>
+          <li>Repository access 只勾选 <code>Bin9chn.github.io</code>。</li>
+          <li>Permissions → Repository permissions → <strong>Contents: Read and write</strong>；Metadata 会自动带上只读。</li>
+          <li>生成后复制以 <code>github_pat_</code> 开头的字符串，粘贴到上面。</li>
+        </ol>
+        <p class="muted">Token 等同这个仓库的写权限，不要发给人、不要提交进仓库。换电脑或清除浏览器数据后需要重新粘贴。</p>
+      </details>
+
+      <p class="login__foot">纯静态后台 · 没有服务器 · 改动直接提交到仓库并触发 Pages 构建</p>
+    </div>
+  </section>
+
+  <!-- 主界面 -->
+  <div class="shell" id="admin-view" hidden>
+    <aside class="sidebar">
+      <div class="sidebar__head">
+        <span class="sidebar__logo">~/</span>
+        <div class="sidebar__meta">
+          <strong>管理后台</strong>
+          <span id="account-label" class="sidebar__account">…</span>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <a class="nav__item" href="#/posts" data-nav="posts"><span class="nav__icon">¶</span> 文章</a>
+        <a class="nav__item" href="#/categories" data-nav="categories"><span class="nav__icon">▤</span> 分类</a>
+        <a class="nav__item" href="#/site" data-nav="site"><span class="nav__icon">⚙</span> 站点设置</a>
+        <a class="nav__item" href="#/sidebar" data-nav="sidebar"><span class="nav__icon">▥</span> 侧边栏</a>
+        <a class="nav__item" href="#/home" data-nav="home"><span class="nav__icon">⌂</span> 首页区块</a>
+        <a class="nav__item" href="#/friends" data-nav="friends"><span class="nav__icon">◎</span> 友链</a>
+        <a class="nav__item" href="#/about" data-nav="about"><span class="nav__icon">✎</span> 关于页</a>
+      </nav>
+
+      <div class="sidebar__foot">
+        <a class="btn btn--ghost btn--block" href="/" target="_blank" rel="noopener">打开博客 ↗</a>
+        <button class="btn btn--ghost btn--block" id="logout-btn" type="button">退出登录</button>
+        <span class="sidebar__version" id="build-label">—</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <button class="btn btn--ghost topbar__menu" id="menu-btn" type="button" aria-label="打开菜单">☰</button>
+          <div>
+            <h2 class="topbar__title" id="page-title">文章</h2>
+            <p class="topbar__sub" id="page-sub">—</p>
+          </div>
+        </div>
+        <div class="topbar__right">
+          <span class="status" id="sync-status" hidden></span>
+          <button class="btn btn--ghost" id="reload-btn" type="button">刷新</button>
+        </div>
+      </header>
+
+      <div class="view" id="view">
+        <div class="loading"><span class="spinner"></span> 正在读取仓库…</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="vendor/js-yaml.min.js"></script>
+  <script src="vendor/marked.min.js"></script>
+  <script src="admin.js"></script>
+  <script src="views.js"></script>
+</body>
+</html>

@@ -13,6 +13,11 @@
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-6xl">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" "友链" "url" (relURL "friends/"))
+          (dict "label" "申请友链")
+        )) }}
         {{ partial "components/page-heading.html" (dict
           "title" "申请友链"
           "description" "填写站点信息，提交后会在 GitHub 生成一条预填好的申请 Issue，审核通过后加入友链页。"

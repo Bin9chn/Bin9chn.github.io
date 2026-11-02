@@ -13,7 +13,11 @@
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-5xl">
-        <a class="mb-6 inline-flex items-center gap-1.5 font-mono text-xs nerdy-muted transition-colors hover:text-accent-cyan" href="{{ "categories/" | relURL }}">← 全部分类</a>
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" "分类" "url" (relURL "categories/"))
+          (dict "label" $cat)
+        )) }}
 
         {{ partial "components/page-heading.html" (dict "title" $cat "description" (.Params.description | default $entry.description) "eyebrow" (printf "~/categories/%s" .Params.slug) "accent" (or $entry.accent "cyan")) }}
 
@@ -43,6 +47,21 @@
               <p class="font-mono text-sm nerdy-muted">这个分类还没有文章，先去别的分类看看？</p>
             </div>
           {{ end }}
+        </div>
+
+        <div class="mt-10 border-t border-slate-300/70 pt-6 dark:border-slate-700">
+          <p class="mb-3 font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft">其他分类</p>
+          <div class="flex flex-wrap gap-1.5">
+            {{ range hugo.Data.categories }}
+              {{ if ne .slug $.Params.slug }}
+                <a class="nerdy-chip border-slate-300/80 text-slate-600 transition-colors hover:border-accent-cyan hover:text-accent-cyan dark:border-slate-700 dark:text-slate-400" href="{{ printf "categories/%s/" .slug | relURL }}">{{ .label }}</a>
+              {{ end }}
+            {{ end }}
+          </div>
+          <div class="mt-6 flex flex-wrap gap-3 font-mono text-xs">
+            <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "categories/" | relURL }}">← 全部分类</a>
+            <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "posts/" | relURL }}">浏览全部文章 →</a>
+          </div>
         </div>
       </div>
     </div>

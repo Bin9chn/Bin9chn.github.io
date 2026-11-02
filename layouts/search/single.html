@@ -7,6 +7,10 @@
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-4xl" id="search-page">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" "搜索")
+        )) }}
         {{ partial "components/page-heading.html" (dict "title" (.Title | default "搜索") "description" .Params.description "eyebrow" "~/search" "accent" "emerald") }}
 
         <div class="nerdy-window">
@@ -53,7 +57,9 @@
         <div class="mt-6 flex flex-col gap-3" id="search-results">
           {{ range $posts }}
             {{ $body := .Plain | plainify | htmlUnescape | replaceRE `\s+` " " }}
-            {{ $hay := printf "%s %s %s %s %s" .Title (.Summary | plainify | htmlUnescape) (delimit (.Params.tags | default slice) " ") (delimit (.Params.categories | default slice) " ") ($body | truncate 900 "") }}
+            {{/* 300 chars is enough for keyword matching and keeps this page small:
+                 38 posts x 900 chars made the HTML ~190 KB on its own. */}}
+            {{ $hay := printf "%s %s %s %s %s" .Title (.Summary | plainify | htmlUnescape) (delimit (.Params.tags | default slice) " ") (delimit (.Params.categories | default slice) " ") ($body | truncate 300 "") }}
             {{ $hay = $hay | replaceRE `\s+` " " | lower }}
             {{ $cat := index (.Params.categories | default (slice "其他")) 0 }}
             <a
@@ -61,7 +67,7 @@
               href="{{ .RelPermalink }}"
               data-cat="{{ $cat }}"
               data-text="{{ $hay }}"
-              data-snippet="{{ $body | truncate 900 "" }}">
+              data-snippet="{{ $body | truncate 400 "" }}">
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] nerdy-muted-soft">
                 <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
                 <span aria-hidden="true">·</span>
@@ -81,6 +87,12 @@
 
         <div class="nerdy-card-dashed mt-6 p-8 text-center" id="search-empty" hidden>
           <p class="font-mono text-sm nerdy-muted">没有匹配的文章，换个关键词试试？</p>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-4 border-t border-slate-300/70 pt-6 font-mono text-xs dark:border-slate-700">
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "posts/" | relURL }}">浏览全部文章 →</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "categories/" | relURL }}">按分类浏览</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "/" | relURL }}">← 返回首页</a>
         </div>
       </div>
     </div>

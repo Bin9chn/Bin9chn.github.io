@@ -1,0 +1,11 @@
+<section class="nerdy-sidebar-card">
+  <h2 class="mb-2 font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft sm:mb-3 sm:text-xs">{{ .title }}</h2>
+  {{/* Phones scroll the chips on one line; tablets and up wrap them.
+       Topic pages are not generated (taxonomies are off), so each chip filters
+       the search page by tag instead of pointing at a dead URL. */}}
+  <div class="nerdy-scroll-fade-x hide-scrollbar -mx-1 flex flex-nowrap items-center gap-1.5 overflow-x-auto px-1 sm:mx-0 sm:flex-wrap sm:px-0">
+    {{ range .items }}
+      <a class="nerdy-chip nerdy-chip-cyan shrink-0 transition-colors hover:border-accent-cyan hover:text-accent-cyan" href="{{ printf "search/?tag=%s" (urlquery .) }}">#{{ . }}</a>
+    {{ end }}
+  </div>
+</section>

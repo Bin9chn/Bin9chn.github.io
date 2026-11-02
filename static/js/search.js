@@ -143,11 +143,15 @@
     input.focus();
   }
 
-  // Restore state from ?q= and ?cat= so results can be linked to.
+  // Restore state from ?q=, ?cat= and ?tag= so results can be linked to.
+  // Topic chips on the home page link here with ?tag=Protocol; the tag is folded
+  // into the query because every post carries its tags in the search haystack.
   var params = new URLSearchParams(location.search);
   var initialQuery = params.get('q') || '';
+  var initialTag = params.get('tag') || '';
   var initialCat = params.get('cat') || '';
   if (initialQuery) input.value = initialQuery;
+  else if (initialTag) input.value = initialTag;
   if (initialCat) {
     var chip = filters.filter(function (el) { return el.dataset.slug === initialCat; })[0];
     if (chip) {

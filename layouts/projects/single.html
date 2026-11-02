@@ -5,6 +5,11 @@
 
     <div class="nerdy-container pb-16 pt-10">
       <div class="mx-auto max-w-4xl">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" "项目" "url" (relURL "projects/"))
+          (dict "label" .Title)
+        )) }}
         {{ partial "components/page-heading.html" (dict "title" .Title "description" (.Params.summary | default .Summary) "eyebrow" (printf "~/%s" (.Params.code | default "project")) "accent" (.Params.status | default "Active")) }}
 
         <dl class="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">

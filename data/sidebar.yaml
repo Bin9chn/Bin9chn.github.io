@@ -1,7 +1,7 @@
 profile:
-  name: "Bin9chn"
-  title: "个人博客 / 什么都写一点"
-  avatar: "images/avatar.png"
+  name: Bin9chn
+  title: Hello~
+  avatar: images/avatar.png
   description: 技术、项目，以及一些没归类的日常。
   status:
     label: Focus
@@ -24,22 +24,21 @@ profile:
     - icon: code
       label: 管理后台
       url: /admin/
-
 sections:
   - id: profile-stats
     type: stats
     title: Snapshot
     items:
       - label: Posts
-        value: "38"
+        value: '38'
         url: /posts/
         accent: cyan
       - label: Projects
-        value: "5"
+        value: '5'
         url: /projects/
         accent: emerald
-      - label: "Team"
-        value: "LapR1skT"
+      - label: Team
+        value: LapR1skT
         accent: purple
   - id: topics
     type: tags

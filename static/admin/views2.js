@@ -393,7 +393,7 @@
     container.innerHTML =
       '<div class="editor-grid">' +
         '<div class="card">' +
-          '<div class="card__title">正文</div><div class="card__desc">Markdown，保存后直接替换 content/about.md 的正文部分。</div>' +
+          '<div class="card__title">正文</div><div class="card__desc">Markdown，保存后直接替换 content/about.md 的正文部分。其中 <code>{{&lt; featured-projects &gt;}}</code> 是自动生成的项目列表，别删——它在预览里显示为原始代码，前台会渲染成和首页「Featured Projects」一样的三个项目。</div>' +
           '<textarea class="editor-body" id="about-body" spellcheck="false">' + esc(body) + '</textarea>' +
           '<div class="row" style="margin-top:12px"><button class="btn btn--primary" id="save-about" type="button">保存关于页</button></div>' +
         '</div>' +
@@ -405,7 +405,15 @@
 
     var bodyEl = container.querySelector('#about-body');
     var previewEl = container.querySelector('#about-preview');
-    function update() { previewEl.innerHTML = window.marked.parse(bodyEl.value || ''); }
+    function update() {
+      // The project list is a Hugo shortcode; marked would print it verbatim, so
+      // swap in a readable stand-in for the preview only.
+      var source = (bodyEl.value || '').replace(
+        /\{\{<\s*featured-projects\s*>\}\}/g,
+        '> 这里会自动显示首页「Featured Projects」里的项目，内容来自首页区块配置。',
+      );
+      previewEl.innerHTML = window.marked.parse(source);
+    }
     bodyEl.addEventListener('input', update);
     update();
 

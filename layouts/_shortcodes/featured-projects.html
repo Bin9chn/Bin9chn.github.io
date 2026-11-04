@@ -1,0 +1,22 @@
+{{- /* Renders the same list the home page shows under "Featured Projects", read from
+       data/home/featured-projects.yaml. Before this existed the about page carried its
+       own hand-written copy, so editing the home page left the about page describing
+       different projects with different wording. */ -}}
+{{- $section := index hugo.Data.home "featured-projects" -}}
+{{- with $section.items -}}
+  <ul>
+    {{- range . -}}
+      {{- $url := "" -}}
+      {{- with .links }}{{ $url = (index . 0).url }}{{ end -}}
+      <li>
+        {{- if $url -}}
+          <a href="{{ $url }}" target="_blank" rel="noopener"><strong>{{ .title }}</strong></a>
+        {{- else -}}
+          <strong>{{ .title }}</strong>
+        {{- end -}}
+        {{- with .description }}：{{ . }}{{ end -}}
+        {{- with .type }} <span class="not-prose ml-1 font-mono text-[10px] uppercase tracking-wider nerdy-muted-soft">{{ . }}</span>{{ end -}}
+      </li>
+    {{- end -}}
+  </ul>
+{{- end -}}

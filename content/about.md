@@ -18,9 +18,7 @@ summary = "Bin9chn 的个人博客，技术、项目和一些日常。"
 
 ## 常驻项目
 
-- [**LapCry**](https://github.com/Bin9chn/LapCry_public)：本地优先的桌面加解密数据处理工作台。
-- [HTTP/2 Bomb](https://github.com/Bin9chn/http2-bomb)：HTTP/2 压缩放大与流控停滞的实验。
-- [LRT CryptoCTF Tools](https://github.com/Bin9chn/LRT-CryptoCTF-Tools)：面向 CTF 的密码学桌面工具。
+{{< featured-projects >}}
 
 ## 联系
 

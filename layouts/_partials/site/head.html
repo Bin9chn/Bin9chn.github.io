@@ -58,7 +58,7 @@
   "inLanguage" "zh-CN"
   "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
   "author" (dict "@type" "Person" "name" (site.Params.author | default "Bin9chn") "url" site.BaseURL)
-  "publisher" (dict "@type" "Organization" "name" site.Title "logo" (dict "@type" "ImageObject" "url" ("images/apple-touch-icon.png" | absURL)))
+  "publisher" (dict "@type" "Organization" "name" site.Title "logo" (dict "@type" "ImageObject" "url" ("images/android-chrome-192x192.png" | absURL)))
 -}}
 <script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
 {{- else }}
@@ -72,9 +72,18 @@
 -}}
 <script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
 {{- end }}
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+{{/* Favicons are cut from the profile avatar. The .ico comes first so browsers
+     that do not pick a PNG still get a real icon; the 48/96 PNGs are what Google
+     reads for the search-result favicon (it ignores SVG and wants a square that
+     is at least 48px). The old favicon.svg is no longer referenced: while it was
+     listed first, Chrome kept showing the theme's generic terminal glyph. */}}
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | relURL }}" title="{{ site.Title }}">
 {{ with resources.Get "js/theme-scheme.js" }}
   {{ $opts := dict "minify" (not hugo.IsDevelopment) }}

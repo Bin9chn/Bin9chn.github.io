@@ -1,8 +1,8 @@
 <section>
-  <h2 class="mb-2 font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft sm:mb-3 sm:text-xs">{{ .title }}</h2>
+  <h2 class="mb-1.5 font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft sm:text-[11px]">{{ .title }}</h2>
   {{/* Phones: three values side by side in a single row. Tablets and up: the stacked list.
        Items may carry an optional `url`, which turns the value into a link. */}}
-  <div class="grid grid-cols-3 gap-2 font-mono text-[11px] sm:block sm:space-y-2 sm:text-xs">
+  <div class="grid grid-cols-3 gap-2 font-mono text-[11px] sm:block sm:space-y-1.5 sm:text-xs">
     {{ range .items }}
       {{ $item := . }}
       {{ $value := .value }}
@@ -11,7 +11,7 @@
         {{ $value = printf "%d" (len (where site.RegularPages "Section" "posts")) }}
       {{ end }}
       {{ $accentClasses := partial "components/accent-classes.html" (.accent | default "cyan") }}
-      <div class="flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:border-b sm:border-slate-200/80 sm:pb-1.5 sm:last:border-b-0 sm:last:pb-0 sm:dark:border-slate-700/50">
+      <div class="flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:border-b sm:border-slate-200/60 sm:pb-1 sm:last:border-b-0 sm:last:pb-0 sm:dark:border-slate-700/50">
         <span class="truncate nerdy-muted">{{ .label }}:</span>
         {{ with .url }}
           <a class="truncate font-bold transition-colors hover:underline sm:text-right {{ $accentClasses.icon }}" href="{{ . }}">{{ $value }}</a>

@@ -5,23 +5,26 @@
   {{ $sectionItems := $sectionsConfig.items | default slice }}
 
   <div class="nerdy-page-surface nerdy-page-surface--home">
-    <div class="nerdy-ambient-bg"></div>
-    <div class="nerdy-top-glow"></div>
+    {{/* Soft colour blobs behind the glass panels — the blur needs something to
+         blur, and the old grid-only background made the panels look flat. */}}
+    <div class="nerdy-glass-blobs" aria-hidden="true"></div>
 
-    <div class="nerdy-container pt-4 lg:pt-6">
-      {{/* Identity moved out of the sidebar and up to a full-width band: the page
-           used to open on five equally-weighted sidebar cards, so nothing read as
-           "who this is". */}}
+    <div class="nerdy-container pt-3 lg:pt-4">
       {{ with $sidebar.profile }}
         {{ partial "home/hero.html" . }}
       {{ end }}
 
-      <div class="mt-4 grid grid-cols-1 items-start gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-12 lg:gap-8">
+      {{/* One-viewport target on desktop: nav + hero + this grid are budgeted to
+           ~100dvh, the grid stretches to fill what is left, and both columns
+           distribute their sections evenly inside it (justify-between). The min()
+           cap stops ultra-tall monitors from pulling the sections apart into
+           huge gaps; on short screens min-h keeps content from being clipped. */}}
+      <div class="mt-3 grid grid-cols-1 items-stretch gap-4 sm:gap-5 lg:min-h-[min(calc(100dvh-17rem),58rem)] lg:grid-cols-12">
         {{/* Phones show the log list first — the reference card is below it, since
              the hero already carries identity. Desktop keeps the original order. */}}
         {{ partial "home/sidebar.html" . }}
 
-        <div class="order-1 flex flex-col gap-6 sm:gap-8 lg:order-2 lg:col-span-8">
+        <div class="order-1 flex flex-col gap-5 sm:gap-6 lg:order-2 lg:col-span-8 lg:h-full lg:justify-between lg:gap-5">
           {{ if site.Params.enableTerminal }}
             {{ partial "terminal.html" . }}
           {{ end }}

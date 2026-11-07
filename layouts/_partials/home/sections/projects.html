@@ -1,9 +1,8 @@
 {{- $items := .items | default slice -}}
-{{- $odd := eq (mod (len $items) 2) 1 -}}
-<section id="{{ .id }}">
-  <div class="mb-3 flex items-end justify-between gap-4">
-    <h2 class="flex min-w-0 items-center gap-2 font-mono text-base font-bold tracking-tight text-slate-950 dark:text-white">
-      <span class="shrink-0 text-accent-cyan">{{ partial "components/icon.html" (dict "name" (.icon | default "code") "class" "h-4 w-4") }}</span>
+<section id="{{ .id }}" class="flex flex-col">
+  <div class="mb-2 flex items-end justify-between gap-4">
+    <h2 class="flex min-w-0 items-center gap-2 font-mono text-sm font-bold tracking-tight text-slate-950 dark:text-white">
+      <span class="shrink-0 text-accent-cyan">{{ partial "components/icon.html" (dict "name" (.icon | default "code") "class" "h-3.5 w-3.5") }}</span>
       <span class="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true">&lt;&lt;</span>
       <span class="truncate">{{ .title | default "Featured Projects" }}</span>
       <span class="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true">&gt;&gt;</span>
@@ -11,11 +10,23 @@
     <a class="shrink-0 font-mono text-[11px] nerdy-link sm:text-xs" href="{{ "projects/" | relLangURL }}">全部 →</a>
   </div>
 
-  {{/* Odd counts make the last card span the row so the grid does not end on a
-       half-empty line. */}}
-  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4{{ if $odd }} sm:[&>*:last-child]:col-span-2{{ end }}">
+  {{/* One row per project: the 2×2 card grid could not fit a one-viewport home page
+       and left the odd card stretched over an empty half-row. */}}
+  <ul class="flex flex-1 flex-col justify-evenly">
     {{ range $items }}
-      {{ partial "home/cards/project.html" . }}
+      {{ $url := "" }}
+      {{ with .links }}{{ with index . 0 }}{{ $url = .url }}{{ end }}{{ end }}
+      {{ $accentClasses := partial "components/accent-classes.html" (.accent | default "cyan") }}
+      <li>
+        <a class="glass-row group flex items-center gap-2.5 py-2 sm:gap-3"
+           href="{{ $url | default (relURL "projects/") }}"
+           {{ if hasPrefix $url "http" }}target="_blank" rel="noopener noreferrer"{{ end }}>
+          {{ with .type }}<span class="{{ $accentClasses.chip }} shrink-0 px-2 py-0.5 text-[10px] uppercase">{{ . }}</span>{{ end }}
+          <span class="shrink-0 text-sm font-semibold text-slate-950 transition-colors group-hover:text-accent-cyan dark:text-white">{{ .title }}</span>
+          {{ with .description }}<span class="min-w-0 flex-1 truncate text-[12px] leading-5 nerdy-muted">{{ . }}</span>{{ end }}
+          <span class="shrink-0 font-mono text-[11px] text-accent-cyan opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">→</span>
+        </a>
+      </li>
     {{ end }}
-  </div>
+  </ul>
 </section>

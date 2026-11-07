@@ -1,0 +1,59 @@
+{{/* Compact digest of data/honors.yaml: top awards and papers, linking to /honors/.
+     No second copy of the data — the honours page stays the single source. */}}
+{{ $honors := site.Data.honors | default dict }}
+{{ $groups := $honors.groups | default slice }}
+{{ $awardGroup := "" }}
+{{ $paperGroup := "" }}
+{{ with first 1 (where $groups "kind" "award") }}{{ $awardGroup = index . 0 }}{{ end }}
+{{ with first 1 (where $groups "kind" "paper") }}{{ $paperGroup = index . 0 }}{{ end }}
+
+{{ if or $awardGroup $paperGroup }}
+  <section class="nerdy-card p-5 sm:p-6">
+    <div class="mb-3 flex items-end justify-between gap-4">
+      <h2 class="flex min-w-0 items-center gap-2 font-mono text-base font-bold tracking-tight text-slate-950 dark:text-white">
+        <span class="shrink-0 text-accent-emerald">{{ partial "components/icon.html" (dict "name" "collection" "class" "h-4 w-4") }}</span>
+        <span class="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true">&lt;&lt;</span>
+        <span class="truncate">{{ $honors.title | default "荣誉与成果" }}</span>
+        <span class="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true">&gt;&gt;</span>
+      </h2>
+      <a class="shrink-0 font-mono text-[11px] nerdy-link sm:text-xs" href="{{ "honors/" | relLangURL }}">全部 →</a>
+    </div>
+
+    {{/* Papers get the wider column: English titles truncate hard at 50% width. */}}
+    <div class="grid gap-5 sm:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] sm:gap-6">
+      {{ with $awardGroup }}
+        <div class="min-w-0">
+          <p class="mb-2 flex items-center justify-between gap-2 border-b border-slate-200/80 pb-1.5 font-mono text-[10px] uppercase tracking-widest nerdy-muted-soft dark:border-slate-700/60">
+            <span>{{ .title }}</span>
+            <span class="text-accent-amber">{{ len (.items | default slice) }}</span>
+          </p>
+          <ul class="flex flex-col gap-1.5">
+            {{ range first 3 (.items | default slice) }}
+              <li class="flex items-baseline gap-2">
+                <span class="min-w-0 flex-1 truncate text-[13px] leading-5 text-slate-700 dark:text-slate-300" title="{{ .title }}">{{ .title }}</span>
+                {{ with .tag }}<span class="shrink-0 font-mono text-[10px] text-accent-amber">{{ . }}</span>{{ end }}
+              </li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+
+      {{ with $paperGroup }}
+        <div class="min-w-0">
+          <p class="mb-2 flex items-center justify-between gap-2 border-b border-slate-200/80 pb-1.5 font-mono text-[10px] uppercase tracking-widest nerdy-muted-soft dark:border-slate-700/60">
+            <span>{{ .title }}</span>
+            <span class="text-accent-purple">{{ len (.items | default slice) }}</span>
+          </p>
+          <ul class="flex flex-col gap-1.5">
+            {{ range first 2 (.items | default slice) }}
+              <li class="flex items-baseline gap-2">
+                <span class="min-w-0 flex-1 truncate text-[13px] leading-5 text-slate-700 dark:text-slate-300" title="{{ .title }}">{{ .title }}</span>
+                {{ with .tag }}<span class="shrink-0 font-mono text-[10px] text-accent-purple">{{ . }}</span>{{ end }}
+              </li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

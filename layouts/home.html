@@ -1,0 +1,52 @@
+{{ define "main" }}
+  {{ $home := hugo.Data.home | default dict }}
+  {{ $sidebar := hugo.Data.sidebar | default dict }}
+  {{ $sectionsConfig := index $home "sections" | default dict }}
+  {{ $sectionItems := $sectionsConfig.items | default slice }}
+
+  <div class="nerdy-page-surface nerdy-page-surface--home">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pt-4 lg:pt-6">
+      {{/* Identity moved out of the sidebar and up to a full-width band: the page
+           used to open on five equally-weighted sidebar cards, so nothing read as
+           "who this is". */}}
+      {{ with $sidebar.profile }}
+        {{ partial "home/hero.html" . }}
+      {{ end }}
+
+      <div class="mt-4 grid grid-cols-1 items-start gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-12 lg:gap-8">
+        {{/* Phones show the log list first — the reference card is below it, since
+             the hero already carries identity. Desktop keeps the original order. */}}
+        {{ partial "home/sidebar.html" . }}
+
+        <div class="order-1 flex flex-col gap-6 sm:gap-8 lg:order-2 lg:col-span-8">
+          {{ if site.Params.enableTerminal }}
+            {{ partial "terminal.html" . }}
+          {{ end }}
+
+          {{ if gt (len $sectionItems) 0 }}
+            {{ range $sectionItems }}
+              {{ with index $home . }}
+                {{ partial "home/main-section.html" . }}
+              {{ else }}
+                {{ errorf "Missing home section data file: data/home/%s.yaml" . }}
+              {{ end }}
+            {{ end }}
+          {{ else }}
+            {{ partial "components/empty-state.html" (dict "parts" (slice
+              (dict "text" "No home sections configured yet. Add section entries under ")
+              (dict "type" "code" "text" "data/home/sections.yaml")
+              (dict "text" " to populate this area.")
+            )) }}
+          {{ end }}
+
+          {{/* Derived from data/honors.yaml, so the honours page is one click away
+               without maintaining a second copy of the list. */}}
+          {{ partial "home/honors-teaser.html" . }}
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

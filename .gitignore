@@ -6,3 +6,5 @@
 /packages/hugoautogen/
 .DS_Store
 Thumbs.db
+/public-new/
+/.tmp-shots/

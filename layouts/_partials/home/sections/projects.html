@@ -1,0 +1,21 @@
+{{- $items := .items | default slice -}}
+{{- $odd := eq (mod (len $items) 2) 1 -}}
+<section id="{{ .id }}">
+  <div class="mb-3 flex items-end justify-between gap-4">
+    <h2 class="flex min-w-0 items-center gap-2 font-mono text-base font-bold tracking-tight text-slate-950 dark:text-white">
+      <span class="shrink-0 text-accent-cyan">{{ partial "components/icon.html" (dict "name" (.icon | default "code") "class" "h-4 w-4") }}</span>
+      <span class="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true">&lt;&lt;</span>
+      <span class="truncate">{{ .title | default "Featured Projects" }}</span>
+      <span class="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true">&gt;&gt;</span>
+    </h2>
+    <a class="shrink-0 font-mono text-[11px] nerdy-link sm:text-xs" href="{{ "projects/" | relLangURL }}">全部 →</a>
+  </div>
+
+  {{/* Odd counts make the last card span the row so the grid does not end on a
+       half-empty line. */}}
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4{{ if $odd }} sm:[&>*:last-child]:col-span-2{{ end }}">
+    {{ range $items }}
+      {{ partial "home/cards/project.html" . }}
+    {{ end }}
+  </div>
+</section>

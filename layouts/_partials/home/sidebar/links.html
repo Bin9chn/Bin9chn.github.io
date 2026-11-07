@@ -1,7 +1,7 @@
 {{/* Sidebar links card (used for 友链 shortcuts). Kept single-line so the whole
      left column fits in one screen.
      Data shape: { title, items: [{ label, url, icon?, external?, description? }] } */}}
-<section class="nerdy-sidebar-card sm:col-span-2 lg:col-span-1">
+<section>
   {{ with .title }}<h2 class="mb-2 font-mono text-[11px] font-bold uppercase tracking-widest nerdy-muted-soft sm:mb-3 sm:text-xs">{{ . }}</h2>{{ end }}
   {{/* Phones lay the entries out two-up so the card stays one row tall. */}}
   <div class="grid grid-cols-2 gap-1.5 lg:flex lg:flex-col lg:gap-0.5">

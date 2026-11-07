@@ -1,0 +1,28 @@
+{{ $sidebar := hugo.Data.sidebar | default dict }}
+{{ $sections := $sidebar.sections | default slice }}
+{{ if gt (len $sections) 0 }}
+  {{/* One card, divided sections. The old version stacked four to five separate
+       bordered cards, which read as separate widgets instead of one reference
+       panel — and doubled the border/shadow noise next to the article column. */}}
+  <aside class="nerdy-sticky-sidebar order-2 lg:sticky lg:top-[4.5rem] lg:order-1 lg:col-span-4 lg:h-fit lg:self-start">
+    <div class="nerdy-sidebar-card">
+      <div class="flex flex-col divide-y divide-slate-200/80 dark:divide-slate-700/60">
+        {{ range $sections }}
+          {{- $rawType := .type | default "" -}}
+          {{- $sectionType := replace ($rawType | lower) "_" "-" -}}
+          {{- $safeType := replaceRE `[^a-z0-9-]` "" $sectionType -}}
+          {{- if or (eq $sectionType "") (ne $sectionType $safeType) -}}
+            {{- errorf "Invalid sidebar section type %q. Use lowercase letters, numbers, hyphens, or underscores." $rawType -}}
+          {{- else -}}
+            {{- $partial := printf "home/sidebar/%s.html" $sectionType -}}
+            {{- if not (templates.Exists (printf "_partials/%s" $partial)) -}}
+              {{- errorf "Unknown sidebar section type %q. Expected partial: layouts/_partials/%s" $rawType $partial -}}
+            {{- else -}}
+              <div class="py-4 first:pt-0 last:pb-0">{{ partial $partial . }}</div>
+            {{- end -}}
+          {{- end }}
+        {{ end }}
+      </div>
+    </div>
+  </aside>
+{{ end }}

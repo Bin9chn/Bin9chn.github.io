@@ -1,7 +1,7 @@
 # 荣誉与成果
 #
 # 在管理后台 →「荣誉与成果」里编辑这个文件。页面按 groups 的顺序分块，
-# 每块内部按 date 倒序（新的在上面）。
+# 每块内部按这里的顺序从上到下显示（新的请加在最上面，不依赖日期排序）。
 #
 # 每个分组有一个 kind，决定条目里哪些字段会显示：
 #   award  竞赛获奖   标题 / 等次 / 颁发方 / 时间 / 说明 / 链接
@@ -13,14 +13,14 @@
 #   title    必填
 #   tag      右侧徽章：一等奖 / 已发表 / CISP
 #   meta     第二行主信息：颁发方、期刊名、发证机构
-#   authors  作者列表，论文专用，用逗号或顿号分隔
+#   authors  作者列表，论文专用
 #   date     年月 YYYY-MM，只写年份也行
 #   extra    补充信息，目前证书用来放有效期
 #   note     一两句说明
 #   link     链接：DOI、赛事页、证书查询页
 
 title: 荣誉与成果
-description: 竞赛获奖、论文发表、行业认证，以及一些零散的记录。
+description: 竞赛获奖、论文发表、软件著作权与个人荣誉。
 
 groups:
   - id: awards
@@ -28,25 +28,87 @@ groups:
     title: 竞赛获奖
     accent: amber
     icon: star
-    items: []
+    items:
+      - title: 第四届“网鼎杯”网络安全大赛
+        tag: 网鼎之星
+      - title: 第九届中国高校智能机器人创意大赛 软件系统安全赛
+        tag: 二等奖
+      - title: 第三届“古剑山”全国高校网络攻防大赛
+        tag: 重庆市三等奖
+      - title: 2025 年重庆市大学生信息安全竞赛
+        tag: 三等奖
+        date: "2025"
+      - title: 第十九届全国大学生信息安全竞赛（西南赛区）
+        tag: 三等奖
+        date: "2024"
+      - title: 第十七届全国大学生信息安全竞赛（西南赛区）
+        tag: 三等奖
+        date: "2022"
+      - title: 第五届全国大学生数学能力挑战赛
+        tag: 二等奖
+      - title: 全国大学生创新能力大赛
+        tag: 二等奖
+      - title: 第十六届蓝桥杯全国软件和信息技术专业人才大赛 网络安全大学组
+        tag: 重庆市一等奖
+        date: "2025"
 
   - id: publications
     kind: paper
     title: 论文发表
     accent: purple
     icon: document
-    items: []
+    items:
+      - title: "A Comprehensive Survey on Machine Learning atop Serverless Computing"
+        tag: EI
+        meta: 2025 IEEE 3rd International Conference on Big Data and Data Mining (ICBDDM)
+        authors: Bingchen Lin, Yuntian Xiao, Songze Li, Jing Li, Junwei Zhang
+        note: IEEE；EI Compendex 收录。
+      - title: "Mitigating Data Skew in Serverless MapReduce Word Count via Hot-Word Prediction and Adaptive Salting"
+        tag: EI
+        meta: 2026 IEEE 5th International Conference on Computing, Communication, Perception and Quantum Technology (CCPQT)
+        authors: Xinyang Li, Bingchen Lin, Jiahao Li, Pengjun Liu, Yingzi Zhang
+        note: IEEE；EI Compendex 收录；第二作者。
+      - title: "Design of Canine-Nose Bionic Olfactory Electronic Nose Gas Chamber Based on Hilbert Curve Deflector"
+        tag: EI / Scopus
+        meta: 2026 IEEE 21st International Symposium on Olfaction and Electronic Nose (ISOEN)
+        authors: Hantao Li, Yuting Zhang, Shiming Fu, Zhiyuan Wu, Yue Liu, Bingchen Lin
+        note: IEEE Xplore；EI / Scopus 收录。
+      - title: "Word Frequency Counting Based on Serverless MapReduce"
+        tag: Scopus / CPCI
+        meta: 2024 International Conference on Engineering Management, Information Technology and Intelligence (EMITI), Shanghai
+        authors: Hanzhe Li, Bingchen Lin, Mengyuan Xu
+        note: Published by SciTePress；Scopus & CPCI 收录。
+      - title: 基于同态加密的数据隐私保护综述
+        tag: 中文期刊
+        meta: 《教育实践》2026
+        authors: Bingchen Lin, Shupeng Zhong, Jianxin Yang, Yingzi Zhang, Pengjun Liu, Yao Pan
+
+  - id: copyrights
+    kind: other
+    title: 软件著作权
+    accent: cyan
+    icon: repository
+    items:
+      - title: Enterprise-Grade Data Protection & Monitoring Platform V1.0
+        tag: 软著
+        meta: 登记号 2025SR1436292
+        date: "2025-08"
+        note: 企业级数据保护与监控平台，已取得计算机软件著作权登记证书。
+
+  - id: personal
+    kind: other
+    title: 个人荣誉
+    accent: emerald
+    icon: collection
+    items:
+      - title: 重庆市创新能力优秀个人
+        tag: 个人荣誉
+      - title: 重庆第二师范学院 创新能力提升先进个人
+        tag: 先进个人
 
   - id: certificates
     kind: cert
     title: 行业认证
     accent: emerald
     icon: library
-    items: []
-
-  - id: others
-    kind: other
-    title: 其他
-    accent: cyan
-    icon: collection
     items: []

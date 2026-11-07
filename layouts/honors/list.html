@@ -35,7 +35,9 @@
             {{ range $groups }}
               {{ $group := . }}
               {{ $kind := $group.kind | default "award" }}
-              {{ $items := sort (.items | default slice) "date" "desc" }}
+              {{/* Keep the YAML order: entries are curated by hand (roughly strongest
+                   first), and not every award carries a date to sort on. */}}
+              {{ $items := .items | default slice }}
               {{ if gt (len $items) 0 }}
                 {{ $accent := partial "components/accent-classes.html" ($group.accent | default "cyan") }}
                 <section>
@@ -62,18 +64,20 @@
                             {{ end }}
 
                             {{/* One meta line: who issued it / where it was published,
-                                 when, and any extra detail the group needs. */}}
+                                 when, and any extra detail the group needs. Separators
+                                 only appear between parts that actually exist. */}}
                             {{ if or $item.meta $item.date $item.extra }}
-                              <p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] nerdy-muted-soft">
-                                {{ with $item.meta }}<span>{{ . }}</span>{{ end }}
-                                {{ with $item.date }}<span aria-hidden="true">·</span><time>{{ . }}</time>{{ end }}
-                                {{ with $item.extra }}<span aria-hidden="true">·</span><span>{{ . }}</span>{{ end }}
+                              {{ $sep := false }}
+                              <p class="mt-1 font-mono text-[11px] leading-5 nerdy-muted-soft">
+                                {{ with $item.meta }}{{ if $sep }} · {{ end }}<span>{{ . }}</span>{{ $sep = true }}{{ end }}
+                                {{ with $item.date }}{{ if $sep }} · {{ end }}<time>{{ . }}</time>{{ $sep = true }}{{ end }}
+                                {{ with $item.extra }}{{ if $sep }} · {{ end }}<span>{{ . }}</span>{{ $sep = true }}{{ end }}
                               </p>
                             {{ end }}
 
                             {{ with $item.authors }}
                               <p class="mt-1 font-mono text-[11px] leading-5 nerdy-muted-soft">
-                                <span class="opacity-70">作者</span> {{ . }}
+                                <span class="opacity-70">作者：</span>{{ . }}
                               </p>
                             {{ end }}
                           </div>

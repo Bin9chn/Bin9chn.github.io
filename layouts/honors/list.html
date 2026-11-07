@@ -76,8 +76,13 @@
                             {{ end }}
 
                             {{ with $item.authors }}
+                              {{ $owner := site.Params.author.name }}
+                              {{ $names := . }}
+                              {{ if $owner }}
+                                {{ $names = replace . $owner (printf `<strong class="font-semibold text-slate-900 dark:text-white">%s</strong>` $owner) }}
+                              {{ end }}
                               <p class="mt-1 font-mono text-[11px] leading-5 nerdy-muted-soft">
-                                <span class="opacity-70">作者：</span>{{ . }}
+                                <span class="opacity-70">作者：</span>{{ $names | safeHTML }}
                               </p>
                             {{ end }}
                           </div>

@@ -63,26 +63,27 @@ groups:
         tag: EI
         meta: 2025 IEEE 3rd International Conference on Big Data and Data Mining (ICBDDM)
         authors: Bingchen Lin, Yuntian Xiao, Songze Li, Jing Li, Junwei Zhang
-        note: IEEE；EI Compendex 收录。
+        note: IEEE；EI Compendex 收录；第一作者。
       - title: "Mitigating Data Skew in Serverless MapReduce Word Count via Hot-Word Prediction and Adaptive Salting"
         tag: EI
         meta: 2026 IEEE 5th International Conference on Computing, Communication, Perception and Quantum Technology (CCPQT)
-        authors: Xinyang Li, Bingchen Lin, Jiahao Li, Pengjun Liu, Yingzi Zhang
-        note: IEEE；EI Compendex 收录；第二作者。
+        authors: Bingchen Lin, Xinyang Li, Jiahao Li, Pengjun Liu, Yingzi Zhang
+        note: IEEE；EI Compendex 收录；第一作者。
       - title: "Design of Canine-Nose Bionic Olfactory Electronic Nose Gas Chamber Based on Hilbert Curve Deflector"
         tag: EI / Scopus
         meta: 2026 IEEE 21st International Symposium on Olfaction and Electronic Nose (ISOEN)
         authors: Hantao Li, Yuting Zhang, Shiming Fu, Zhiyuan Wu, Yue Liu, Bingchen Lin
-        note: IEEE Xplore；EI / Scopus 收录。
+        note: IEEE Xplore；EI / Scopus 收录；合作作者。
       - title: "Word Frequency Counting Based on Serverless MapReduce"
         tag: Scopus / CPCI
         meta: 2024 International Conference on Engineering Management, Information Technology and Intelligence (EMITI), Shanghai
-        authors: Hanzhe Li, Bingchen Lin, Mengyuan Xu
-        note: Published by SciTePress；Scopus & CPCI 收录。
+        authors: Bingchen Lin, Hanzhe Li, Mengyuan Xu
+        note: Published by SciTePress；Scopus & CPCI 收录；第一作者。
       - title: 基于同态加密的数据隐私保护综述
         tag: 中文期刊
         meta: 《教育实践》2026
         authors: Bingchen Lin, Shupeng Zhong, Jianxin Yang, Yingzi Zhang, Pengjun Liu, Yao Pan
+        note: 第一作者。
 
   - id: copyrights
     kind: other

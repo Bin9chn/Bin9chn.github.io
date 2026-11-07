@@ -24,6 +24,10 @@ pagerSize = 10
 description = "Bin9chn 的个人博客：技术笔记、项目记录，还有一些没归类的日常。"
 keywords = "Bin9chn,个人博客,技术笔记,项目,随笔"
 
+# 站点主人姓名。荣誉页的论文作者列表会把它加粗，方便一眼看出自己在署名里的位置。
+[params.author]
+name = "Bingchen Lin"
+
 # Home-page terminal demo. Templates and data/terminal/* are kept, so flipping
 # this back to true restores the terminal without touching any code.
 enableTerminal = false

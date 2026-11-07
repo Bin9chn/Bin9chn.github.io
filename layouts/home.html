@@ -5,9 +5,7 @@
   {{ $sectionItems := $sectionsConfig.items | default slice }}
 
   <div class="nerdy-page-surface nerdy-page-surface--home">
-    {{/* Soft colour blobs behind the glass panels — the blur needs something to
-         blur, and the old grid-only background made the panels look flat. */}}
-    <div class="nerdy-glass-blobs" aria-hidden="true"></div>
+    {{/* 粒子画布与柔光色斑由 particles.js 全站注入（fixed, z-0），首页不再单独放。 */}}
 
     <div class="nerdy-container pt-3 lg:pt-4">
       {{ with $sidebar.profile }}

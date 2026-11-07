@@ -70,7 +70,9 @@
                               {{ $sep := false }}
                               <p class="mt-1 font-mono text-[11px] leading-5 nerdy-muted-soft">
                                 {{ with $item.meta }}{{ if $sep }} · {{ end }}<span>{{ . }}</span>{{ $sep = true }}{{ end }}
-                                {{ with $item.date }}{{ if $sep }} · {{ end }}<time>{{ . }}</time>{{ $sep = true }}{{ end }}
+                                {{/* A bare "2025" reads like a stray number; add 年 when the
+                                     date is just a year, leave YYYY-MM untouched. */}}
+                                {{ with $item.date }}{{ if $sep }} · {{ end }}<time>{{ if eq (len .) 4 }}{{ . }} 年{{ else }}{{ . }}{{ end }}</time>{{ $sep = true }}{{ end }}
                                 {{ with $item.extra }}{{ if $sep }} · {{ end }}<span>{{ . }}</span>{{ $sep = true }}{{ end }}
                               </p>
                             {{ end }}

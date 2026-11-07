@@ -115,11 +115,16 @@ weight = 4
 url = "/projects/"
 
 [[menu.main]]
-name = "友链"
+name = "荣誉"
 weight = 5
+url = "/honors/"
+
+[[menu.main]]
+name = "友链"
+weight = 6
 url = "/friends/"
 
 [[menu.main]]
 name = "关于"
-weight = 6
+weight = 7
 url = "/about/"

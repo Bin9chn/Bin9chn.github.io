@@ -1,0 +1,52 @@
+# 荣誉与成果
+#
+# 在管理后台 →「荣誉与成果」里编辑这个文件。页面按 groups 的顺序分块，
+# 每块内部按 date 倒序（新的在上面）。
+#
+# 每个分组有一个 kind，决定条目里哪些字段会显示：
+#   award  竞赛获奖   标题 / 等次 / 颁发方 / 时间 / 说明 / 链接
+#   paper  论文发表   标题 / 状态 / 期刊或会议 / 作者 / 时间 / 说明 / 链接
+#   cert   行业认证   标题 / 缩写 / 发证机构 / 时间 / 有效期至 / 说明 / 链接
+#   other  其他       标题 / 标签 / 颁发方 / 时间 / 说明 / 链接
+#
+# 条目字段（填了才显示，空的自动隐藏）：
+#   title    必填
+#   tag      右侧徽章：一等奖 / 已发表 / CISP
+#   meta     第二行主信息：颁发方、期刊名、发证机构
+#   authors  作者列表，论文专用，用逗号或顿号分隔
+#   date     年月 YYYY-MM，只写年份也行
+#   extra    补充信息，目前证书用来放有效期
+#   note     一两句说明
+#   link     链接：DOI、赛事页、证书查询页
+
+title: 荣誉与成果
+description: 竞赛获奖、论文发表、行业认证，以及一些零散的记录。
+
+groups:
+  - id: awards
+    kind: award
+    title: 竞赛获奖
+    accent: amber
+    icon: star
+    items: []
+
+  - id: publications
+    kind: paper
+    title: 论文发表
+    accent: purple
+    icon: document
+    items: []
+
+  - id: certificates
+    kind: cert
+    title: 行业认证
+    accent: emerald
+    icon: library
+    items: []
+
+  - id: others
+    kind: other
+    title: 其他
+    accent: cyan
+    icon: collection
+    items: []

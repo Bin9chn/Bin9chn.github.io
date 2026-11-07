@@ -1,0 +1,104 @@
+{{ define "main" }}
+  {{ $data := site.Data.honors | default dict }}
+  {{ $groups := $data.groups | default slice }}
+
+  {{/* Count first so an entirely empty page can say so once, instead of showing
+       four separate "nothing here" blocks. */}}
+  {{ $total := 0 }}
+  {{ range $groups }}
+    {{ $total = add $total (len (.items | default slice)) }}
+  {{ end }}
+
+  <div class="nerdy-page-surface">
+    <div class="nerdy-ambient-bg"></div>
+    <div class="nerdy-top-glow"></div>
+
+    <div class="nerdy-container pb-16 pt-10">
+      <div class="mx-auto max-w-4xl">
+        {{ partial "nav/breadcrumb.html" (dict "items" (slice
+          (dict "label" "首页" "url" (relURL "/"))
+          (dict "label" .Title)
+        )) }}
+        {{ partial "components/page-heading.html" (dict
+          "title" .Title
+          "description" (.Description | default $data.description)
+          "eyebrow" "~/honors"
+          "accent" "amber"
+        ) }}
+
+        {{ if eq $total 0 }}
+          <div class="nerdy-card-dashed p-10 text-center">
+            <p class="font-mono text-sm nerdy-muted">记录整理中，稍后补充。</p>
+          </div>
+        {{ else }}
+          <div class="flex flex-col gap-10">
+            {{ range $groups }}
+              {{ $group := . }}
+              {{ $kind := $group.kind | default "award" }}
+              {{ $items := sort (.items | default slice) "date" "desc" }}
+              {{ if gt (len $items) 0 }}
+                {{ $accent := partial "components/accent-classes.html" ($group.accent | default "cyan") }}
+                <section>
+                  <div class="mb-4 flex items-center gap-3">
+                    {{ partial "components/icon.html" (dict "name" ($group.icon | default "star") "class" (printf "h-4 w-4 %s" $accent.icon)) }}
+                    <h2 class="font-mono text-lg font-bold text-slate-950 dark:text-white">{{ $group.title }}</h2>
+                    <span class="{{ $accent.chip }}">{{ len $items }}</span>
+                    <span class="h-px flex-1 bg-slate-300/70 dark:bg-slate-700/60" aria-hidden="true"></span>
+                  </div>
+
+                  <div class="flex flex-col gap-3">
+                    {{ range $items }}
+                      {{ $item := . }}
+                      {{ $title := $item.title | default "未命名" }}
+                      <article class="nerdy-card nerdy-card-hover {{ $accent.card }} p-4 sm:p-5">
+                        <div class="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                          <div class="min-w-0">
+                            {{ if $item.link }}
+                              <h3 class="nerdy-card-title text-base font-bold leading-6">
+                                <a class="transition-colors hover:text-accent-cyan" href="{{ $item.link }}" target="_blank" rel="noopener">{{ $title }}<span class="ml-1 font-mono text-[11px] align-super" aria-hidden="true">↗</span></a>
+                              </h3>
+                            {{ else }}
+                              <h3 class="nerdy-card-title text-base font-bold leading-6">{{ $title }}</h3>
+                            {{ end }}
+
+                            {{/* One meta line: who issued it / where it was published,
+                                 when, and any extra detail the group needs. */}}
+                            {{ if or $item.meta $item.date $item.extra }}
+                              <p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] nerdy-muted-soft">
+                                {{ with $item.meta }}<span>{{ . }}</span>{{ end }}
+                                {{ with $item.date }}<span aria-hidden="true">·</span><time>{{ . }}</time>{{ end }}
+                                {{ with $item.extra }}<span aria-hidden="true">·</span><span>{{ . }}</span>{{ end }}
+                              </p>
+                            {{ end }}
+
+                            {{ with $item.authors }}
+                              <p class="mt-1 font-mono text-[11px] leading-5 nerdy-muted-soft">
+                                <span class="opacity-70">作者</span> {{ . }}
+                              </p>
+                            {{ end }}
+                          </div>
+                          {{ with $item.tag }}
+                            <span class="{{ $accent.chip }} shrink-0 self-start sm:self-auto">{{ . }}</span>
+                          {{ end }}
+                        </div>
+                        {{ with $item.note }}
+                          <p class="mt-3 text-sm leading-6 nerdy-muted">{{ . }}</p>
+                        {{ end }}
+                      </article>
+                    {{ end }}
+                  </div>
+                </section>
+              {{ end }}
+            {{ end }}
+          </div>
+        {{ end }}
+
+        <div class="mt-12 flex flex-wrap gap-4 border-t border-slate-300/70 pt-6 font-mono text-xs dark:border-slate-700">
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "about/" | relURL }}">关于我 →</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "projects/" | relURL }}">项目</a>
+          <a class="nerdy-link inline-flex min-h-8 items-center" href="{{ "/" | relURL }}">← 返回首页</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

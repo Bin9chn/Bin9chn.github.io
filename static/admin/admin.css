@@ -264,6 +264,17 @@ p { margin: 0; }
 .row--between { justify-content: space-between; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 14px; }
+.grid-3 .field--wide { grid-column: 1 / -1; }
+
+/* ---------- honors editor ---------- */
+.honor-items { display: flex; flex-direction: column; gap: 12px; margin: 2px 0 14px; }
+.honor-item {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px 14px 0;
+  background: var(--panel-2);
+}
+.honor-item__head { margin-bottom: 10px; }
 
 /* ---------- cards / tables ---------- */
 .card {

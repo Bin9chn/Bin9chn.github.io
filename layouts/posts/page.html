@@ -59,10 +59,13 @@
               {{- end -}}
             {{- end -}}
             {{- if not $coverImg -}}{{- $coverImg = $cover.Process "webp q80" -}}{{- end -}}
-            <figure class="overflow-hidden rounded-xl border border-slate-300/80 bg-white/95 p-1.5 shadow-lg shadow-slate-300/25 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">
+            {{/* 窄屏（<lg）时封面会和标题上下堆叠，原来满宽会变成一张压住整屏的白卡片。
+                 手机上收到 16rem、平板到 22rem（与桌面那一栏同宽），贴左侧内容栏对齐；
+                 桌面断点起恢复原样，交给右侧那一栏控制宽度。 */}}
+            <figure class="w-full max-w-[16rem] overflow-hidden rounded-xl border border-slate-300/80 bg-white/95 p-1.5 shadow-lg shadow-slate-300/25 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20 sm:max-w-[22rem] lg:mx-0 lg:max-w-none">
               <img class="h-auto w-full rounded-lg" src="{{ $coverImg.RelPermalink }}"
                    {{- with $coverSrcset }} srcset="{{ delimit . ", " }}"{{ end }}
-                   sizes="(max-width: 1024px) calc(100vw - 3rem), 22rem"
+                   sizes="(max-width: 640px) 16rem, 22rem"
                    alt="{{ $.Title }} 封面" width="{{ $coverImg.Width }}" height="{{ $coverImg.Height }}" loading="eager" fetchpriority="high" decoding="async">
             </figure>
           {{ end }}

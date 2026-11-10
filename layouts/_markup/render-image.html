@@ -36,7 +36,7 @@
         <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 bg-slate-200/60 shadow-lg dark:border-slate-700 dark:bg-slate-700/60"
              src="{{ $largest.RelPermalink }}"
              {{- with $srcset }} srcset="{{ delimit . ", " }}"{{ end }}
-             sizes="(max-width: 640px) calc(100vw - 3.5rem), (max-width: 1024px) calc(100vw - 5rem), 800px"
+             sizes="(max-width: 640px) calc(100vw - 4.5rem), (max-width: 1024px) calc(100vw - 6rem), 800px"
              width="{{ $largest.Width }}" height="{{ $largest.Height }}"
              alt="{{ $alt }}"
              loading="{{ if eq .Ordinal 0 }}eager{{ else }}lazy{{ end }}"

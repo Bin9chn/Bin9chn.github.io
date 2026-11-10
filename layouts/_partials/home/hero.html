@@ -7,17 +7,23 @@
     <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/70 bg-white/60 shadow-sm sm:h-16 sm:w-16 dark:border-slate-600/60 dark:bg-slate-900/60">
       {{- with .avatar }}
         {{- $avatarURL := . -}}
+        {{- $avatarSrcset := "" -}}
         {{- $avatarWidth := 64 -}}
         {{- $avatarHeight := 64 -}}
         {{- if not (hasPrefix . "http") }}
           {{- $avatarURL = . | relURL }}
           {{- with resources.Get . -}}
-            {{- $avatarURL = .RelPermalink -}}
-            {{- $avatarWidth = .Width -}}
-            {{- $avatarHeight = .Height -}}
+            {{/* 头像显示尺寸只有 64px，出去重之前是直接吃 28KB 的 PNG。
+               生成 1x/2x 两档 webp，手机上省一半以上。 */}}
+            {{- $small := .Fill "64x64 Center webp q82" -}}
+            {{- $large := .Fill "128x128 Center webp q82" -}}
+            {{- $avatarURL = $large.RelPermalink -}}
+            {{- $avatarSrcset = printf "%s 1x, %s 2x" $small.RelPermalink $large.RelPermalink -}}
+            {{- $avatarWidth = 128 -}}
+            {{- $avatarHeight = 128 -}}
           {{- end }}
         {{- end }}
-        <img class="h-full w-full object-cover" src="{{ $avatarURL }}" alt="{{ $profile.name | default "Profile avatar" }}" width="{{ $avatarWidth }}" height="{{ $avatarHeight }}" loading="eager" decoding="async" fetchpriority="high">
+        <img class="h-full w-full object-cover" src="{{ $avatarURL }}"{{ with $avatarSrcset }} srcset="{{ . }}"{{ end }} alt="{{ $profile.name | default "Profile avatar" }}" width="{{ $avatarWidth }}" height="{{ $avatarHeight }}" loading="eager" decoding="async" fetchpriority="high">
       {{- else }}
         <span class="font-mono text-xl text-accent-cyan">{}</span>
       {{- end }}

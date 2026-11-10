@@ -1,20 +1,52 @@
 {{- $alt := .Text | plainify -}}
 {{- $resource := .Page.Resources.GetMatch .Destination -}}
 {{- if $resource -}}
-  {{/* Convert every non-GIF inline image to webp at build time. Several writeups
-       shipped 1–2 MB PNG screenshots; serving those untouched was the single
-       biggest reason article pages felt slow. Fit never upscales, so small images
-       keep their size. The original stays available behind the link. */}}
-  {{- $image := $resource -}}
-  {{- if ne $resource.MediaType.SubType "gif" -}}
-    {{- $image = $resource.Fit "1400x1400 webp q82" -}}
+  {{- if eq $resource.MediaType.SubType "gif" -}}
+    {{/* GIF 不转码，否则动图会变成静态帧。 */}}
+    <figure class="my-8 text-center">
+      <a href="{{ $resource.RelPermalink }}">
+        <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 shadow-lg dark:border-slate-700" src="{{ $resource.RelPermalink }}" alt="{{ $alt }}" width="{{ $resource.Width }}" height="{{ $resource.Height }}" loading="lazy" decoding="async">
+      </a>
+      {{ with .Title }}<figcaption class="mt-3 text-sm nerdy-muted">{{ . }}</figcaption>{{ end }}
+    </figure>
+  {{- else -}}
+    {{/* 三档宽度 + srcset：手机不再下 1400px 整图，宽屏仍拿高清版。
+         24px 低质占位以内联 base64 铺满图框，解码完成后被真图覆盖，
+         慢网下看到的是模糊预览而不是长时间白框。 */}}
+    {{- $srcset := slice -}}
+    {{- $largest := false -}}
+    {{- range (slice 600 1000 1400) -}}
+      {{- if ge $resource.Width . -}}
+        {{- $variant := $resource.Resize (printf "%dx webp q78" .) -}}
+        {{- $srcset = $srcset | append (printf "%s %dw" $variant.RelPermalink $variant.Width) -}}
+        {{- $largest = $variant -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not $largest -}}
+      {{- $largest = $resource.Process "webp q78" -}}
+    {{- end -}}
+    {{- $lqip := $resource.Fit "24x24 webp q25" -}}
+    {{- $lqipURL := printf "data:image/webp;base64,%s" ($lqip.Content | base64Encode) -}}
+    {{/* 整个 style 属性走 safeHTMLAttr：走 safeCSS 的话 html/template 仍会把 base64 里的
+         引号/加号转成实体（虽然能解析回来，但输出很难看，也容易在个别浏览器翻车）。
+         不加引号的 url() 里 + / = 都是合法字符，所以直接拼 data URI。 */}}
+    {{- $lqipAttr := printf `style="background-image:url(%s);background-size:100%% 100%%;background-repeat:no-repeat"` $lqipURL -}}
+    <figure class="my-8 text-center">
+      <a href="{{ $resource.RelPermalink }}">
+        <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 bg-slate-200/60 shadow-lg dark:border-slate-700 dark:bg-slate-700/60"
+             src="{{ $largest.RelPermalink }}"
+             {{- with $srcset }} srcset="{{ delimit . ", " }}"{{ end }}
+             sizes="(max-width: 640px) calc(100vw - 3.5rem), (max-width: 1024px) calc(100vw - 5rem), 800px"
+             width="{{ $largest.Width }}" height="{{ $largest.Height }}"
+             alt="{{ $alt }}"
+             loading="{{ if eq .Ordinal 0 }}eager{{ else }}lazy{{ end }}"
+             fetchpriority="{{ if eq .Ordinal 0 }}high{{ else }}auto{{ end }}"
+             decoding="async"
+             {{ $lqipAttr | safeHTMLAttr }}>
+      </a>
+      {{ with .Title }}<figcaption class="mt-3 text-sm nerdy-muted">{{ . }}</figcaption>{{ end }}
+    </figure>
   {{- end -}}
-  <figure class="my-8 text-center">
-    <a href="{{ $resource.RelPermalink }}">
-      <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 shadow-lg dark:border-slate-700" src="{{ $image.RelPermalink }}" alt="{{ $alt }}" width="{{ $image.Width }}" height="{{ $image.Height }}" loading="lazy" decoding="async">
-    </a>
-    {{ with .Title }}<figcaption class="mt-3 text-sm nerdy-muted">{{ . }}</figcaption>{{ end }}
-  </figure>
 {{- else -}}
   <img class="mx-auto h-auto max-w-full rounded-xl border border-slate-300/80 dark:border-slate-700" src="{{ .Destination | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
 {{- end -}}

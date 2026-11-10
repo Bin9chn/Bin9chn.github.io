@@ -20,14 +20,13 @@
   }}
 
   {{/* Resolve the cover once so it can sit next to the title instead of pushing
-       the article a full screen down. */}}
+       the article a full screen down. Widths are picked below: on desktop the
+       frame is only 22rem wide, so shipping a fixed 1600px image wasted most of
+       the transfer. */}}
   {{ $cover := false }}
   {{ with .Params.featuredImage }}
     {{ with $.Resources.GetMatch . }}
       {{ $cover = . }}
-      {{ if and (gt $cover.Width 0) (gt $cover.Width 1600) }}
-        {{ $cover = .Resize "1600x webp q85" }}
-      {{ end }}
     {{ end }}
   {{ end }}
 
@@ -50,8 +49,21 @@
           {{ partial "posts/components/heading.html" (dict "path" $path "title" .Title "date" .Date "readingTime" .ReadingTime "tags" .Params.tags "description" .Params.summary "margin" "mb-0") }}
 
           {{ with $cover }}
+            {{- $coverSrcset := slice -}}
+            {{- $coverImg := false -}}
+            {{- range (slice 360 720 1080) -}}
+              {{- if ge $cover.Width . -}}
+                {{- $variant := $cover.Resize (printf "%dx webp q80" .) -}}
+                {{- $coverSrcset = $coverSrcset | append (printf "%s %dw" $variant.RelPermalink $variant.Width) -}}
+                {{- $coverImg = $variant -}}
+              {{- end -}}
+            {{- end -}}
+            {{- if not $coverImg -}}{{- $coverImg = $cover.Process "webp q80" -}}{{- end -}}
             <figure class="overflow-hidden rounded-xl border border-slate-300/80 bg-white/95 p-1.5 shadow-lg shadow-slate-300/25 dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">
-              <img class="h-auto w-full rounded-lg" src="{{ .RelPermalink }}" alt="{{ $.Title }} 封面" width="{{ .Width }}" height="{{ .Height }}" loading="eager" decoding="async">
+              <img class="h-auto w-full rounded-lg" src="{{ $coverImg.RelPermalink }}"
+                   {{- with $coverSrcset }} srcset="{{ delimit . ", " }}"{{ end }}
+                   sizes="(max-width: 1024px) calc(100vw - 3rem), 22rem"
+                   alt="{{ $.Title }} 封面" width="{{ $coverImg.Width }}" height="{{ $coverImg.Height }}" loading="eager" fetchpriority="high" decoding="async">
             </figure>
           {{ end }}
         </div>

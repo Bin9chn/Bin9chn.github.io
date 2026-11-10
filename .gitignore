@@ -8,3 +8,8 @@
 Thumbs.db
 /public-new/
 /.tmp-shots/
+/public-perf/
+/public-check/
+/public-*/
+/_p.html
+/_*.html

@@ -24,6 +24,9 @@
   let dots = [];
   let raf = 0;
   let running = false;
+  let lastFrame = 0;
+  /* 30fps 就够了：粒子是背景装饰，60fps 只会跟图片解码抢主线程。 */
+  const FRAME_MS = 1000 / 30;
   const mouse = { x: -1e4, y: -1e4 };
   const LINK = 120;
   const LINK_MOUSE = 150;
@@ -92,8 +95,11 @@
     }
   }
 
-  function loop() {
+  function loop(now) {
     if (!running) return;
+    raf = requestAnimationFrame(loop);
+    if (now - lastFrame < FRAME_MS) return;
+    lastFrame = now;
     for (const p of dots) {
       p.x += p.vx;
       p.y += p.vy;
@@ -103,7 +109,6 @@
       else if (p.y > h + 10) p.y = -10;
     }
     draw();
-    raf = requestAnimationFrame(loop);
   }
 
   function start() {

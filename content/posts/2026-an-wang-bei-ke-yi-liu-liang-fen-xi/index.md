@@ -9,9 +9,13 @@ categories = ["WP"]
 slug = "2026-an-wang-bei-ke-yi-liu-liang-fen-xi"
 +++
 
+## 题目信息
+
 ![题目信息](images/01-challenge.png)
 
 用 Wireshark 打开 附件`challenge.pcap`
+
+## 协议分级与会话统计
 
 统计-协议分级 发现TCP最多
 
@@ -20,6 +24,8 @@ slug = "2026-an-wang-bei-ke-yi-liu-liang-fen-xi"
 统计-会话-IPV4
 
 ![IPv4 会话](images/03-conversations.png)
+
+## 定位受害主机
 
 分析可得172.29.50.100为受害主机，与另外4台主机都有通信，分析流量包可以发现:
 
@@ -33,9 +39,15 @@ slug = "2026-an-wang-bei-ke-yi-liu-liang-fen-xi"
 .40 MySQL
 ```
 
+## 逐协议排查
+
 依次用 `http`、`ftp`、`mysql`、`dns` 过滤器快速过一遍：FTP 是明文登录 + 传 readme.txt；MySQL 是 TLS 加密；HTTP 只有 index/about 两页。三条都是噪音，唯一可疑的是 DNS。
 
+## DNS 分块外传
+
 子域结构中有例如 `10RATBCSV`、`02XRVPBGB` 都是2位数字+base32的字符串，这是典型的DNS分块外传。
+
+## 提取与排序
 
 过滤器过滤
 
@@ -66,6 +78,8 @@ dns.flags.response == 0 && dns.qry.name contains "cdn"
 ```text
 MZWGCZ33GI2DEYTEMRSGIMBZMI3DONRZMQZGKNBYGQYDIZRWMU3TAZBTHBSH2
 ```
+
+## Base32 解码
 
 解码得到flag
 

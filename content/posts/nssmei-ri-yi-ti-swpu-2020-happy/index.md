@@ -17,7 +17,7 @@ featuredImage: "images/cover.png"
 
 #### ![【NSS每日一题】[SWPU 2020]happy 配图 1](images/image-01.png)
 
-#### 题目附件：
+## 题目附件：
 
 ```text
 ('c=', '0x7a7e031f14f6b6c3292d11a41161d2491ce8bcdc67ef1baa9eL')
@@ -26,7 +26,7 @@ featuredImage: "images/cover.png"
 #qp + q *p^2 = 1109691832903289208389283296592510864729403914873734836011311325874120780079555500202475594
 ```
 
-#### 题目分析：
+## 题目分析：
 
 **第一步：提取公因子简化方程**
 
@@ -61,7 +61,7 @@ featuredImage: "images/cover.png"
 2.  **素数验证**：求解出的 `p`、`q` 需验证是否为素数（可通过简单的素性测试，如米勒 - 拉宾测试）；
 3.  **模逆元求解**：若 `e` 和 `φ(n)` 不互质，说明计算有误（RSA 中 `e` 需与 `φ(n)` 互质）。
 
-#### 解题：
+## 解题：
 
 根据附件可知需要求出p,q，一看就是需要求公约数的，用到的原理
 
@@ -100,8 +100,7 @@ flag = pow(c, d, n)
 print(long_to_bytes(flag))
 ```
 
-####
-Flag
+## Flag
 
 ```text
 flag{happy_rsa_1}

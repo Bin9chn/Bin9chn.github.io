@@ -16,9 +16,13 @@ tags:
 featuredImage: "images/cover.png"
 ---
 
+## 题目概览
+
 一个RC4的解密， 密钥 的部分做了动态的反调试，找到逻辑即可。
 
 ![RCTF2025--Chaos2 配图 1](images/image-01.png)
+
+## 密文与初始 key
 
 密文入栈部分，往下一共有80字节。
 
@@ -27,6 +31,8 @@ featuredImage: "images/cover.png"
 ![RCTF2025--Chaos2 配图 2](images/image-02.png)
 
 错误的key:flag:{ Th1sflaglsG00ds}.
+
+## 四处反调试改装 key
 
 之后有4处反调试的地方
 
@@ -65,6 +71,8 @@ featuredImage: "images/cover.png"
 将G00ds第二个’0’改成’o’
 
 所以最后真正的key是flag:{ThisflagIsGoods}
+
+## RC4 解密
 
 RC4解密即可。
 
@@ -115,5 +123,7 @@ if __name__ == "__main__":
     plaintext = rc4_transform(s, CIPHERTEXT)
     print(plaintext)
 ```
+
+## Flag
 
 Flag；RCTF{AntiDbg\_Reversing\_2025\_v2.0\_Ch4llenge}

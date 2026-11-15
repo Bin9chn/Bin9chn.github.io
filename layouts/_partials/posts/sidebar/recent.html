@@ -1,0 +1,21 @@
+{{/* 侧栏「最近文章」：按日期倒序取 5 篇，含当前这篇（读者能顺手看到前后更新）。 */}}
+{{- $limit := 5 -}}
+{{- $all := (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
+{{- with $all -}}
+  <section class="nerdy-card p-4" aria-labelledby="post-recent-title">
+    <div class="flex items-baseline justify-between gap-2">
+      <h2 id="post-recent-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">最近文章</h2>
+      <a class="shrink-0 font-mono text-[10px] nerdy-link" href="{{ relLangURL "posts/" }}">全部 {{ len . }} 篇 →</a>
+    </div>
+    <ul class="post-sidebar-list mt-1.5">
+      {{ range first $limit . }}
+        <li>
+          <a class="post-sidebar-item" href="{{ .RelPermalink }}">
+            <span class="line-clamp-2 text-[13px] font-medium leading-5">{{ .Title }}</span>
+            <time class="mt-0.5 block font-mono text-[10px] tabular-nums text-slate-500 dark:text-slate-500" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+{{- end -}}

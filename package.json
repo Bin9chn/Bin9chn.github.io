@@ -7,6 +7,7 @@
     "prepare:stats": "hugo --renderToMemory",
     "build": "hugo --renderToMemory && hugo --minify --gc --cleanDestinationDir",
     "server": "hugo --renderToMemory && hugo server --buildDrafts --watch",
+    "toc": "node scripts/check-toc.mjs",
     "dev": "npm run server"
   },
   "devDependencies": {

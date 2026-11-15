@@ -1,6 +1,6 @@
 {{/* Compact digest of data/honors.yaml: top awards and papers, linking to /honors/.
      No second copy of the data — the honours page stays the single source. */}}
-{{ $honors := site.Data.honors | default dict }}
+{{ $honors := hugo.Data.honors | default dict }}
 {{ $groups := $honors.groups | default slice }}
 {{ $awardGroup := "" }}
 {{ $paperGroup := "" }}

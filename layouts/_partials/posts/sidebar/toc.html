@@ -1,0 +1,54 @@
+{{/* 文章页侧栏的「目录」卡。
+     TOC 完全由正文标题自动生成（hugo.toml 里 startLevel=2 / endLevel=3），
+     所以正文只要用 ## / ### 分节，这里就有条目，不需要手写目录。
+     没有小标题的短文（很多短 write-up 就是连续的段落 + 图）这张卡整个不渲染，
+     不会在侧栏留一个空盒子。 */}}
+{{- $pageTitle := .Title | plainify | lower -}}
+{{- $items := slice -}}
+{{- $base := 0 -}}
+{{- range .Fragments.Headings -}}
+  {{- $title := .Title | plainify -}}
+  {{- if and $title (ne ($title | lower) $pageTitle) -}}
+    {{- if eq $base 0 }}{{ $base = .Level }}{{ end -}}
+    {{- $items = $items | append (dict "ID" .ID "Title" $title "Depth" (sub .Level $base)) -}}
+  {{- end -}}
+  {{- range .Headings -}}
+    {{- $childTitle := .Title | plainify -}}
+    {{- if and $childTitle (ne ($childTitle | lower) $pageTitle) -}}
+      {{- if eq $base 0 }}{{ $base = .Level }}{{ end -}}
+      {{- $items = $items | append (dict "ID" .ID "Title" $childTitle "Depth" (sub .Level $base)) -}}
+    {{- end -}}
+    {{- range .Headings -}}
+      {{- $grandTitle := .Title | plainify -}}
+      {{- if and $grandTitle (ne ($grandTitle | lower) $pageTitle) -}}
+        {{- if eq $base 0 }}{{ $base = .Level }}{{ end -}}
+        {{- $items = $items | append (dict "ID" .ID "Title" $grandTitle "Depth" (sub .Level $base)) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $items -}}
+  <section class="nerdy-card hidden p-4 lg:block" aria-labelledby="post-toc-title">
+    {{/* details：桌面默认展开，长目录可以一键收起；lg 以下整张卡不显示，
+         因为那时侧栏已经落在正文末尾，锚点列表没有用处。 */}}
+    <details class="post-toc group/toc" open>
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+        <span id="post-toc-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">本页目录</span>
+        <span class="flex shrink-0 items-center gap-1.5 font-mono text-[10px] tabular-nums text-slate-400 dark:text-slate-500">
+          <span>{{ len $items }} 节</span>
+          <svg class="h-3.5 w-3.5 transition-transform duration-200 group-open/toc:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </summary>
+      <ul class="post-toc-list hide-scrollbar mt-2 flex max-h-[calc(100vh-19rem)] flex-col overflow-y-auto">
+        {{ range . }}
+          <li>
+            <a class="post-toc-link{{ if gt .Depth 0 }} post-toc-link--child{{ end }}" href="#{{ .ID }}" data-toc-link data-target="{{ .ID }}" title="{{ .Title }}">
+              {{ .Title }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </details>
+  </section>
+{{- end -}}

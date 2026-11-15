@@ -1,0 +1,103 @@
+{{/* 文章页侧栏第一张卡：头像 / 昵称 / 一句话简介 / 文章·标签·分类 统计 / 关注我。
+     数据全部来自 data/sidebar.yaml（profile + follow），和首页 hero 共用一份，
+     改配置两边一起变，模板里不再硬编码任何链接。 */}}
+{{- $sidebar := hugo.Data.sidebar | default dict -}}
+{{- $profile := $sidebar.profile | default dict -}}
+{{- $follow := $sidebar.follow | default dict -}}
+{{- $posts := where site.RegularPages "Section" "posts" -}}
+
+{{/* 标签去重后计数（站内混用 CTF / ctf，按小写算同一个）。 */}}
+{{- $tagKeys := slice -}}
+{{- range $posts -}}
+  {{- range (.Params.tags | default slice) -}}
+    {{- $key := lower . -}}
+    {{- if not (in $tagKeys $key) }}{{ $tagKeys = $tagKeys | append $key }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* 只统计真的有文章的分类，空分类在这里显示成 0 会像死链。 */}}
+{{- $catCount := 0 -}}
+{{- range hugo.Data.categories -}}
+  {{- $label := .label -}}
+  {{- range $posts -}}
+    {{- if in (.Params.categories | default slice) $label -}}
+      {{- $catCount = add $catCount 1 -}}
+      {{- break -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $stats := slice
+  (dict "label" "文章" "value" (printf "%d" (len $posts)) "url" (relLangURL "posts/"))
+  (dict "label" "标签" "value" (printf "%d" (len $tagKeys)) "url" (relLangURL "search/"))
+  (dict "label" "分类" "value" (printf "%d" $catCount) "url" (relLangURL "categories/"))
+-}}
+
+<section class="nerdy-card p-4" aria-label="关于博主">
+  <div class="flex items-center gap-3">
+    <div class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/70 bg-white/60 shadow-sm dark:border-slate-600/60 dark:bg-slate-900/60">
+      {{- with $profile.avatar -}}
+        {{- $avatarURL := . -}}
+        {{- $avatarSrcset := "" -}}
+        {{- $avatarWidth := 44 -}}
+        {{- $avatarHeight := 44 -}}
+        {{- if not (hasPrefix . "http") -}}
+          {{- $avatarURL = . | relURL -}}
+          {{- with resources.Get . -}}
+            {{- $small := .Fill "44x44 Center webp q82" -}}
+            {{- $large := .Fill "88x88 Center webp q82" -}}
+            {{- $avatarURL = $large.RelPermalink -}}
+            {{- $avatarSrcset = printf "%s 1x, %s 2x" $small.RelPermalink $large.RelPermalink -}}
+            {{- $avatarWidth = 88 -}}
+            {{- $avatarHeight = 88 -}}
+          {{- end -}}
+        {{- end -}}
+        <img class="h-full w-full object-cover" src="{{ $avatarURL }}"{{ with $avatarSrcset }} srcset="{{ . }}"{{ end }}
+             alt="{{ $profile.name | default "博主头像" }}" width="{{ $avatarWidth }}" height="{{ $avatarHeight }}" loading="lazy" decoding="async">
+      {{- else -}}
+        <span class="font-mono text-lg text-accent-cyan">{}</span>
+      {{- end -}}
+    </div>
+
+    <div class="min-w-0">
+      <a class="block truncate text-base font-bold tracking-tight text-slate-950 transition-colors hover:text-accent-cyan dark:text-white" href="{{ relLangURL "/" }}">{{ $profile.name | default site.Title }}</a>
+      {{ with $profile.title }}<p class="truncate font-mono text-[11px] text-accent-cyan">{{ . }}</p>{{ end }}
+    </div>
+  </div>
+
+  {{ with $profile.description }}
+    <p class="mt-2.5 line-clamp-3 text-[13px] leading-6 nerdy-muted">{{ . }}</p>
+  {{ end }}
+
+  <dl class="mt-3 grid grid-cols-3 divide-x divide-slate-900/8 border-y border-slate-900/8 py-2 dark:divide-slate-400/15 dark:border-slate-400/15">
+    {{ range $stats }}
+      <div class="flex flex-col items-center gap-0.5">
+        <dd class="order-1 font-mono text-sm font-bold tabular-nums text-slate-950 dark:text-white">
+          <a class="transition-colors hover:text-accent-cyan" href="{{ .url }}">{{ .value }}</a>
+        </dd>
+        <dt class="order-2 font-mono text-[10px] tracking-wide nerdy-muted-soft">{{ .label }}</dt>
+      </div>
+    {{ end }}
+  </dl>
+
+  {{- with $follow.items -}}
+    <div class="mt-3">
+      <p class="font-mono text-[10px] uppercase tracking-widest nerdy-muted-soft">{{ $follow.title | default "关注我" }}</p>
+      <div class="mt-1.5 flex flex-wrap gap-1.5">
+        {{ range . }}
+          {{- $href := .url -}}
+          {{- $external := hasPrefix (string .url) "http" -}}
+          {{- if not $external }}{{ $href = .url | relLangURL }}{{ end -}}
+          <a class="group inline-flex min-h-8 min-w-0 flex-1 basis-[calc(50%-0.375rem)] items-center justify-center gap-1.5 rounded-lg border border-slate-900/10 bg-white/50 px-2 py-1 font-mono text-[11px] font-medium text-slate-700 transition-colors hover:border-accent-cyan/60 hover:bg-white hover:text-slate-950 dark:border-slate-400/15 dark:bg-slate-900/30 dark:text-slate-300 dark:hover:border-accent-cyan/50 dark:hover:bg-slate-900/60 dark:hover:text-white"
+             href="{{ $href }}"
+             {{ if $external }}target="_blank" rel="noopener noreferrer"{{ end }}>
+            <span class="shrink-0 text-slate-500 transition-colors group-hover:text-accent-cyan dark:text-slate-400">
+              {{ partial "components/icon.html" (dict "name" (.icon | default "website") "class" "h-3.5 w-3.5") }}
+            </span>
+            <span class="truncate">{{ .label }}</span>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  {{- end -}}
+</section>

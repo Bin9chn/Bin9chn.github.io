@@ -313,6 +313,136 @@ body > footer {
     inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 
+/* ---------------------------------------------------------------- */
+/* 文章页右侧栏：目录卡 + 最近/相关文章列表                            */
+/* 侧栏现在是「身份卡 → 目录 → 最近文章 → 相关文章」一列玻璃卡片，     */
+/* 目录不再走 toc-rail 那套独立窄轨，改为卡片内的左描边列表。           */
+/* ---------------------------------------------------------------- */
+
+.post-toc summary::-webkit-details-marker {
+  display: none;
+}
+
+.post-toc-list {
+  border-top: 1px solid rgb(15 23 42 / 0.07);
+  padding-top: 0.35rem;
+}
+
+.dark .post-toc-list {
+  border-top-color: rgb(148 163 184 / 0.12);
+}
+
+.post-toc-link {
+  display: block;
+  overflow: hidden;
+  margin-left: -2px;
+  padding: 0.32rem 0.4rem 0.32rem 0.7rem;
+  border-left: 2px solid rgb(15 23 42 / 0.12);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  line-height: 1.15rem;
+  color: rgb(71 85 105);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.post-toc-link:hover {
+  border-left-color: rgb(100 116 139);
+  background: rgb(15 23 42 / 0.04);
+  color: rgb(15 23 42);
+}
+
+.post-toc-link--child {
+  padding-left: 1.5rem;
+}
+
+.post-toc-link.toc-active {
+  border-left-color: var(--accent-cyan);
+  background: color-mix(in oklab, var(--accent-cyan) 10%, transparent);
+  color: rgb(15 23 42);
+  font-weight: 600;
+}
+
+.dark .post-toc-link {
+  border-left-color: rgb(148 163 184 / 0.2);
+  color: rgb(148 163 184);
+}
+
+.dark .post-toc-link:hover {
+  border-left-color: rgb(148 163 184 / 0.45);
+  background: rgb(148 163 184 / 0.08);
+  color: rgb(241 245 249);
+}
+
+.dark .post-toc-link.toc-active {
+  border-left-color: var(--accent-cyan);
+  background: color-mix(in oklab, var(--accent-cyan) 14%, transparent);
+  color: rgb(248 250 252);
+}
+
+.post-sidebar-list > li + li {
+  border-top: 1px solid rgb(15 23 42 / 0.06);
+}
+
+.dark .post-sidebar-list > li + li {
+  border-top-color: rgb(148 163 184 / 0.1);
+}
+
+.post-sidebar-item {
+  display: block;
+  margin-inline: -0.4rem;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  color: rgb(51 65 85);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.post-sidebar-item:hover {
+  background: rgb(15 23 42 / 0.05);
+  color: rgb(15 23 42);
+}
+
+.dark .post-sidebar-item {
+  color: rgb(203 213 225);
+}
+
+.dark .post-sidebar-item:hover {
+  background: rgb(148 163 184 / 0.1);
+  color: rgb(248 250 252);
+}
+
+/* 长目录在侧栏内部滚动，滚动条会平白多出一条竖线，藏掉更安静。 */
+.post-toc-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* 侧栏整列也是滚动容器（内容比视口高时）。默认不画滚动条，鼠标移上去才显形：
+   浅色主题下那条 6px 深灰会把整列切出一道边，比藏起来更难看。 */
+aside[aria-label="文章侧栏"]::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+aside[aria-label="文章侧栏"]:hover::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139 / 0.35);
+}
+
+aside[aria-label="文章侧栏"]:hover::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139 / 0.6);
+}
+
+/* 玻璃卡片的白色描边在浅色底上等于没有，侧栏这一列给它一条真正的发丝线，
+   否则四张卡会糊成一片。 */
+aside[aria-label="文章侧栏"] > .nerdy-card {
+  border-color: rgb(15 23 42 / 0.07);
+}
+
+.dark aside[aria-label="文章侧栏"] > .nerdy-card {
+  border-color: rgb(148 163 184 / 0.18);
+}
+
+
 /* 主题的 hover 描边色被上面的 border-color 压掉了，这里补回彩色悬停边。 */
 .nerdy-card-accent-cyan:hover {
   border-color: color-mix(in oklab, var(--accent-cyan) 55%, transparent);

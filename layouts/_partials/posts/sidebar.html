@@ -1,0 +1,10 @@
+{{/* 文章页右侧栏：身份卡（含关注我）→ 本页目录 → 最近文章 → 相关文章。
+     xl 起整列粘住并自己内部滚动，长目录也不会把「相关文章」推到两屏以外。
+     手机/平板侧栏落在正文下面（单列布局），目录在 lg 以下直接隐藏 ——
+     正文都读完了再给一份锚点列表没有意义，反而把页面拉得很长。 */}}
+<aside class="min-w-0 space-y-3.5 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-1" aria-label="文章侧栏">
+  {{ partial "posts/sidebar/profile.html" . }}
+  {{ partial "posts/sidebar/toc.html" . }}
+  {{ partial "posts/sidebar/recent.html" . }}
+  {{ partial "posts/sidebar/related.html" . }}
+</aside>

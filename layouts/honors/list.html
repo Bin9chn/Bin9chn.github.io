@@ -1,5 +1,5 @@
 {{ define "main" }}
-  {{ $data := site.Data.honors | default dict }}
+  {{ $data := hugo.Data.honors | default dict }}
   {{ $groups := $data.groups | default slice }}
 
   {{/* Count first so an entirely empty page can say so once, instead of showing

@@ -25,6 +25,21 @@ profile:
       label: 管理后台
       url: /admin/
 
+# 文章页侧栏身份卡底部的「关注我」。按这里写的顺序显示，图标取自 assets/icons/<icon>.svg。
+# 站内链接（以 / 开头）会自动加 site 前缀，http 开头的按外链处理（新窗口打开）。
+follow:
+  title: 关注我
+  items:
+    - label: GitHub
+      url: https://github.com/Bin9chn
+      icon: github
+    - label: CSDN
+      url: https://blog.csdn.net/BEICHENst
+      icon: article
+    - label: RSS 订阅
+      url: /index.xml
+      icon: rss
+
 sections:
   - id: profile-stats
     type: stats

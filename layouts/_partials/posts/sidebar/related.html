@@ -1,0 +1,44 @@
+{{/* 侧栏「相关文章」：按共同标签（每个 3 分）和共同分类（2 分）打分，取前 3。
+     以前这块放在正文底部整行三联卡，读完文章要再往下滚一屏；挪到侧栏后
+     正文结尾只剩上下篇，视线不用来回跳。
+     没有任何同标签/同分类的文章时整张卡不渲染。 */}}
+{{- $current := . -}}
+{{- $tags := .Params.tags | default slice -}}
+{{- $cats := .Params.categories | default slice -}}
+{{- $scored := slice -}}
+{{- range where site.RegularPages "Section" "posts" -}}
+  {{- if ne .RelPermalink $current.RelPermalink -}}
+    {{- $score := mul (len (intersect (.Params.tags | default slice) $tags)) 3 -}}
+    {{- if intersect (.Params.categories | default slice) $cats -}}
+      {{- $score = add $score 2 -}}
+    {{- end -}}
+    {{- if gt $score 0 -}}
+      {{- $scored = $scored | append (dict "page" . "score" $score) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with first 3 (sort $scored "score" "desc") -}}
+  <section class="nerdy-card p-4" aria-labelledby="post-related-title">
+    <div class="flex items-baseline justify-between gap-2">
+      <h2 id="post-related-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">相关文章</h2>
+      <a class="shrink-0 font-mono text-[10px] nerdy-link" href="{{ relLangURL "posts/" }}">更多 →</a>
+    </div>
+    <ul class="post-sidebar-list mt-1.5">
+      {{- range . -}}
+        {{- $post := .page -}}
+        {{- $category := "其他" -}}
+        {{- with index ($post.Params.categories | default slice) 0 }}{{ $category = . }}{{ end -}}
+        <li>
+          <a class="post-sidebar-item" href="{{ $post.RelPermalink }}">
+            <span class="line-clamp-2 text-[13px] font-medium leading-5">{{ $post.Title }}</span>
+            <span class="mt-0.5 flex items-center gap-1.5 font-mono text-[10px]">
+              <span class="nerdy-chip nerdy-chip-cyan px-1.5 py-0 text-[10px] leading-4">{{ $category }}</span>
+              <time class="tabular-nums text-slate-500 dark:text-slate-500" datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "2006-01-02" }}</time>
+            </span>
+          </a>
+        </li>
+      {{- end -}}
+    </ul>
+  </section>
+{{- end -}}

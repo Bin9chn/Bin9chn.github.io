@@ -1,10 +1,13 @@
-{{/* 文章页右侧栏：身份卡（含关注我）→ 本页目录 → 最近文章 → 相关文章。
-     xl 起整列粘住并自己内部滚动，长目录也不会把「相关文章」推到两屏以外。
-     手机/平板侧栏落在正文下面（单列布局），目录在 lg 以下直接隐藏 ——
-     正文都读完了再给一份锚点列表没有意义，反而把页面拉得很长。 */}}
-<aside class="min-w-0 space-y-3.5 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-1" aria-label="文章侧栏">
+{{/* 文章页右侧栏：身份卡（含关注我）→ 本页目录 → 标签 → 上一篇/下一篇 → 相关文章 → 最近文章。
+     正文底部的标签和上下篇都挪到了这里，读完正文不用再往下找。
+     lg 起整列粘住（长文滚动时目录一直在），高度上限是视口；前五张卡压在一屏内，
+     最后一张「最近文章」留给侧栏自己的滚动条 —— 它同时也是「下面还有」的信号。
+     lg 以下侧栏落在正文后面，目录卡隐藏。 */}}
+<aside class="min-w-0 space-y-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-1" aria-label="文章侧栏">
   {{ partial "posts/sidebar/profile.html" . }}
   {{ partial "posts/sidebar/toc.html" . }}
-  {{ partial "posts/sidebar/recent.html" . }}
+  {{ partial "posts/sidebar/tags.html" . }}
+  {{ partial "posts/sidebar/nav.html" . }}
   {{ partial "posts/sidebar/related.html" . }}
+  {{ partial "posts/sidebar/recent.html" . }}
 </aside>

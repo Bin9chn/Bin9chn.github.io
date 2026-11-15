@@ -1,0 +1,58 @@
+{{/* 侧栏「上一篇 / 下一篇」。同栏目（同分类）内按日期排序，取相邻两篇；
+     该分类只有这一篇时退回全站排序，和原来正文底部的逻辑一致。
+     两边都没有（全站只有一篇）整张卡不渲染。 */}}
+{{- $page := . -}}
+{{- $category := "其他" -}}
+{{- with .Params.categories }}{{ with index . 0 }}{{ $category = . }}{{ end }}{{ end -}}
+
+{{- $series := slice -}}
+{{- range where site.RegularPages "Section" "posts" -}}
+  {{- $candidate := . -}}
+  {{- with .Params.categories -}}
+    {{- if in . $category }}{{ $series = $series | append $candidate }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if lt (len $series) 2 -}}
+  {{- $series = sort (where site.RegularPages "Section" "posts") "Date" "desc" -}}
+{{- else -}}
+  {{- $series = sort $series "Date" "desc" -}}
+{{- end -}}
+
+{{- $previous := false -}}
+{{- $next := false -}}
+{{- range $index, $candidate := $series -}}
+  {{- if eq $candidate.RelPermalink $page.RelPermalink -}}
+    {{- if gt $index 0 }}{{ $previous = index $series (sub $index 1) }}{{ end -}}
+    {{- if lt (add $index 1) (len $series) }}{{ $next = index $series (add $index 1) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if or $previous $next -}}
+  <section class="nerdy-card p-3.5" aria-labelledby="post-nav-title">
+    <h2 id="post-nav-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">上一篇 / 下一篇</h2>
+    <ul class="post-sidebar-list mt-1.5">
+      {{ with $previous }}
+        <li>
+          <a class="post-sidebar-item group" href="{{ .RelPermalink }}">
+            <span class="mb-0.5 flex items-center gap-1 font-mono text-[10px] text-accent-cyan">
+              <span class="transition-transform group-hover:-translate-x-1">←</span>
+              <span>上一篇</span>
+            </span>
+            <span class="line-clamp-2 text-[13px] font-medium leading-5">{{ .Title }}</span>
+          </a>
+        </li>
+      {{ end }}
+      {{ with $next }}
+        <li>
+          <a class="post-sidebar-item group" href="{{ .RelPermalink }}">
+            <span class="mb-0.5 flex items-center gap-1 font-mono text-[10px] text-accent-cyan">
+              <span>下一篇</span>
+              <span class="transition-transform group-hover:translate-x-1">→</span>
+            </span>
+            <span class="line-clamp-2 text-[13px] font-medium leading-5">{{ .Title }}</span>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+{{- end -}}

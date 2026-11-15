@@ -2,7 +2,7 @@
 {{- $limit := 5 -}}
 {{- $all := (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
 {{- with $all -}}
-  <section class="nerdy-card p-4" aria-labelledby="post-recent-title">
+  <section class="nerdy-card p-3.5" aria-labelledby="post-recent-title">
     <div class="flex items-baseline justify-between gap-2">
       <h2 id="post-recent-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">最近文章</h2>
       <a class="shrink-0 font-mono text-[10px] nerdy-link" href="{{ relLangURL "posts/" }}">全部 {{ len . }} 篇 →</a>

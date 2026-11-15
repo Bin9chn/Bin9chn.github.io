@@ -412,24 +412,24 @@ body > footer {
   color: rgb(248 250 252);
 }
 
-/* 长目录在侧栏内部滚动，滚动条会平白多出一条竖线，藏掉更安静。 */
+/* 目录卡内部在长目录时会滚动，滚动条藏起来更安静。 */
 .post-toc-list::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
 
-/* 侧栏整列也是滚动容器（内容比视口高时）。默认不画滚动条，鼠标移上去才显形：
-   浅色主题下那条 6px 深灰会把整列切出一道边，比藏起来更难看。 */
+/* 侧栏整列也是滚动容器：六张卡不可能全塞进一屏。滚动条常显但画得很淡，
+   让人一眼看出「下面还有卡」；悬停再加深。 */
 aside[aria-label="文章侧栏"]::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgb(100 116 139 / 0.25);
 }
 
 aside[aria-label="文章侧栏"]:hover::-webkit-scrollbar-thumb {
-  background: rgb(100 116 139 / 0.35);
+  background: rgb(100 116 139 / 0.5);
 }
 
 aside[aria-label="文章侧栏"]:hover::-webkit-scrollbar-thumb:hover {
-  background: rgb(100 116 139 / 0.6);
+  background: rgb(100 116 139 / 0.75);
 }
 
 /* 玻璃卡片的白色描边在浅色底上等于没有，侧栏这一列给它一条真正的发丝线，

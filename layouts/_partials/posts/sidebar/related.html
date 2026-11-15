@@ -1,7 +1,8 @@
 {{/* 侧栏「相关文章」：按共同标签（每个 3 分）和共同分类（2 分）打分，取前 3。
-     以前这块放在正文底部整行三联卡，读完文章要再往下滚一屏；挪到侧栏后
-     正文结尾只剩上下篇，视线不用来回跳。
-     没有任何同标签/同分类的文章时整张卡不渲染。 */}}
+     一个都没打上的文章（比如团队介绍那种没有同类内容的）退化成「推荐阅读」，
+     用最新 3 篇顶上，保证侧栏这块永远不空。
+     以前这块放在正文底部整行三联卡，读完要再往下滚一屏；挪到侧栏后正文
+     结尾只剩一串出口链接。 */}}
 {{- $current := . -}}
 {{- $tags := .Params.tags | default slice -}}
 {{- $cats := .Params.categories | default slice -}}
@@ -18,23 +19,39 @@
   {{- end -}}
 {{- end -}}
 
-{{- with first 3 (sort $scored "score" "desc") -}}
-  <section class="nerdy-card p-4" aria-labelledby="post-related-title">
+{{- $items := slice -}}
+{{- range first 3 (sort $scored "score" "desc") -}}
+  {{- $items = $items | append .page -}}
+{{- end -}}
+
+{{- $recommend := false -}}
+{{- if not $items -}}
+  {{- $recommend = true -}}
+  {{- $picked := 0 -}}
+  {{- range sort (where site.RegularPages "Section" "posts") "Date" "desc" -}}
+    {{- if and (lt $picked 3) (ne .RelPermalink $current.RelPermalink) -}}
+      {{- $items = $items | append . -}}
+      {{- $picked = add $picked 1 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $items -}}
+  <section class="nerdy-card p-3.5" aria-labelledby="post-related-title">
     <div class="flex items-baseline justify-between gap-2">
-      <h2 id="post-related-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">相关文章</h2>
+      <h2 id="post-related-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">{{ if $recommend }}推荐阅读{{ else }}相关文章{{ end }}</h2>
       <a class="shrink-0 font-mono text-[10px] nerdy-link" href="{{ relLangURL "posts/" }}">更多 →</a>
     </div>
     <ul class="post-sidebar-list mt-1.5">
       {{- range . -}}
-        {{- $post := .page -}}
         {{- $category := "其他" -}}
-        {{- with index ($post.Params.categories | default slice) 0 }}{{ $category = . }}{{ end -}}
+        {{- with index (.Params.categories | default slice) 0 }}{{ $category = . }}{{ end -}}
         <li>
-          <a class="post-sidebar-item" href="{{ $post.RelPermalink }}">
-            <span class="line-clamp-2 text-[13px] font-medium leading-5">{{ $post.Title }}</span>
+          <a class="post-sidebar-item" href="{{ .RelPermalink }}">
+            <span class="line-clamp-2 text-[13px] font-medium leading-5">{{ .Title }}</span>
             <span class="mt-0.5 flex items-center gap-1.5 font-mono text-[10px]">
               <span class="nerdy-chip nerdy-chip-cyan px-1.5 py-0 text-[10px] leading-4">{{ $category }}</span>
-              <time class="tabular-nums text-slate-500 dark:text-slate-500" datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "2006-01-02" }}</time>
+              <time class="tabular-nums text-slate-500 dark:text-slate-500" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
             </span>
           </a>
         </li>

@@ -1,0 +1,16 @@
+{{/* 侧栏「标签」卡：本篇的标签，点进去是站内搜索的 tag 过滤。
+     没有标签的文章整张卡不渲染。 */}}
+{{- with .Params.tags -}}
+  <section class="nerdy-card p-3.5" aria-labelledby="post-tags-title">
+    <div class="flex items-baseline justify-between gap-2">
+      <h2 id="post-tags-title" class="font-mono text-[10px] font-bold uppercase tracking-widest nerdy-muted-soft">标签</h2>
+      <a class="shrink-0 font-mono text-[10px] nerdy-link" href="{{ relLangURL "search/" }}">全部标签 →</a>
+    </div>
+    <div class="mt-2 flex flex-wrap gap-1.5">
+      {{ range . }}
+        <a class="nerdy-chip nerdy-chip-cyan transition-colors hover:border-accent-cyan hover:text-accent-cyan"
+           href="{{ printf "%ssearch/?tag=%s" site.Home.RelPermalink (urlquery .) }}">#{{ . }}</a>
+      {{ end }}
+    </div>
+  </section>
+{{- end -}}
